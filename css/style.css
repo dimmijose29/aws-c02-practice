@@ -1307,6 +1307,7 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
 
     /* Practice mode: full width already, just adjust padding */
     .practice-mode .q-main { padding: 16px 14px 80px; }
+    .practice-mode .btn-nav-toggle { display: none; }
 
     /* --- Results screen --- */
     .results-container { padding: 28px 14px 60px; }
