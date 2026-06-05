@@ -19,17 +19,27 @@
         <h1 class="start-title">Practice Exam Simulator</h1>
         <p class="start-subtitle">Realistic CLF-C02 practice questions — study smarter, pass faster.</p>
 
-        <div class="mode-type-toggle">
-            <button class="mtt-btn mtt-active" data-type="exam">
-                <span class="mtt-icon">🎯</span>
-                <span class="mtt-label">Exam Mode</span>
-                <span class="mtt-desc">Answer all questions, get results at the end</span>
-            </button>
-            <button class="mtt-btn" data-type="practice">
-                <span class="mtt-icon">📖</span>
-                <span class="mtt-label">Practice Mode</span>
-                <span class="mtt-desc">Instant feedback and explanations after each question</span>
-            </button>
+        <div class="mode-stats-row">
+            <div class="mode-type-toggle">
+                <button class="mtt-btn mtt-active" data-type="exam">
+                    <span class="mtt-icon">🎯</span>
+                    <span class="mtt-label">Exam Mode</span>
+                    <span class="mtt-desc">Answer all questions, get results at the end</span>
+                </button>
+                <button class="mtt-btn" data-type="practice">
+                    <span class="mtt-icon">📖</span>
+                    <span class="mtt-label">Practice Mode</span>
+                    <span class="mtt-desc">Instant feedback and explanations after each question</span>
+                </button>
+            </div>
+
+            <!-- Stats panel -->
+            <div class="stats-panel-wrap">
+                <div class="stats-panel-header">
+                    <h3 class="stats-panel-title">📊 Your History</h3>
+                </div>
+                <div id="stats-panel" class="stats-panel"></div>
+            </div>
         </div>
 
         <!-- Domain filter -->
@@ -113,14 +123,6 @@
         </div>
 
         <p class="passing-note">Passing score: 700 / 1000 (≈ 70%)</p>
-
-        <!-- Stats panel -->
-        <div class="stats-panel-wrap">
-            <div class="stats-panel-header">
-                <h3 class="stats-panel-title">📊 Your History</h3>
-            </div>
-            <div id="stats-panel" class="stats-panel"></div>
-        </div>
 
         <!-- Cheat sheet button -->
         <button id="btn-cheatsheet" class="btn-cheatsheet">📋 Open Study Cheat Sheet</button>

@@ -66,27 +66,45 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
     margin-bottom: 44px;
 }
 
+/* Mode + Stats side-by-side row */
+.mode-stats-row {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    margin-bottom: 28px;
+    text-align: left;
+}
+
+.mode-stats-row .mode-type-toggle {
+    flex-shrink: 0;
+}
+
+.mode-stats-row .stats-panel-wrap {
+    flex: 1;
+    margin-bottom: 0;
+    min-width: 0;
+}
+
 /* Mode type toggle (Exam / Practice) */
 .mode-type-toggle {
     display: flex;
+    flex-direction: column;
     gap: 12px;
-    justify-content: center;
-    margin-bottom: 28px;
-    flex-wrap: wrap;
+    margin-bottom: 0;
 }
 
 .mtt-btn {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     gap: 4px;
-    padding: 14px 28px;
+    padding: 14px 20px;
     border-radius: 10px;
     border: 2px solid var(--border);
     background: var(--white);
     cursor: pointer;
     transition: border-color .2s, background .2s, box-shadow .2s;
-    min-width: 200px;
+    width: 220px;
 }
 
 .mtt-btn:hover { border-color: var(--orange); }
@@ -258,6 +276,7 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
 .passing-note {
     font-size: 13px;
     color: var(--text-sec);
+    margin-bottom: 20px;
 }
 
 /* ===== QUIZ HEADER ===== */
@@ -1102,6 +1121,12 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
     color: #fff;
 }
 
+.df-pill.df-pill-active::after {
+    content: ' ✓';
+    font-size: 11px;
+    opacity: .85;
+}
+
 /* ===== STATS PANEL ===== */
 .stats-panel-wrap {
     background: var(--white);
@@ -1677,6 +1702,11 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
     /* Practice mode: full width already, just adjust padding */
     .practice-mode .q-main { padding: 16px 14px 80px; }
     .practice-mode .btn-nav-toggle { display: none; }
+
+    /* --- Mode + stats row --- */
+    .mode-stats-row { flex-direction: column; }
+    .mtt-btn { width: 100%; }
+    .mode-type-toggle { flex-direction: row; flex-wrap: wrap; }
 
     /* --- Domain filter & stats --- */
     .df-pill { font-size: 12px; padding: 6px 12px; }
