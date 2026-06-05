@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(node --input-type=module)",
-      "Bash(node -e ' *)"
+      "Bash(node -e ' *)",
+      "Bash(node -c /Users/m4/Project/aws-certification/js/questions.js)"
     ]
   }
 }
