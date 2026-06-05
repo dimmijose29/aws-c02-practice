@@ -6300,7 +6300,13 @@ const QUESTION_BANK = [
     question: "Which AWS service enables developers to deploy containerized applications by providing a fully managed container registry?",
     options: ["Amazon ECS", "Amazon EKS", "Amazon ECR", "AWS Fargate"],
     correct: [2],
-    explanation: "Amazon ECR (Elastic Container Registry) is a fully managed Docker container image registry. It stores, manages, and deploys container images securely. Integrated with ECS, EKS, and Fargate for seamless container deployments."
+    explanation: "Amazon ECR (Elastic Container Registry) is a fully managed Docker container image registry. It stores, manages, and deploys container images securely. Integrated with ECS, EKS, and Fargate for seamless container deployments.",
+    optionExplanations: [
+      "Amazon ECS is a container orchestration service that runs containers — it does not store container images; it pulls them from a registry like ECR.",
+      "Amazon EKS is a managed Kubernetes service for orchestration — it does not host container images; it pulls them from a registry.",
+      "Correct — Amazon ECR is the fully managed Docker container image registry that stores, manages, and deploys images, integrated with ECS, EKS, and Fargate.",
+      "AWS Fargate is a serverless compute engine for containers — it runs containers but does not store the container images themselves."
+    ]
   },
   {
     id: 351,
@@ -6309,7 +6315,13 @@ const QUESTION_BANK = [
     question: "Which AWS service provides a managed IoT platform for connecting, managing, and securing billions of IoT devices?",
     options: ["AWS Greengrass", "Amazon Kinesis", "AWS IoT Core", "Amazon SageMaker"],
     correct: [2],
-    explanation: "AWS IoT Core is a managed cloud service that lets connected devices interact with cloud applications. It handles device connectivity (MQTT, HTTP), message brokering, security (X.509 certificates), and integration with AWS services."
+    explanation: "AWS IoT Core is a managed cloud service that lets connected devices interact with cloud applications. It handles device connectivity (MQTT, HTTP), message brokering, security (X.509 certificates), and integration with AWS services.",
+    optionExplanations: [
+      "AWS Greengrass extends AWS to edge devices for local processing — it complements IoT Core but is not the central managed IoT platform for device connectivity.",
+      "Amazon Kinesis processes real-time streaming data — it can ingest IoT data but is not a managed platform for device connectivity, management, and security.",
+      "Correct — AWS IoT Core is the managed cloud platform for connecting, managing, and securing IoT devices with MQTT/HTTP, X.509 certificates, and AWS service integration.",
+      "Amazon SageMaker is a machine learning platform — it can process IoT data but is not the device connectivity and management service."
+    ]
   },
   {
     id: 352,
@@ -6318,7 +6330,13 @@ const QUESTION_BANK = [
     question: "Which AWS service provides a managed service for running Apache Kafka-compatible streaming, fully managed and integrated with AWS services?",
     options: ["Amazon Kinesis Data Streams", "Amazon SQS", "Amazon MSK (Managed Streaming for Apache Kafka)", "AWS EventBridge"],
     correct: [2],
-    explanation: "Amazon MSK (Managed Streaming for Apache Kafka) is a fully managed service that makes it easy to build and run applications that use Apache Kafka. AWS handles provisioning, configuration, and maintenance of Kafka brokers and ZooKeeper."
+    explanation: "Amazon MSK (Managed Streaming for Apache Kafka) is a fully managed service that makes it easy to build and run applications that use Apache Kafka. AWS handles provisioning, configuration, and maintenance of Kafka brokers and ZooKeeper.",
+    optionExplanations: [
+      "Amazon Kinesis Data Streams is AWS's proprietary streaming service — it is not Apache Kafka-compatible and would require code changes to migrate existing Kafka applications.",
+      "Amazon SQS is a message queue — it is not a streaming platform and is not Apache Kafka-compatible.",
+      "Correct — Amazon MSK is the fully managed Apache Kafka-compatible streaming service, with AWS handling Kafka broker and ZooKeeper provisioning and maintenance.",
+      "AWS EventBridge is an event bus for routing events — it is not a Kafka-compatible streaming platform."
+    ]
   },
   {
     id: 353,
@@ -6327,7 +6345,13 @@ const QUESTION_BANK = [
     question: "Which AWS service provides a cloud-based desktop-as-a-service (DaaS) solution, allowing users to access virtual desktops from any device?",
     options: ["AWS AppStream 2.0", "Amazon WorkSpaces", "AWS Virtual Desktop", "Amazon Connect"],
     correct: [1],
-    explanation: "Amazon WorkSpaces is a fully managed, persistent virtual desktop infrastructure (VDI) in the cloud. Users access their Windows or Linux virtual desktop from any supported device. AWS handles hardware, patching, and availability."
+    explanation: "Amazon WorkSpaces is a fully managed, persistent virtual desktop infrastructure (VDI) in the cloud. Users access their Windows or Linux virtual desktop from any supported device. AWS handles hardware, patching, and availability.",
+    optionExplanations: [
+      "AWS AppStream 2.0 streams individual applications to browsers — it is not a persistent virtual desktop solution where each user has their own desktop.",
+      "Correct — Amazon WorkSpaces is the managed Desktop-as-a-Service (DaaS) providing persistent Windows/Linux virtual desktops accessible from any device.",
+      "'AWS Virtual Desktop' is not an AWS service name — the actual DaaS service is Amazon WorkSpaces.",
+      "Amazon Connect is a cloud-based contact center service — it is for customer service operations, not virtual desktops for end users."
+    ]
   },
   {
     id: 354,
@@ -6336,7 +6360,13 @@ const QUESTION_BANK = [
     question: "Which AWS service allows you to stream desktop applications to users' browsers, without requiring installations on their devices?",
     options: ["Amazon WorkSpaces", "Amazon Connect", "AWS AppStream 2.0", "AWS WorkLink"],
     correct: [2],
-    explanation: "AWS AppStream 2.0 streams desktop applications from AWS to users' web browsers. Applications run on AWS infrastructure and are streamed as pixels — no installation required on the user's device, and data never leaves AWS."
+    explanation: "AWS AppStream 2.0 streams desktop applications from AWS to users' web browsers. Applications run on AWS infrastructure and are streamed as pixels — no installation required on the user's device, and data never leaves AWS.",
+    optionExplanations: [
+      "Amazon WorkSpaces provides persistent virtual desktops — it streams an entire desktop, not specific applications, and users have their own dedicated desktop environment.",
+      "Amazon Connect is a cloud-based contact center — it has no application streaming capabilities.",
+      "Correct — AWS AppStream 2.0 streams individual desktop applications to users' browsers without local installation, with data remaining in AWS.",
+      "AWS WorkLink (now discontinued) was for accessing internal websites on mobile devices — it was not for streaming desktop applications."
+    ]
   },
   {
     id: 355,
@@ -6345,7 +6375,13 @@ const QUESTION_BANK = [
     question: "Which AWS service is a cloud-based contact center that allows you to set up a customer service operation quickly with pay-as-you-go pricing?",
     options: ["Amazon Chime", "Amazon Connect", "Amazon WorkMail", "AWS Wickr"],
     correct: [1],
-    explanation: "Amazon Connect is a cloud-based omnichannel contact center. You can set up a contact center in minutes with automatic call distribution, interactive voice response, real-time analytics, and integration with CRM systems."
+    explanation: "Amazon Connect is a cloud-based omnichannel contact center. You can set up a contact center in minutes with automatic call distribution, interactive voice response, real-time analytics, and integration with CRM systems.",
+    optionExplanations: [
+      "Amazon Chime is a unified communications service for meetings, video, and chat — it is not a contact center service for customer service operations.",
+      "Correct — Amazon Connect is the cloud-based contact center with pay-as-you-go pricing, automatic call distribution, IVR, and CRM integration.",
+      "Amazon WorkMail is a managed business email and calendar service — it is not a contact center solution.",
+      "AWS Wickr is a secure messaging service for end-to-end encrypted communications — it is not a customer service contact center."
+    ]
   },
   {
     id: 356,
@@ -6354,7 +6390,13 @@ const QUESTION_BANK = [
     question: "Which AWS service automatically detects, classifies, and migrates on-premises workloads to AWS with minimal downtime?",
     options: ["AWS Migration Hub", "AWS Application Migration Service (MGN)", "AWS DataSync", "AWS Transfer Family"],
     correct: [1],
-    explanation: "AWS Application Migration Service (AWS MGN) is the primary migration service for lift-and-shift migrations. It replicates source servers continuously and cutover causes minimal downtime. It replaced AWS Server Migration Service (SMS)."
+    explanation: "AWS Application Migration Service (AWS MGN) is the primary migration service for lift-and-shift migrations. It replicates source servers continuously and cutover causes minimal downtime. It replaced AWS Server Migration Service (SMS).",
+    optionExplanations: [
+      "AWS Migration Hub provides a centralized view of migration progress across multiple tools — it tracks migrations but does not perform the actual workload replication and cutover.",
+      "Correct — AWS Application Migration Service (MGN) is the primary lift-and-shift migration service, continuously replicating source servers and minimizing downtime during cutover.",
+      "AWS DataSync transfers files between on-premises storage and AWS storage — it is for data transfer, not entire server workload migration with cutover.",
+      "AWS Transfer Family provides managed file transfer (SFTP, FTPS) — it is for file transfer protocols, not workload migration."
+    ]
   },
   {
     id: 357,
@@ -6363,7 +6405,13 @@ const QUESTION_BANK = [
     question: "Which AWS service provides a central location to track the progress of application migrations to AWS across multiple migration tools?",
     options: ["AWS Application Migration Service", "AWS Migration Hub", "AWS Control Tower", "AWS DataSync"],
     correct: [1],
-    explanation: "AWS Migration Hub provides a single location to track migration status across multiple AWS and partner migration tools. It gives visibility into application portfolio and the status of each server's migration."
+    explanation: "AWS Migration Hub provides a single location to track migration status across multiple AWS and partner migration tools. It gives visibility into application portfolio and the status of each server's migration.",
+    optionExplanations: [
+      "AWS Application Migration Service performs the actual server migration — it is one of the tools that Migration Hub tracks, not the central tracking dashboard itself.",
+      "Correct — AWS Migration Hub provides a centralized dashboard to track migration progress across multiple AWS and partner migration tools.",
+      "AWS Control Tower automates setup of a multi-account governance environment — it is not a migration tracking tool.",
+      "AWS DataSync transfers data between on-premises and AWS — it is a data transfer tool, not a migration tracking dashboard."
+    ]
   },
   {
     id: 358,
@@ -6372,7 +6420,13 @@ const QUESTION_BANK = [
     question: "Which physical device does AWS provide to transfer large amounts of data (up to 80 TB) to AWS when internet bandwidth is insufficient?",
     options: ["AWS Storage Gateway", "AWS DataSync", "AWS Snowball Edge", "AWS Transfer Family"],
     correct: [2],
-    explanation: "AWS Snowball Edge is a physical device for offline data transfer. Customers load data onto the device and ship it to AWS. Each Snowball Edge stores up to 80 TB and can also run EC2 compute at the edge. For larger migrations, Snowmobile (truck) is used."
+    explanation: "AWS Snowball Edge is a physical device for offline data transfer. Customers load data onto the device and ship it to AWS. Each Snowball Edge stores up to 80 TB and can also run EC2 compute at the edge. For larger migrations, Snowmobile (truck) is used.",
+    optionExplanations: [
+      "AWS Storage Gateway bridges on-premises storage with AWS cloud storage online — it is not a physical device shipped to customers for offline bulk data transfer.",
+      "AWS DataSync transfers data online between on-premises and AWS — it operates over network connections, not as a physical device for offline bulk transfer.",
+      "Correct — AWS Snowball Edge is the physical device shipped to customers for offline data transfer of up to 80 TB, useful when internet bandwidth is insufficient.",
+      "AWS Transfer Family provides managed SFTP/FTPS — it is an online file transfer service, not a physical device for bulk data migration."
+    ]
   },
   {
     id: 359,
@@ -6381,7 +6435,13 @@ const QUESTION_BANK = [
     question: "Which AWS service enables automated, accelerated data transfer between on-premises storage and AWS storage services like S3, EFS, and FSx?",
     options: ["AWS Snowball", "AWS Transfer Family", "AWS DataSync", "AWS Storage Gateway"],
     correct: [2],
-    explanation: "AWS DataSync is an online data transfer service that automates moving data between on-premises and AWS storage (S3, EFS, FSx). It handles scheduling, monitoring, encryption, and can transfer at speeds up to 10x faster than open-source tools."
+    explanation: "AWS DataSync is an online data transfer service that automates moving data between on-premises and AWS storage (S3, EFS, FSx). It handles scheduling, monitoring, encryption, and can transfer at speeds up to 10x faster than open-source tools.",
+    optionExplanations: [
+      "AWS Snowball is a physical device for offline data transfer — it is for cases where network bandwidth is insufficient, not for accelerated online transfers.",
+      "AWS Transfer Family provides managed SFTP/FTPS/FTP — it is for file transfer protocols, not for high-speed automated data sync between on-premises and AWS storage.",
+      "Correct — AWS DataSync automates and accelerates online data transfer between on-premises storage and AWS storage services (S3, EFS, FSx) with up to 10x speeds.",
+      "AWS Storage Gateway provides hybrid cloud storage access — it is for ongoing hybrid access, not for accelerated one-time or scheduled data transfers."
+    ]
   },
   {
     id: 360,
@@ -6390,7 +6450,13 @@ const QUESTION_BANK = [
     question: "Which AWS service connects on-premises software applications to AWS storage, enabling hybrid cloud storage use cases?",
     options: ["AWS DataSync", "Amazon EFS", "AWS Storage Gateway", "AWS Direct Connect"],
     correct: [2],
-    explanation: "AWS Storage Gateway is a hybrid cloud storage service that presents on-premises applications with standard storage protocols (NFS, SMB, iSCSI) while storing the actual data in S3, EBS, or Glacier. It bridges on-premises apps with cloud storage."
+    explanation: "AWS Storage Gateway is a hybrid cloud storage service that presents on-premises applications with standard storage protocols (NFS, SMB, iSCSI) while storing the actual data in S3, EBS, or Glacier. It bridges on-premises apps with cloud storage.",
+    optionExplanations: [
+      "AWS DataSync is for one-time or scheduled data transfers — it is not for persistent on-premises application access to cloud storage via standard protocols.",
+      "Amazon EFS is a managed cloud NFS file system — it is not a hybrid solution for bridging on-premises applications with cloud storage.",
+      "Correct — AWS Storage Gateway bridges on-premises applications to AWS cloud storage using NFS, SMB, and iSCSI protocols, storing data in S3, EBS, or Glacier.",
+      "AWS Direct Connect provides a dedicated network link from on-premises to AWS — it is a connectivity service, not a storage protocol bridge for on-premises applications."
+    ]
   },
   {
     id: 361,
@@ -6399,7 +6465,13 @@ const QUESTION_BANK = [
     question: "Which Amazon EC2 feature automatically distributes incoming application traffic across multiple targets (EC2 instances, containers, Lambda functions)?",
     options: ["Amazon Route 53", "Auto Scaling Group", "Elastic Load Balancing (ELB)", "AWS Global Accelerator"],
     correct: [2],
-    explanation: "Elastic Load Balancing automatically distributes incoming traffic across multiple healthy targets in one or more AZs. Types include Application Load Balancer (HTTP/HTTPS), Network Load Balancer (TCP/UDP), and Gateway Load Balancer."
+    explanation: "Elastic Load Balancing automatically distributes incoming traffic across multiple healthy targets in one or more AZs. Types include Application Load Balancer (HTTP/HTTPS), Network Load Balancer (TCP/UDP), and Gateway Load Balancer.",
+    optionExplanations: [
+      "Amazon Route 53 is a DNS service — it can perform some routing via DNS records but does not distribute traffic across targets like load balancers do.",
+      "Auto Scaling Group adjusts the number of EC2 instances based on demand — it manages capacity, not distributing incoming traffic across targets.",
+      "Correct — Elastic Load Balancing distributes incoming traffic across multiple healthy targets (EC2, containers, Lambda) across one or more AZs.",
+      "AWS Global Accelerator routes traffic via the AWS global network using anycast IPs — it improves global performance but is not a per-Region load balancer for distributing traffic across targets."
+    ]
   },
   {
     id: 362,
@@ -6408,7 +6480,13 @@ const QUESTION_BANK = [
     question: "Which type of Elastic Load Balancer operates at Layer 7 (HTTP/HTTPS) and supports path-based and host-based routing?",
     options: ["Classic Load Balancer", "Network Load Balancer", "Gateway Load Balancer", "Application Load Balancer"],
     correct: [3],
-    explanation: "Application Load Balancer (ALB) operates at Layer 7 and supports advanced routing: path-based (/api/* vs /web/*), host-based (api.example.com vs web.example.com), header-based, and weighted routing. Required for containerized microservices."
+    explanation: "Application Load Balancer (ALB) operates at Layer 7 and supports advanced routing: path-based (/api/* vs /web/*), host-based (api.example.com vs web.example.com), header-based, and weighted routing. Required for containerized microservices.",
+    optionExplanations: [
+      "Classic Load Balancer is legacy — it has limited Layer 7 features and is superseded by ALB for HTTP/HTTPS workloads.",
+      "Network Load Balancer operates at Layer 4 (TCP/UDP) — it does not perform path-based or host-based content routing.",
+      "Gateway Load Balancer deploys and scales third-party virtual appliances at Layer 3 — it is not for HTTP/HTTPS path/host-based routing.",
+      "Correct — Application Load Balancer operates at Layer 7 and supports path-based and host-based routing for HTTP/HTTPS traffic, ideal for microservices."
+    ]
   },
   {
     id: 363,
@@ -6417,7 +6495,13 @@ const QUESTION_BANK = [
     question: "Which AWS service provides automated recommendations for optimal AWS resource types and sizes based on your historical usage data?",
     options: ["AWS Trusted Advisor", "AWS Compute Optimizer", "AWS Cost Explorer", "AWS Budgets"],
     correct: [1],
-    explanation: "AWS Compute Optimizer uses ML to analyze CloudWatch metrics and recommend optimal EC2 instance types, Auto Scaling group configurations, EBS volume types, and Lambda function memory settings to improve performance and reduce costs."
+    explanation: "AWS Compute Optimizer uses ML to analyze CloudWatch metrics and recommend optimal EC2 instance types, Auto Scaling group configurations, EBS volume types, and Lambda function memory settings to improve performance and reduce costs.",
+    optionExplanations: [
+      "AWS Trusted Advisor provides best-practice recommendations across multiple categories — it includes some rightsizing checks but does not provide the ML-driven, granular optimization recommendations of Compute Optimizer.",
+      "Correct — AWS Compute Optimizer uses ML on CloudWatch metrics to recommend optimal EC2 instance types, ASG configurations, EBS volumes, and Lambda memory settings.",
+      "AWS Cost Explorer visualizes historical costs — it can show rightsizing recommendations for EC2 but does not provide the comprehensive ML-driven optimization recommendations across all compute services.",
+      "AWS Budgets tracks spending against thresholds — it does not analyze usage patterns to recommend optimal resource configurations."
+    ]
   },
   {
     id: 364,
@@ -6426,7 +6510,13 @@ const QUESTION_BANK = [
     question: "Which AWS service provides a fully managed relational database supporting six database engines: MySQL, MariaDB, PostgreSQL, Oracle, SQL Server, and Amazon Aurora?",
     options: ["Amazon DynamoDB", "Amazon Aurora", "Amazon RDS", "Amazon Redshift"],
     correct: [2],
-    explanation: "Amazon RDS (Relational Database Service) is a managed service for relational databases. It handles provisioning, patching, backups, and scaling. It supports MySQL, MariaDB, PostgreSQL, Oracle, SQL Server, and the Aurora-compatible engines."
+    explanation: "Amazon RDS (Relational Database Service) is a managed service for relational databases. It handles provisioning, patching, backups, and scaling. It supports MySQL, MariaDB, PostgreSQL, Oracle, SQL Server, and the Aurora-compatible engines.",
+    optionExplanations: [
+      "Amazon DynamoDB is a NoSQL database — it does not support MySQL, MariaDB, PostgreSQL, Oracle, or SQL Server engines.",
+      "Amazon Aurora is a single engine (MySQL/PostgreSQL-compatible) within the RDS family — it does not itself host all six engines listed.",
+      "Correct — Amazon RDS is the managed relational database service supporting six engines: MySQL, MariaDB, PostgreSQL, Oracle, SQL Server, and Amazon Aurora.",
+      "Amazon Redshift is a data warehouse — it is not a general-purpose relational database service supporting multiple engines."
+    ]
   },
   {
     id: 365,
@@ -6435,7 +6525,13 @@ const QUESTION_BANK = [
     question: "Which AWS service is a fully managed graph database service that makes it easy to build and run applications working with highly connected datasets?",
     options: ["Amazon DocumentDB", "Amazon Neptune", "Amazon QLDB", "Amazon Keyspaces"],
     correct: [1],
-    explanation: "Amazon Neptune is a purpose-built graph database supporting Property Graph (Gremlin) and RDF (SPARQL). It is optimized for graph queries on billions of relationships — used for knowledge graphs, fraud detection, and recommendation engines."
+    explanation: "Amazon Neptune is a purpose-built graph database supporting Property Graph (Gremlin) and RDF (SPARQL). It is optimized for graph queries on billions of relationships — used for knowledge graphs, fraud detection, and recommendation engines.",
+    optionExplanations: [
+      "Amazon DocumentDB is a MongoDB-compatible document database — it stores JSON-like documents, not graph relationships.",
+      "Correct — Amazon Neptune is a purpose-built graph database supporting Gremlin and SPARQL, optimized for queries on highly connected datasets.",
+      "Amazon QLDB is a ledger database for immutable transaction logs — it is not a graph database for connected data queries.",
+      "Amazon Keyspaces is an Apache Cassandra-compatible wide-column database — it is not a graph database."
+    ]
   },
   {
     id: 366,
@@ -6444,7 +6540,13 @@ const QUESTION_BANK = [
     question: "Which AWS service provides a fully managed, immutable ledger database that maintains a transparent, cryptographically verifiable transaction log?",
     options: ["Amazon Neptune", "Amazon DynamoDB", "Amazon QLDB", "Amazon DocumentDB"],
     correct: [2],
-    explanation: "Amazon QLDB (Quantum Ledger Database) is a fully managed ledger database with an immutable, cryptographically verifiable transaction log. No data can be altered or deleted — ideal for supply chain, financial records, and compliance applications."
+    explanation: "Amazon QLDB (Quantum Ledger Database) is a fully managed ledger database with an immutable, cryptographically verifiable transaction log. No data can be altered or deleted — ideal for supply chain, financial records, and compliance applications.",
+    optionExplanations: [
+      "Amazon Neptune is a graph database for connected data queries — it does not provide an immutable, cryptographically verifiable transaction log.",
+      "Amazon DynamoDB is a NoSQL key-value database — data can be modified or deleted; it does not provide immutable ledger semantics.",
+      "Correct — Amazon QLDB is the fully managed ledger database with an immutable, cryptographically verifiable transaction log, ideal for supply chain and financial records.",
+      "Amazon DocumentDB is a document database — data can be modified or deleted; it does not provide ledger immutability or cryptographic verification."
+    ]
   },
   {
     id: 367,
@@ -6453,7 +6555,13 @@ const QUESTION_BANK = [
     question: "Which AWS service is a MongoDB-compatible fully managed document database service?",
     options: ["Amazon DynamoDB", "Amazon Keyspaces", "Amazon DocumentDB", "Amazon Neptune"],
     correct: [2],
-    explanation: "Amazon DocumentDB (with MongoDB compatibility) is a fully managed document database. It implements the MongoDB API so existing MongoDB applications and drivers work without significant code changes, while AWS manages availability and scaling."
+    explanation: "Amazon DocumentDB (with MongoDB compatibility) is a fully managed document database. It implements the MongoDB API so existing MongoDB applications and drivers work without significant code changes, while AWS manages availability and scaling.",
+    optionExplanations: [
+      "Amazon DynamoDB is a key-value/document NoSQL database — it uses AWS-specific APIs and is not MongoDB-compatible.",
+      "Amazon Keyspaces is Apache Cassandra-compatible — it is a wide-column database, not a MongoDB-compatible document database.",
+      "Correct — Amazon DocumentDB is the MongoDB-compatible fully managed document database, allowing existing MongoDB workloads to migrate with minimal code changes.",
+      "Amazon Neptune is a graph database — it stores relationships, not JSON-like documents in a MongoDB-compatible format."
+    ]
   },
   {
     id: 368,
@@ -6462,7 +6570,13 @@ const QUESTION_BANK = [
     question: "Which AWS service provides a scalable, serverless, highly available Apache Cassandra-compatible database?",
     options: ["Amazon DynamoDB", "Amazon DocumentDB", "Amazon Neptune", "Amazon Keyspaces (for Apache Cassandra)"],
     correct: [3],
-    explanation: "Amazon Keyspaces is a serverless, fully managed Cassandra-compatible database service. Existing Cassandra workloads can migrate with minimal code changes. AWS handles scaling, patching, and availability."
+    explanation: "Amazon Keyspaces is a serverless, fully managed Cassandra-compatible database service. Existing Cassandra workloads can migrate with minimal code changes. AWS handles scaling, patching, and availability.",
+    optionExplanations: [
+      "Amazon DynamoDB is a NoSQL key-value/document database with AWS-specific APIs — it is not Apache Cassandra-compatible.",
+      "Amazon DocumentDB is MongoDB-compatible — it is for document workloads, not Cassandra wide-column workloads.",
+      "Amazon Neptune is a graph database — it is not Cassandra-compatible.",
+      "Correct — Amazon Keyspaces is the serverless, fully managed Cassandra-compatible database service for migrating Cassandra workloads with minimal code changes."
+    ]
   },
   {
     id: 369,
@@ -6471,7 +6585,13 @@ const QUESTION_BANK = [
     question: "Which AWS service continuously monitors your AWS infrastructure and applications to detect anomalies and creates alarms based on metrics?",
     options: ["AWS CloudTrail", "Amazon GuardDuty", "Amazon CloudWatch", "AWS Config"],
     correct: [2],
-    explanation: "Amazon CloudWatch is the observability service for AWS. It collects and monitors metrics, logs, and events. You can create alarms that notify you or trigger actions (Auto Scaling, Lambda) when thresholds are breached."
+    explanation: "Amazon CloudWatch is the observability service for AWS. It collects and monitors metrics, logs, and events. You can create alarms that notify you or trigger actions (Auto Scaling, Lambda) when thresholds are breached.",
+    optionExplanations: [
+      "AWS CloudTrail records API call history — it provides audit logs, not real-time metrics monitoring or anomaly detection alarms.",
+      "Amazon GuardDuty detects security threats — it monitors for malicious activity, not general infrastructure and application performance metrics.",
+      "Correct — Amazon CloudWatch monitors AWS infrastructure and applications, collecting metrics and triggering alarms based on thresholds and anomalies.",
+      "AWS Config evaluates resource configurations against compliance rules — it does not monitor real-time performance metrics or trigger metric-based alarms."
+    ]
   },
   {
     id: 370,
@@ -6480,7 +6600,13 @@ const QUESTION_BANK = [
     question: "Which AWS service provides automated operations through runbooks and playbooks, enabling you to patch, configure, and manage EC2 instances and on-premises servers at scale?",
     options: ["AWS OpsWorks", "Amazon EC2 Auto Scaling", "AWS Systems Manager", "AWS Config"],
     correct: [2],
-    explanation: "AWS Systems Manager provides operational tooling to manage AWS and on-premises resources: patch management (Patch Manager), configuration (State Manager), run commands (Run Command), parameter storage (Parameter Store), and more."
+    explanation: "AWS Systems Manager provides operational tooling to manage AWS and on-premises resources: patch management (Patch Manager), configuration (State Manager), run commands (Run Command), parameter storage (Parameter Store), and more.",
+    optionExplanations: [
+      "AWS OpsWorks is a configuration management service using Chef/Puppet — it manages server configurations but is less comprehensive than Systems Manager's full operational toolkit.",
+      "Amazon EC2 Auto Scaling adjusts the number of EC2 instances based on demand — it manages capacity, not patching, run commands, or configuration management.",
+      "Correct — AWS Systems Manager provides runbooks, patch management, run commands, configuration management, and parameter storage for AWS and on-premises servers.",
+      "AWS Config evaluates resource configurations against compliance rules — it monitors compliance but does not perform operational tasks like patching or executing remote commands."
+    ]
   },
   {
     id: 371,
@@ -6489,7 +6615,13 @@ const QUESTION_BANK = [
     question: "Which AWS service provides a managed GraphQL API layer, allowing front-end developers to query and update data from multiple data sources with a single request?",
     options: ["Amazon API Gateway", "AWS AppSync", "AWS Amplify", "Amazon EventBridge"],
     correct: [1],
-    explanation: "AWS AppSync is a managed GraphQL service that connects to DynamoDB, RDS, Lambda, Elasticsearch, and HTTP data sources. It supports real-time subscriptions and offline data synchronization for mobile and web apps."
+    explanation: "AWS AppSync is a managed GraphQL service that connects to DynamoDB, RDS, Lambda, Elasticsearch, and HTTP data sources. It supports real-time subscriptions and offline data synchronization for mobile and web apps.",
+    optionExplanations: [
+      "Amazon API Gateway is a managed REST/HTTP/WebSocket API service — it is not specifically a GraphQL service with multi-source data integration.",
+      "Correct — AWS AppSync is the managed GraphQL service that connects to multiple data sources (DynamoDB, RDS, Lambda) with real-time subscriptions and offline sync.",
+      "AWS Amplify is a development platform that uses AppSync under the hood — but AppSync is the actual GraphQL service for backend data access.",
+      "Amazon EventBridge is an event bus for routing events to targets — it is not a GraphQL API layer for querying data sources."
+    ]
   },
   {
     id: 372,
@@ -6498,7 +6630,13 @@ const QUESTION_BANK = [
     question: "Which AWS service provides a fully managed CI/CD pipeline for building, testing, and deploying applications?",
     options: ["AWS CloudFormation", "AWS CodePipeline", "AWS CodeBuild", "AWS CodeDeploy"],
     correct: [1],
-    explanation: "AWS CodePipeline is a fully managed continuous delivery service that orchestrates build, test, and deploy phases. It integrates with CodeCommit, CodeBuild, CodeDeploy, GitHub, Jenkins, and third-party tools to automate release pipelines."
+    explanation: "AWS CodePipeline is a fully managed continuous delivery service that orchestrates build, test, and deploy phases. It integrates with CodeCommit, CodeBuild, CodeDeploy, GitHub, Jenkins, and third-party tools to automate release pipelines.",
+    optionExplanations: [
+      "AWS CloudFormation deploys infrastructure as code — it can be a deploy stage in a pipeline, but is not the pipeline orchestration service itself.",
+      "Correct — AWS CodePipeline orchestrates CI/CD phases (build, test, deploy), integrating with CodeBuild, CodeDeploy, CodeCommit, GitHub, and other tools.",
+      "AWS CodeBuild compiles code and runs tests — it is a build stage within a pipeline, not the orchestration service connecting all stages.",
+      "AWS CodeDeploy automates deployments to EC2/Lambda/ECS — it is a deploy stage, not the overall CI/CD pipeline orchestration."
+    ]
   },
   {
     id: 373,
@@ -6507,7 +6645,13 @@ const QUESTION_BANK = [
     question: "Which AWS service provides a managed source control service hosting private Git repositories?",
     options: ["AWS CodePipeline", "AWS CodeBuild", "AWS CodeDeploy", "AWS CodeCommit"],
     correct: [3],
-    explanation: "AWS CodeCommit is a fully managed, private Git repository service. It scales automatically, integrates with IAM for access control, and works with standard Git tools. No repository size limits."
+    explanation: "AWS CodeCommit is a fully managed, private Git repository service. It scales automatically, integrates with IAM for access control, and works with standard Git tools. No repository size limits.",
+    optionExplanations: [
+      "AWS CodePipeline orchestrates CI/CD pipelines — it integrates with source repositories but is not itself a Git repository hosting service.",
+      "AWS CodeBuild compiles code and runs tests — it is a build service, not a Git repository hosting service.",
+      "AWS CodeDeploy automates deployments — it deploys built artifacts, not stores source code repositories.",
+      "Correct — AWS CodeCommit is the fully managed private Git repository service, with IAM access control and no size limits."
+    ]
   },
   {
     id: 374,
@@ -6516,7 +6660,13 @@ const QUESTION_BANK = [
     question: "Which AWS services can be used to decouple the components of a distributed application? (Select TWO)",
     options: ["Amazon SQS", "Amazon RDS", "Amazon SNS", "Amazon EC2"],
     correct: [0, 2],
-    explanation: "SQS (message queues) and SNS (pub/sub notifications) both decouple application components. SQS lets producers and consumers operate independently at different rates. SNS allows one publisher to notify multiple subscribers without direct connections."
+    explanation: "SQS (message queues) and SNS (pub/sub notifications) both decouple application components. SQS lets producers and consumers operate independently at different rates. SNS allows one publisher to notify multiple subscribers without direct connections.",
+    optionExplanations: [
+      "Correct — Amazon SQS provides message queues that decouple producers and consumers, allowing them to operate independently at different rates.",
+      "Amazon RDS is a relational database — it stores application data but does not provide messaging or component decoupling.",
+      "Correct — Amazon SNS is a pub/sub notification service that decouples publishers from multiple subscribers, enabling fan-out architectures.",
+      "Amazon EC2 provides virtual machines for compute workloads — it is not a messaging or decoupling service."
+    ]
   },
   {
     id: 375,
@@ -6525,7 +6675,13 @@ const QUESTION_BANK = [
     question: "Which Amazon S3 feature allows you to host a static website (HTML, CSS, JavaScript) directly from an S3 bucket?",
     options: ["S3 Transfer Acceleration", "S3 Object Lambda", "S3 Static Website Hosting", "S3 Replication"],
     correct: [2],
-    explanation: "S3 Static Website Hosting lets you serve a static website directly from an S3 bucket with a custom domain. Files are served via HTTP. For HTTPS and CDN, you would place CloudFront in front of the S3 bucket."
+    explanation: "S3 Static Website Hosting lets you serve a static website directly from an S3 bucket with a custom domain. Files are served via HTTP. For HTTPS and CDN, you would place CloudFront in front of the S3 bucket.",
+    optionExplanations: [
+      "S3 Transfer Acceleration speeds up uploads/downloads to S3 via CloudFront edge locations — it does not host static websites directly from the bucket.",
+      "S3 Object Lambda transforms data as it is retrieved from S3 using Lambda — it is for data transformation, not static website hosting.",
+      "Correct — S3 Static Website Hosting serves HTML/CSS/JS files directly from an S3 bucket as a static website, with HTTP endpoints (HTTPS requires CloudFront).",
+      "S3 Replication copies objects between buckets — it provides redundancy or geographic distribution, not website hosting capabilities."
+    ]
   },
   {
     id: 376,
@@ -6534,7 +6690,13 @@ const QUESTION_BANK = [
     question: "Which AWS service provides a fully managed message broker service supporting Apache ActiveMQ and RabbitMQ protocols?",
     options: ["Amazon SQS", "Amazon SNS", "Amazon Kinesis", "Amazon MQ"],
     correct: [3],
-    explanation: "Amazon MQ is a managed message broker service for Apache ActiveMQ and RabbitMQ. It is designed for migrating existing message broker workloads to AWS with minimal code changes. SQS and SNS are AWS-native alternatives for new applications."
+    explanation: "Amazon MQ is a managed message broker service for Apache ActiveMQ and RabbitMQ. It is designed for migrating existing message broker workloads to AWS with minimal code changes. SQS and SNS are AWS-native alternatives for new applications.",
+    optionExplanations: [
+      "Amazon SQS is AWS-native message queuing — it uses its own API, not Apache ActiveMQ or RabbitMQ protocols, so existing apps would require code rewrites to migrate.",
+      "Amazon SNS is an AWS-native pub/sub notification service — it does not support ActiveMQ or RabbitMQ protocols.",
+      "Amazon Kinesis is for real-time data streaming — it is not a message broker compatible with ActiveMQ or RabbitMQ.",
+      "Correct — Amazon MQ is the managed message broker service supporting Apache ActiveMQ and RabbitMQ, enabling migration of existing message broker workloads with minimal code changes."
+    ]
   },
 
   // ────────────────────────────────────────────────────────────────
