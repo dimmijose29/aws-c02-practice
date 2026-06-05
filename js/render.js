@@ -180,10 +180,11 @@ function updatePracticeScore() {
     if (JSON.stringify(userSorted) === JSON.stringify(correctIdxs)) correct++;
   });
 
-  const pct = total > 0 ? Math.round((correct / total) * 100) : 0;
+  const totalQuestions = state.questions.length;
+  const pct = totalQuestions > 0 ? Math.round((correct / totalQuestions) * 100) : 0;
   const color = pct >= 70 ? 'var(--correct)' : pct >= 50 ? 'var(--flagged)' : 'var(--incorrect)';
 
-  document.getElementById('ps-fraction').textContent = `${correct} / ${total}`;
+  document.getElementById('ps-fraction').textContent = `${correct} / ${totalQuestions}`;
   document.getElementById('ps-pct').textContent      = `${pct}%`;
   document.getElementById('ps-pct').style.color      = total > 0 ? color : 'var(--text-sec)';
   document.getElementById('ps-bar-fill').style.width  = `${pct}%`;
