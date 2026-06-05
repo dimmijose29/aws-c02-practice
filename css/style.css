@@ -1141,6 +1141,96 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
 /* Grid revealed state (practice mode) */
 .grid-btn.gb-revealed { background: #7B68EE; color: #fff; border-color: #7B68EE; }
 
+/* ===== PRACTICE LIVE SCORE BAR ===== */
+.practice-score-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 8px 24px;
+    font-size: 13px;
+}
+
+.ps-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-sec);
+    white-space: nowrap;
+}
+
+.ps-fraction {
+    font-weight: 700;
+    color: var(--navy);
+    white-space: nowrap;
+    min-width: 48px;
+}
+
+.ps-bar-wrap {
+    flex: 1;
+    height: 6px;
+    background: #E8E8E8;
+    border-radius: 3px;
+    overflow: hidden;
+    min-width: 60px;
+}
+
+.ps-bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width .4s ease, background .4s ease;
+    background: var(--border);
+}
+
+.ps-pct {
+    font-size: 14px;
+    font-weight: 800;
+    min-width: 40px;
+    text-align: right;
+    white-space: nowrap;
+    transition: color .4s;
+}
+
+/* ===== MOBILE NAV TOGGLE BUTTON ===== */
+.btn-nav-toggle {
+    display: none;
+    background: rgba(255,255,255,.1);
+    border: 1px solid rgba(255,255,255,.2);
+    color: #fff;
+    border-radius: 6px;
+    padding: 5px 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background .15s;
+}
+
+.btn-nav-toggle:hover { background: rgba(255,255,255,.2); }
+
+/* Sidebar close button (mobile only) */
+.nav-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.nav-title-row .nav-title { margin-bottom: 0; }
+
+.nav-close-btn {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text-sec);
+    font-size: 16px;
+    cursor: pointer;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.nav-close-btn:hover { background: var(--bg); }
+
 /* ===== SCROLLBAR ===== */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
@@ -1149,18 +1239,83 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
-    .quiz-body { flex-direction: column; height: auto; overflow: visible; }
-    .q-nav {
-        width: 100%;
-        border-right: none;
-        border-bottom: 1px solid var(--border);
-        max-height: 160px;
-    }
-    .q-main { padding: 20px 16px 40px; }
-    .question-card { padding: 20px 18px; }
-    .quiz-header { flex-wrap: wrap; padding: 10px 16px; }
-    .hdr-center { order: 3; flex-basis: 100%; }
+
+    /* --- Start screen --- */
+    .start-container { padding: 20px 16px 40px; }
+    .aws-logo-img { max-width: 160px; }
+    .start-title { font-size: 22px; }
+    .start-subtitle { font-size: 14px; margin-bottom: 28px; }
+    .mtt-btn { min-width: 140px; padding: 12px 16px; }
     .exam-modes { flex-direction: column; align-items: center; }
-    .mode-card { width: 100%; max-width: 360px; }
-    .score-card { padding: 24px 16px; }
+    .mode-card { width: 100%; max-width: 380px; }
+    .domains-overview { padding: 16px; }
+
+    /* --- Quiz header --- */
+    .quiz-header { padding: 8px 14px; gap: 8px; min-height: 52px; }
+    .hdr-logo { height: 30px; }
+    .hdr-center { flex: 1; min-width: 0; }
+    .progress-text { font-size: 11px; }
+    .timer-box { font-size: 13px; padding: 4px 8px; }
+    .btn-submit-exam { padding: 6px 12px; font-size: 12px; }
+    .btn-nav-toggle { display: flex; align-items: center; justify-content: center; }
+
+    /* --- Practice score bar --- */
+    .practice-score-bar { padding: 6px 14px; gap: 8px; }
+
+    /* --- Quiz body: sidebar as overlay drawer --- */
+    .quiz-body {
+        display: block;
+        height: calc(100vh - 52px);
+        overflow: hidden;
+        position: relative;
+    }
+
+    .q-nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 85%;
+        max-width: 320px;
+        height: 100%;
+        z-index: 300;
+        transform: translateX(-110%);
+        transition: transform .28s ease;
+        box-shadow: 4px 0 20px rgba(0,0,0,.18);
+        border-right: 1px solid var(--border);
+    }
+
+    .q-nav.nav-open { transform: translateX(0); }
+
+    .nav-close-btn { display: block; }
+
+    /* Smaller grid buttons on mobile */
+    .question-grid { grid-template-columns: repeat(6, 1fr); gap: 4px; }
+    .grid-btn { font-size: 10px; }
+
+    /* --- Main question area --- */
+    .q-main {
+        height: 100%;
+        overflow-y: auto;
+        padding: 16px 14px 80px;
+    }
+
+    .question-card { padding: 18px 16px; }
+
+    .q-text { font-size: 15px; line-height: 1.6; }
+    .option-item { padding: 12px 14px; }
+    .option-text { font-size: 13px; }
+
+    /* Practice mode: full width already, just adjust padding */
+    .practice-mode .q-main { padding: 16px 14px 80px; }
+
+    /* --- Results screen --- */
+    .results-container { padding: 28px 14px 60px; }
+    .score-card { padding: 20px 14px; }
+    .result-title { font-size: 22px; }
+    .stat-val { font-size: 22px; }
+    .score-pct { font-size: 24px; }
+    .rc-body { padding: 14px 14px; }
+
+    /* --- Modal --- */
+    .modal-box { padding: 24px 18px; }
 }

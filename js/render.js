@@ -73,6 +73,9 @@ function renderQuestion() {
     expBox.style.display = 'none';
   }
 
+  // Live score (practice mode only)
+  if (state.practiceMode) updatePracticeScore();
+
   // Navigation buttons
   const prevBtn = document.getElementById('prev-btn');
   const nextBtn = document.getElementById('next-btn');
@@ -155,6 +158,36 @@ function renderRevealedOptions(q, selected, list) {
     div.append(marker, content);
     list.appendChild(div);
   });
+}
+
+// ===== PRACTICE LIVE SCORE =====
+
+function updatePracticeScore() {
+  const bar      = document.getElementById('practice-score-bar');
+  if (!bar) return;
+
+  const revealed = [...state.revealed];
+  const total    = revealed.length;
+  let   correct  = 0;
+
+  revealed.forEach(id => {
+    const q = state.questions.find(q => q.id === id);
+    if (!q) return;
+    const userAnswers = state.answers[id] || [];
+    const correctIdxs = q.options.correctNew
+      .map((c, i) => c ? i : -1).filter(i => i >= 0).sort((a, b) => a - b);
+    const userSorted  = [...userAnswers].sort((a, b) => a - b);
+    if (JSON.stringify(userSorted) === JSON.stringify(correctIdxs)) correct++;
+  });
+
+  const pct = total > 0 ? Math.round((correct / total) * 100) : 0;
+  const color = pct >= 70 ? 'var(--correct)' : pct >= 50 ? 'var(--flagged)' : 'var(--incorrect)';
+
+  document.getElementById('ps-fraction').textContent = `${correct} / ${total}`;
+  document.getElementById('ps-pct').textContent      = `${pct}%`;
+  document.getElementById('ps-pct').style.color      = total > 0 ? color : 'var(--text-sec)';
+  document.getElementById('ps-bar-fill').style.width  = `${pct}%`;
+  document.getElementById('ps-bar-fill').style.background = total > 0 ? color : 'var(--border)';
 }
 
 // ===== QUESTION GRID =====

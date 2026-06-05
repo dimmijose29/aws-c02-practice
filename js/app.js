@@ -48,6 +48,10 @@ function startQuiz(mode) {
   buildGrid();
   renderQuestion();
 
+  // Show/hide practice score bar
+  const scoreBar = document.getElementById('practice-score-bar');
+  if (scoreBar) scoreBar.style.display = state.practiceMode ? 'flex' : 'none';
+
   if (!state.practiceMode) startTimer(submitExam);
 }
 
@@ -112,6 +116,8 @@ function nextQuestion() {
 function goToQuestion(idx) {
   state.current = idx;
   renderQuestion();
+  // Close sidebar on mobile after selection
+  document.getElementById('q-nav').classList.remove('nav-open');
 }
 
 // ===== SUBMIT & RESTART =====
@@ -146,6 +152,14 @@ document.querySelectorAll('.mtt-btn').forEach(btn => {
 // Start screen: mode cards
 document.querySelectorAll('.mode-card').forEach(card => {
   card.addEventListener('click', () => startQuiz(Number(card.dataset.mode)));
+});
+
+// Mobile sidebar toggle (exam mode only)
+document.getElementById('btn-nav-toggle').addEventListener('click', () => {
+  document.getElementById('q-nav').classList.toggle('nav-open');
+});
+document.getElementById('nav-close-btn').addEventListener('click', () => {
+  document.getElementById('q-nav').classList.remove('nav-open');
 });
 
 // Quiz screen controls
