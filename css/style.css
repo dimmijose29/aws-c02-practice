@@ -81,6 +81,7 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
     flex-direction: column;
     gap: 12px;
     margin-bottom: 0;
+    text-align: center;
 }
 
 .mode-stats-row .stats-panel-wrap {
@@ -1153,6 +1154,11 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
     color: var(--navy);
 }
 
+.stats-panel {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
 .stats-empty {
     font-size: 13px;
     color: var(--text-sec);
@@ -1228,6 +1234,72 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
     font-size: 13px;
     min-width: 36px;
     text-align: right;
+}
+
+.sr-clickable {
+    cursor: pointer;
+    border-radius: 6px;
+    padding: 4px 6px;
+    margin: 0 -6px;
+    transition: background .15s;
+}
+
+.sr-clickable:hover { background: var(--bg); }
+
+.sr-fraction {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text);
+    white-space: nowrap;
+    min-width: 40px;
+}
+
+.sr-chevron {
+    font-size: 11px;
+    color: var(--text-sec);
+    transition: transform .2s;
+    flex-shrink: 0;
+}
+
+.sr-accordion {
+    padding: 8px 6px 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.sr-domain-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+}
+
+.sr-domain-name {
+    color: var(--text-sec);
+    min-width: 90px;
+    font-size: 11px;
+}
+
+.sr-domain-bar-wrap {
+    flex: 1;
+    height: 5px;
+    background: #E8E8E8;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.sr-domain-bar {
+    height: 100%;
+    border-radius: 3px;
+}
+
+.sr-domain-score {
+    font-weight: 700;
+    font-size: 11px;
+    min-width: 80px;
+    text-align: right;
+    white-space: nowrap;
 }
 
 .btn-clear-stats {

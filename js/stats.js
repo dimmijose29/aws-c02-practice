@@ -79,27 +79,64 @@ function renderStatsPanel() {
     `<div class="stats-metric"><span class="sm-val">${sessions.length}</span><span class="sm-lbl">Sessions</span></div>`,
   ].join('');
 
-  // Recent sessions list
-  const MODE_LABEL = { 65: 'Full', 35: 'Short', 15: 'Flash' };
-  const recentHtml = sessions.slice(0, 5).map(s => {
+  // Sessions list with accordion
+  const MODE_LABEL  = { 65: 'Full', 35: 'Short', 15: 'Flash' };
+  const DOMAIN_SHORT = {
+    'Cloud Concepts':              'Cloud Concepts',
+    'Security & Compliance':       'Security',
+    'Cloud Technology & Services': 'Tech & Services',
+    'Billing, Pricing & Support':  'Billing',
+  };
+
+  const sessionsHtml = sessions.map((s, idx) => {
     const color    = s.score >= 70 ? 'var(--correct)' : s.score >= 50 ? 'var(--flagged)' : 'var(--incorrect)';
-    const date     = new Date(s.date).toLocaleDateString('it-IT', { day: '2-digit', month: 'short' });
+    const date     = new Date(s.date).toLocaleDateString('it-IT', { day: '2-digit', month: 'short', year: '2-digit' });
     const typeIcon = s.modeType === 'practice' ? '📖' : '🎯';
     const label    = MODE_LABEL[s.mode] || s.mode;
+
+    // Domain breakdown rows (accordion body)
+    const domainRows = Object.entries(s.domains || {}).map(([d, v]) => {
+      const dpct  = v.total > 0 ? Math.round((v.correct / v.total) * 100) : 0;
+      const dcolor = dpct >= 70 ? 'var(--correct)' : dpct >= 50 ? 'var(--flagged)' : 'var(--incorrect)';
+      return `
+        <div class="sr-domain-row">
+          <span class="sr-domain-name">${DOMAIN_SHORT[d] || d}</span>
+          <div class="sr-domain-bar-wrap"><div class="sr-domain-bar" style="width:${dpct}%;background:${dcolor}"></div></div>
+          <span class="sr-domain-score" style="color:${dcolor}">${v.correct}/${v.total} · ${dpct}%</span>
+        </div>`;
+    }).join('');
+
     return `
-      <div class="stats-row">
-        <span class="sr-date">${date}</span>
-        <span class="sr-mode">${typeIcon} ${label}</span>
-        <div class="sr-bar-wrap"><div class="sr-bar-fill" style="width:${s.score}%;background:${color}"></div></div>
-        <span class="sr-score" style="color:${color}">${s.score}%</span>
+      <div class="stats-session" data-idx="${idx}">
+        <div class="stats-row sr-clickable">
+          <span class="sr-date">${date}</span>
+          <span class="sr-mode">${typeIcon} ${label}</span>
+          <span class="sr-fraction">${s.correct}/${s.total}</span>
+          <div class="sr-bar-wrap"><div class="sr-bar-fill" style="width:${s.score}%;background:${color}"></div></div>
+          <span class="sr-score" style="color:${color}">${s.score}%</span>
+          <span class="sr-chevron">▸</span>
+        </div>
+        <div class="sr-accordion" style="display:none">${domainRows}</div>
       </div>`;
   }).join('');
 
   el.innerHTML = `
     <div class="stats-summary">${metricsHtml}</div>
-    <div class="stats-recent">${recentHtml}</div>
+    <div class="stats-recent">${sessionsHtml}</div>
     <button class="btn-clear-stats" id="btn-clear-stats">Clear history</button>
   `;
+
+  // Accordion toggle
+  el.querySelectorAll('.sr-clickable').forEach(row => {
+    row.addEventListener('click', () => {
+      const session   = row.closest('.stats-session');
+      const accordion = session.querySelector('.sr-accordion');
+      const chevron   = row.querySelector('.sr-chevron');
+      const isOpen    = accordion.style.display !== 'none';
+      accordion.style.display = isOpen ? 'none' : 'block';
+      chevron.style.transform = isOpen ? '' : 'rotate(90deg)';
+    });
+  });
 
   document.getElementById('btn-clear-stats').addEventListener('click', () => {
     if (confirm('Clear all session history?')) { clearStats(); renderStatsPanel(); }
