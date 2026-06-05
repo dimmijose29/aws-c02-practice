@@ -66,14 +66,9 @@ function renderQuestion() {
     renderNormalOptions(q, selected, list);
   }
 
-  // Inline explanation box (practice mode only)
+  // Inline explanation box (practice mode only) — hidden, per-option explanations now cover this
   const expBox = document.getElementById('practice-explanation');
-  if (isRevealed) {
-    expBox.innerHTML = `<strong>Correct answer:</strong> ${esc(q.explanation)}`;
-    expBox.style.display = 'block';
-  } else {
-    expBox.style.display = 'none';
-  }
+  if (expBox) expBox.style.display = 'none';
 
   // Live score (practice mode only)
   if (state.practiceMode) updatePracticeScore();

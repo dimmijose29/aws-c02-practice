@@ -164,7 +164,6 @@ function renderAnswersReview() {
         <div class="rc-body">
           <div class="rc-question">${esc(q.question)}</div>
           <div class="rc-options">${optionsHtml}</div>
-          <div class="rc-explanation"><strong>Correct answer:</strong> ${esc(q.explanation)}</div>
         </div>
       </div>`;
   });
