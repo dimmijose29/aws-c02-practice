@@ -70,13 +70,17 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
 .mode-stats-row {
     display: flex;
     gap: 20px;
-    align-items: flex-start;
+    align-items: stretch;
     margin-bottom: 28px;
     text-align: left;
 }
 
 .mode-stats-row .mode-type-toggle {
     flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 0;
 }
 
 .mode-stats-row .stats-panel-wrap {
@@ -85,18 +89,19 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
     min-width: 0;
 }
 
-/* Mode type toggle (Exam / Practice) */
+/* Mode type toggle (Exam / Practice) — standalone (not in row) */
 .mode-type-toggle {
     display: flex;
-    flex-direction: column;
     gap: 12px;
-    margin-bottom: 0;
+    justify-content: center;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
 }
 
 .mtt-btn {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     gap: 4px;
     padding: 14px 20px;
     border-radius: 10px;
@@ -105,6 +110,7 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
     cursor: pointer;
     transition: border-color .2s, background .2s, box-shadow .2s;
     width: 220px;
+    text-align: center;
 }
 
 .mtt-btn:hover { border-color: var(--orange); }
