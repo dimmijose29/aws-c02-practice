@@ -24,8 +24,10 @@ function renderQuestion() {
   const isRevealed = state.practiceMode && state.revealed.has(q.id);
 
   // Header progress
-  document.getElementById('progress-text').textContent =
-    `Question ${state.current + 1} of ${total}`;
+  const isMobile = window.innerWidth <= 768;
+  document.getElementById('progress-text').textContent = isMobile
+    ? `${state.current + 1} / ${total}`
+    : `Question ${state.current + 1} of ${total}`;
   document.getElementById('progress-fill').style.width =
     `${((state.current + 1) / total) * 100}%`;
 
