@@ -17,7 +17,7 @@ function sortedIndices(boolArray) {
 
 // ===== SCORING =====
 
-function calculateResults() {
+function computeScore() {
   let correct = 0, incorrect = 0, skipped = 0;
   const domainMap = {};
 
@@ -40,9 +40,29 @@ function calculateResults() {
     }
   });
 
-  const total  = state.questions.length;
-  const pct    = Math.round((correct / total) * 100);
+  const total = state.questions.length;
+  const score = Math.round((correct / total) * 100);
+  return { correct, incorrect, skipped, total, score, domainMap };
+}
+
+function calculateResults() {
+  const { correct, incorrect, skipped, total, score, domainMap } = computeScore();
+  const pct    = score;
   const passed = pct >= 70;
+
+  // Save session to stats
+  saveSession({
+    date:     new Date().toISOString(),
+    mode:     state.mode,
+    modeType: state.practiceMode ? 'practice' : 'exam',
+    score:    pct,
+    correct,
+    total,
+    domains:  domainMap,
+  });
+
+  // Refresh stats panel on start screen
+  renderStatsPanel();
 
   // Hero section
   document.getElementById('result-badge').textContent    = passed ? '🎉' : '📚';

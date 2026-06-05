@@ -32,6 +32,17 @@
             </button>
         </div>
 
+        <!-- Domain filter -->
+        <div class="domain-filter-wrap">
+            <p class="df-label">Filter by domain</p>
+            <div id="domain-filter" class="domain-filter">
+                <button class="df-pill df-pill-active" data-domain="Cloud Concepts">☁️ Cloud Concepts</button>
+                <button class="df-pill df-pill-active" data-domain="Security &amp; Compliance">🔒 Security &amp; Compliance</button>
+                <button class="df-pill df-pill-active" data-domain="Cloud Technology &amp; Services">⚙️ Tech &amp; Services</button>
+                <button class="df-pill df-pill-active" data-domain="Billing, Pricing &amp; Support">💰 Billing &amp; Pricing</button>
+            </div>
+        </div>
+
         <div class="exam-modes">
             <div class="mode-card" data-mode="15">
                 <div class="mode-header">
@@ -102,6 +113,30 @@
         </div>
 
         <p class="passing-note">Passing score: 700 / 1000 (≈ 70%)</p>
+
+        <!-- Stats panel -->
+        <div class="stats-panel-wrap">
+            <div class="stats-panel-header">
+                <h3 class="stats-panel-title">📊 Your History</h3>
+            </div>
+            <div id="stats-panel" class="stats-panel"></div>
+        </div>
+
+        <!-- Cheat sheet button -->
+        <button id="btn-cheatsheet" class="btn-cheatsheet">📋 Open Study Cheat Sheet</button>
+
+    </div>
+</div>
+
+<!-- ======================== CHEAT SHEET SCREEN ======================== -->
+<div id="cheatsheet-screen" class="screen">
+    <div class="cs-container">
+        <div class="cs-header">
+            <button id="btn-cs-back" class="btn-cs-back">&#8592; Back to Home</button>
+            <h1 class="cs-title">CLF-C02 Study Cheat Sheet</h1>
+        </div>
+        <div id="cs-tabs" class="cs-tabs"></div>
+        <div id="cs-content" class="cs-content"></div>
     </div>
 </div>
 
@@ -257,6 +292,8 @@
 <script src="js/state.js"></script>
 <script src="js/timer.js"></script>
 <script src="js/render.js"></script>
+<script src="js/stats.js"></script>
+<script src="js/cheatsheet.js"></script>
 <script src="js/results.js"></script>
 <script src="js/app.js"></script>
 </body>

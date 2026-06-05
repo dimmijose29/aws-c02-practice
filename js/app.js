@@ -1,6 +1,14 @@
-// ===== MODE TYPE SELECTION (start screen) =====
+// ===== MODE TYPE & DOMAIN SELECTION (start screen) =====
 
 let selectedModeType = 'exam'; // 'exam' | 'practice'
+
+const ALL_DOMAINS = [
+  'Cloud Concepts',
+  'Security & Compliance',
+  'Cloud Technology & Services',
+  'Billing, Pricing & Support',
+];
+let selectedDomains = new Set(ALL_DOMAINS); // all selected by default
 
 // ===== SHUFFLE =====
 
@@ -28,7 +36,11 @@ function startQuiz(mode) {
   state.flagged      = new Set();
   state.current      = 0;
 
-  const pool = [...QUESTION_BANK];
+  const filtered = selectedDomains.size === ALL_DOMAINS.length
+    ? [...QUESTION_BANK]
+    : QUESTION_BANK.filter(q => selectedDomains.has(q.domain));
+
+  const pool = filtered;
   for (let i = pool.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [pool[i], pool[j]] = [pool[j], pool[i]];
@@ -148,6 +160,37 @@ document.querySelectorAll('.mtt-btn').forEach(btn => {
     btn.classList.add('mtt-active');
   });
 });
+
+// Domain filter pills
+document.getElementById('domain-filter').addEventListener('click', e => {
+  const pill = e.target.closest('.df-pill');
+  if (!pill) return;
+  const domain = pill.dataset.domain;
+
+  if (selectedDomains.has(domain)) {
+    // Don't allow deselecting all
+    if (selectedDomains.size > 1) selectedDomains.delete(domain);
+  } else {
+    selectedDomains.add(domain);
+  }
+
+  document.querySelectorAll('.df-pill').forEach(p => {
+    p.classList.toggle('df-pill-active', selectedDomains.has(p.dataset.domain));
+  });
+});
+
+// Cheat sheet navigation
+document.getElementById('btn-cheatsheet').addEventListener('click', () => {
+  activeDomain = 0;
+  renderCheatsheet();
+  showScreen('cheatsheet-screen');
+});
+document.getElementById('btn-cs-back').addEventListener('click', () => {
+  showScreen('start-screen');
+});
+
+// Init stats panel and cheat sheet on load
+renderStatsPanel();
 
 // Start screen: mode cards
 document.querySelectorAll('.mode-card').forEach(card => {
