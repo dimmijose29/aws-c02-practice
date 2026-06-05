@@ -1328,7 +1328,7 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
     font-weight: 700;
     cursor: pointer;
     transition: all .15s;
-    margin-bottom: 8px;
+    margin-bottom: 20px;
 }
 
 .btn-cheatsheet:hover { background: var(--navy); color: #fff; }
