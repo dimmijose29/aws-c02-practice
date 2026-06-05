@@ -154,6 +154,9 @@ document.querySelectorAll('.mode-card').forEach(card => {
   card.addEventListener('click', () => startQuiz(Number(card.dataset.mode)));
 });
 
+// Back to home button
+document.getElementById('btn-home').addEventListener('click', restartQuiz);
+
 // Mobile sidebar toggle (exam mode only)
 document.getElementById('btn-nav-toggle').addEventListener('click', () => {
   document.getElementById('q-nav').classList.toggle('nav-open');

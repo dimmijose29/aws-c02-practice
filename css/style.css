@@ -277,6 +277,27 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
     flex-wrap: wrap;
 }
 
+.hdr-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-home {
+    background: rgba(255,255,255,.1);
+    border: 1px solid rgba(255,255,255,.2);
+    color: #fff;
+    border-radius: 6px;
+    padding: 5px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .15s;
+    white-space: nowrap;
+}
+
+.btn-home:hover { background: rgba(255,255,255,.2); }
+
 .hdr-left .hdr-brand {
     font-size: 15px;
     font-weight: 700;
