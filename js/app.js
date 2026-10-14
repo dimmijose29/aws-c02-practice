@@ -11,6 +11,7 @@ function applyCert() {
   selectedDomains = new Set(cert.domains.map(d => d.name));
 
   document.title = `${cert.name} — Practice Exam`;
+  document.getElementById('favicon').href = cert.favicon;
   ['start-logo', 'hdr-logo'].forEach(id => {
     const img = document.getElementById(id);
     img.style.visibility = '';
