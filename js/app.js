@@ -448,6 +448,19 @@ document.querySelector('.modal-actions .btn-danger').addEventListener('click', s
 // Results screen
 document.querySelector('.results-footer .btn-primary').addEventListener('click', restartQuiz);
 
+// Results review filters — status chips and domain select (delegated: rebuilt on every result)
+document.getElementById('review-filters').addEventListener('click', e => {
+  const chip = e.target.closest('.rf-chip');
+  if (!chip) return;
+  reviewFilter.status = chip.dataset.status;
+  applyReviewFilter();
+});
+document.getElementById('review-filters').addEventListener('change', e => {
+  if (!e.target.matches('.rf-domain')) return;
+  reviewFilter.domain = e.target.value;
+  applyReviewFilter();
+});
+
 // ===== KEYBOARD SHORTCUTS =====
 
 document.addEventListener('keydown', e => {

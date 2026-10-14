@@ -99,19 +99,25 @@ function calculateResults() {
 
 // ===== ANSWERS REVIEW =====
 
+let reviewFilter = { status: 'all', domain: 'all' };
+
 function renderAnswersReview() {
   const container = document.getElementById('answers-review');
   container.innerHTML = '';
+  reviewFilter = { status: 'all', domain: 'all' };
+  const counts = { all: 0, incorrect: 0, skipped: 0, correct: 0, flagged: 0 };
 
   state.questions.forEach((q, idx) => {
     const userAnswers = state.answers[q.id] || [];
     const isSkipped   = userAnswers.length === 0;
     const isCorrect   = !isSkipped && isAnswerCorrect(q);
+    const isFlagged   = state.flagged.has(q.id);
 
     let statusClass, statusText;
     if (isSkipped)      { statusClass = 'skipped';   statusText = 'Not Answered'; }
     else if (isCorrect) { statusClass = 'correct';   statusText = '✓ Correct'; }
     else                { statusClass = 'incorrect'; statusText = '✗ Incorrect'; }
+    counts.all++; counts[statusClass]++; if (isFlagged) counts.flagged++;
 
     // Build options with color coding
     let optionsHtml = '';
@@ -139,10 +145,13 @@ function renderAnswersReview() {
     });
 
     container.innerHTML += `
-      <div class="review-card">
+      <div class="review-card" data-status="${statusClass}" data-flagged="${isFlagged}" data-domain="${esc(q.domain)}">
         <div class="rc-header">
           <span class="rc-num">Question ${idx + 1} · ${esc(q.domain)}</span>
-          <span class="rc-status ${statusClass}">${statusText}</span>
+          <span class="rc-tags">
+            ${isFlagged ? '<span class="rc-flag">⚑ Flagged</span>' : ''}
+            <span class="rc-status ${statusClass}">${statusText}</span>
+          </span>
         </div>
         <div class="rc-body">
           <div class="rc-question">${esc(q.question)}</div>
@@ -150,4 +159,44 @@ function renderAnswersReview() {
         </div>
       </div>`;
   });
+
+  renderReviewFilters(counts);
 }
+
+// ===== REVIEW FILTERS =====
+
+function renderReviewFilters(counts) {
+  const chips = [
+    ['all', 'All'], ['incorrect', 'Incorrect'], ['skipped', 'Unanswered'], ['correct', 'Correct'],
+    ...(counts.flagged ? [['flagged', '⚑ Flagged']] : []),
+  ].map(([key, label]) =>
+    `<button class="rf-chip${reviewFilter.status === key ? ' rf-chip-active' : ''}" data-status="${key}">${label} <span class="rf-count">${counts[key]}</span></button>`
+  ).join('');
+
+  const domains = [...new Set(state.questions.map(q => q.domain))];
+  const options = ['<option value="all">All domains</option>', ...domains.map(d =>
+    `<option value="${esc(d)}"${reviewFilter.domain === d ? ' selected' : ''}>${esc(d)}</option>`)].join('');
+
+  document.getElementById('review-filters').innerHTML = `
+    <div class="rf-chips">${chips}</div>
+    <select class="rf-domain" aria-label="Filter by domain">${options}</select>
+    <p class="rf-showing"></p>`;
+  applyReviewFilter();
+}
+
+function applyReviewFilter() {
+  const cards = document.querySelectorAll('#answers-review .review-card');
+  let shown = 0;
+  cards.forEach(card => {
+    const statusOk = reviewFilter.status === 'all' ||
+      (reviewFilter.status === 'flagged' ? card.dataset.flagged === 'true' : card.dataset.status === reviewFilter.status);
+    const domainOk = reviewFilter.domain === 'all' || card.dataset.domain === reviewFilter.domain;
+    card.style.display = statusOk && domainOk ? '' : 'none';
+    if (statusOk && domainOk) shown++;
+  });
+  document.querySelectorAll('.rf-chip').forEach(c =>
+    c.classList.toggle('rf-chip-active', c.dataset.status === reviewFilter.status));
+  document.querySelector('.rf-showing').textContent =
+    shown === cards.length ? '' : shown ? `Showing ${shown} of ${cards.length} questions` : 'No questions match these filters.';
+}
+
