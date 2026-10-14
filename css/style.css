@@ -53,6 +53,48 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
     height: auto;
 }
 
+/* Certification switch */
+.cert-switch {
+    display: inline-flex;
+    gap: 4px;
+    padding: 4px;
+    margin-bottom: 20px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+}
+
+.cert-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 8px 18px;
+    border: none;
+    border-radius: 9px;
+    background: none;
+    cursor: pointer;
+    transition: background .2s;
+}
+
+.cert-btn:hover { background: var(--bg); }
+
+.cert-btn.cert-btn-active {
+    background: #FFF8EE;
+    box-shadow: inset 0 0 0 2px var(--orange);
+}
+
+.cert-btn-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--navy);
+}
+
+.cert-btn-code {
+    font-size: 11px;
+    color: var(--text-sec);
+}
+
 .start-title {
     font-size: 30px;
     font-weight: 800;

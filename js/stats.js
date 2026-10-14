@@ -1,6 +1,5 @@
 // ===== STATS — localStorage persistence =====
 
-const STATS_KEY     = 'aws_clf_stats_v1';
 const MAX_SESSIONS  = 50;
 const MAX_MISSED    = 15;
 
@@ -10,18 +9,18 @@ function saveSession(session) {
   const sessions = loadSessions();
   sessions.unshift(session);
   if (sessions.length > MAX_SESSIONS) sessions.pop();
-  try { localStorage.setItem(STATS_KEY, JSON.stringify(sessions)); } catch(e) {}
+  try { localStorage.setItem(cert.statsKey, JSON.stringify(sessions)); } catch(e) {}
 }
 
 function loadSessions() {
   try {
-    const raw = localStorage.getItem(STATS_KEY);
+    const raw = localStorage.getItem(cert.statsKey);
     return raw ? JSON.parse(raw) : [];
   } catch(e) { return []; }
 }
 
 function clearStats() {
-  localStorage.removeItem(STATS_KEY);
+  localStorage.removeItem(cert.statsKey);
 }
 
 // ===== STATS PANEL RENDERING =====
@@ -67,37 +66,19 @@ function renderStatsPanel() {
     }
   });
 
-  // Shorten domain name for display
-  const shortDomain = d => {
-    if (!d) return '';
-    const map = {
-      'Cloud Concepts':                 'Cloud Concepts',
-      'Security & Compliance':          'Security',
-      'Cloud Technology & Services':    'Tech & Services',
-      'Billing, Pricing & Support':     'Billing',
-    };
-    return map[d] || d;
-  };
-
   // Summary metrics
   const metricsHtml = [
     avg  !== null ? `<div class="stats-metric"><span class="sm-val">${avg}%</span><span class="sm-lbl">Avg Score</span></div>`  : '',
     best !== null ? `<div class="stats-metric"><span class="sm-val">${best}%</span><span class="sm-lbl">Best Score</span></div>` : '',
-    weakest       ? `<div class="stats-metric"><span class="sm-val sm-val-weak">${weakestPct}%</span><span class="sm-lbl">Weakest: ${shortDomain(weakest)}</span></div>` : '',
+    weakest       ? `<div class="stats-metric"><span class="sm-val sm-val-weak">${weakestPct}%</span><span class="sm-lbl">Weakest: ${esc(domainShort(weakest))}</span></div>` : '',
     `<div class="stats-metric"><span class="sm-val">${sessions.length}</span><span class="sm-lbl">Sessions</span></div>`,
   ].join('');
 
   // Sessions list with accordion
   const MODE_LABEL  = { 65: 'Full', 35: 'Short', 15: 'Flash' };
-  const DOMAIN_SHORT = {
-    'Cloud Concepts':              'Cloud Concepts',
-    'Security & Compliance':       'Security',
-    'Cloud Technology & Services': 'Tech & Services',
-    'Billing, Pricing & Support':  'Billing',
-  };
 
   const sessionsHtml = sessions.map((s, idx) => {
-    const color    = s.score >= 70 ? 'var(--correct)' : s.score >= 50 ? 'var(--flagged)' : 'var(--incorrect)';
+    const color    = scoreColor(s.score);
     const date     = new Date(s.date).toLocaleDateString('it-IT', { day: '2-digit', month: 'short', year: '2-digit' });
     const typeIcon = s.modeType === 'practice' ? '📖' : '🎯';
     const label    = MODE_LABEL[s.mode] || s.mode;
@@ -105,10 +86,10 @@ function renderStatsPanel() {
     // Domain breakdown rows (accordion body)
     const domainRows = Object.entries(s.domains || {}).map(([d, v]) => {
       const dpct  = v.total > 0 ? Math.round((v.correct / v.total) * 100) : 0;
-      const dcolor = dpct >= 70 ? 'var(--correct)' : dpct >= 50 ? 'var(--flagged)' : 'var(--incorrect)';
+      const dcolor = scoreColor(dpct);
       return `
         <div class="sr-domain-row">
-          <span class="sr-domain-name">${DOMAIN_SHORT[d] || d}</span>
+          <span class="sr-domain-name">${esc(domainShort(d))}</span>
           <div class="sr-domain-bar-wrap"><div class="sr-domain-bar" style="width:${dpct}%;background:${dcolor}"></div></div>
           <span class="sr-domain-score" style="color:${dcolor}">${v.correct}/${v.total} · ${dpct}%</span>
         </div>`;
@@ -164,7 +145,7 @@ function aggregateMissed(sessions) {
 }
 
 function renderMissedQuestions(el, sessions) {
-  const byId   = new Map(QUESTION_BANK.map(q => [q.id, q]));
+  const byId   = new Map(cert.questions().map(q => [q.id, q]));
   const missed = aggregateMissed(sessions).filter(m => byId.has(m.id)).slice(0, MAX_MISSED);
 
   if (missed.length === 0) {

@@ -341,7 +341,8 @@ function renderCheatsheet() {
   if (!tabs || !content) return;
 
   // Build tabs
-  tabs.innerHTML = CHEATSHEET.map((d, i) => `
+  const sheet   = cert.cheatsheet();
+  tabs.innerHTML = sheet.map((d, i) => `
     <button class="cs-tab ${i === activeDomain ? 'cs-tab-active' : ''}"
             data-idx="${i}" style="${i === activeDomain ? `border-bottom-color:${d.color};color:${d.color}` : ''}">
       <span class="cs-tab-icon">${d.icon}</span>
@@ -357,7 +358,7 @@ function renderCheatsheet() {
   });
 
   // Build content
-  const d = CHEATSHEET[activeDomain];
+  const d = sheet[activeDomain];
   const sectionsHtml = d.sections.map(s => `
     <div class="cs-section">
       <h3 class="cs-section-title">${s.title}</h3>

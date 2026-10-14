@@ -52,7 +52,7 @@ function computeScore() {
 function calculateResults() {
   const { correct, incorrect, skipped, total, score, domainMap, outcomes } = computeScore();
   const pct    = score;
-  const passed = pct >= 70;
+  const passed = pct >= cert.passPct;
 
   // Save session to stats
   saveSession({
@@ -75,7 +75,7 @@ function calculateResults() {
     ? 'Congratulations! You Passed!'
     : "Keep Studying — You'll Get There!";
   document.getElementById('result-subtitle').textContent = passed
-    ? `You scored ${pct}%, which meets the 70% passing threshold. Well done!`
+    ? `You scored ${pct}%, which meets the ${cert.passPct}% passing threshold. Well done!`
     : `You scored ${pct}%. Review the questions below and focus on your weaker domains.`;
 
   // Score stats
@@ -95,7 +95,7 @@ function calculateResults() {
   breakdown.innerHTML = '';
   Object.entries(domainMap).forEach(([domain, data]) => {
     const dpct  = data.total > 0 ? Math.round((data.correct / data.total) * 100) : 0;
-    const color = dpct >= 70 ? 'var(--correct)' : dpct >= 50 ? 'var(--orange)' : 'var(--incorrect)';
+    const color = dpct >= cert.passPct ? 'var(--correct)' : dpct >= 50 ? 'var(--orange)' : 'var(--incorrect)';
     breakdown.innerHTML += `
       <div class="domain-row">
         <div class="domain-row-header">

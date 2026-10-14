@@ -2,13 +2,65 @@
 
 let selectedModeType = 'exam'; // 'exam' | 'practice'
 
-const ALL_DOMAINS = [
-  'Cloud Concepts',
-  'Security & Compliance',
-  'Cloud Technology & Services',
-  'Billing, Pricing & Support',
-];
-let selectedDomains = new Set(ALL_DOMAINS); // all selected by default
+let selectedDomains = new Set(); // filled by applyCert() — all domains selected by default
+
+// ===== CERTIFICATION =====
+
+// Rebuild every cert-specific part of the start screen for the active `cert`
+function applyCert() {
+  selectedDomains = new Set(cert.domains.map(d => d.name));
+
+  document.title = `${cert.name} — Practice Exam`;
+  ['start-logo', 'hdr-logo'].forEach(id => {
+    const img = document.getElementById(id);
+    img.src = cert.logo;
+    img.alt = cert.name;
+  });
+  document.querySelectorAll('.cert-code').forEach(el => { el.textContent = cert.code; });
+  document.getElementById('cs-title').textContent = `${cert.code} Study Cheat Sheet`;
+  document.getElementById('btn-cheatsheet').style.display = cert.cheatsheet() ? '' : 'none';
+
+  document.getElementById('cert-switch').querySelectorAll('.cert-btn').forEach(b =>
+    b.classList.toggle('cert-btn-active', b.dataset.cert === cert.id));
+
+  document.getElementById('domains-grid').innerHTML = cert.domains.map(d => `
+    <div class="domain-pill">
+      <span class="d-pct">${d.weight}%</span>
+      <span class="d-name">${esc(d.name)}</span>
+    </div>`).join('');
+
+  document.getElementById('domain-filter').innerHTML = cert.domains.map(d =>
+    `<button class="df-pill df-pill-active" data-domain="${esc(d.name)}">${d.icon} ${esc(d.label)}</button>`
+  ).join('');
+
+  document.querySelectorAll('.mode-card').forEach(card => {
+    card.querySelector('.mode-t').textContent = `⏱ ${cert.minutes[card.dataset.mode]} min`;
+  });
+
+  const passText = `Passing score: ${cert.passScore} / 1000 (≈ ${cert.passPct}%)`;
+  document.getElementById('passing-note').textContent        = passText;
+  document.getElementById('passing-note-result').textContent = passText;
+
+  renderStatsPanel();
+}
+
+function selectCert(id) {
+  if (!CERTS[id]) return;
+  cert = CERTS[id];
+  try { localStorage.setItem(CERT_STORAGE_KEY, id); } catch (e) {}
+  applyCert();
+}
+
+// ?cert=<id> in the URL wins, then the last choice, then the first cert
+function initialCertId() {
+  const fromUrl = new URLSearchParams(location.search).get('cert');
+  if (CERTS[fromUrl]) return fromUrl;
+  try {
+    const saved = localStorage.getItem(CERT_STORAGE_KEY);
+    if (CERTS[saved]) return saved;
+  } catch (e) {}
+  return Object.keys(CERTS)[0];
+}
 
 // ===== SHUFFLE =====
 
@@ -36,9 +88,10 @@ function startQuiz(mode) {
   state.flagged      = new Set();
   state.current      = 0;
 
-  const filtered = selectedDomains.size === ALL_DOMAINS.length
-    ? [...QUESTION_BANK]
-    : QUESTION_BANK.filter(q => selectedDomains.has(q.domain));
+  const bank     = cert.questions();
+  const filtered = selectedDomains.size === cert.domains.length
+    ? [...bank]
+    : bank.filter(q => selectedDomains.has(q.domain));
 
   const pool = filtered;
   for (let i = pool.length - 1; i > 0; i--) {
@@ -51,7 +104,7 @@ function startQuiz(mode) {
     options: shuffleOptionsWithMapping(q)
   }));
   // Scale the time when the domain filter leaves fewer questions than the mode asks for
-  const baseSeconds = mode === 65 ? 90 * 60 : mode === 35 ? 50 * 60 : 20 * 60;
+  const baseSeconds = cert.minutes[mode] * 60;
   state.secondsLeft = Math.ceil((baseSeconds * state.questions.length / mode) / 60) * 60;
 
   // Apply/remove practice mode class (controls layout via CSS)
@@ -200,8 +253,24 @@ document.getElementById('stats-tabs').addEventListener('click', e => {
   renderStatsPanel();
 });
 
-// Init stats panel and cheat sheet on load
-renderStatsPanel();
+// Certification switch (only shown when more than one cert is available)
+const certSwitch = document.getElementById('cert-switch');
+if (Object.keys(CERTS).length > 1) {
+  certSwitch.innerHTML = Object.values(CERTS).map(c =>
+    `<button class="cert-btn" data-cert="${c.id}">
+       <span class="cert-btn-name">${esc(c.shortName)}</span>
+       <span class="cert-btn-code">${c.code}</span>
+     </button>`).join('');
+  certSwitch.style.display = '';
+}
+certSwitch.addEventListener('click', e => {
+  const btn = e.target.closest('.cert-btn');
+  if (btn) selectCert(btn.dataset.cert);
+});
+
+// Init start screen (domains, filter, timings, stats) for the initial cert
+cert = CERTS[initialCertId()];
+applyCert();
 
 // Start screen: mode cards
 document.querySelectorAll('.mode-card').forEach(card => {

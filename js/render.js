@@ -179,7 +179,7 @@ function updatePracticeScore() {
 
   const totalQuestions = state.questions.length;
   const pct = totalQuestions > 0 ? Math.round((correct / totalQuestions) * 100) : 0;
-  const color = pct >= 70 ? 'var(--correct)' : pct >= 50 ? 'var(--flagged)' : 'var(--incorrect)';
+  const color = scoreColor(pct);
 
   document.getElementById('ps-fraction').textContent = `${correct} / ${totalQuestions}`;
   document.getElementById('ps-pct').textContent      = `${pct}%`;

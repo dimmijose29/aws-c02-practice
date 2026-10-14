@@ -13,35 +13,21 @@
 <div id="start-screen" class="screen active">
     <div class="start-container">
         <div class="aws-logo-block">
-            <img src="img/logo.png" alt="AWS Certified Cloud Practitioner" class="aws-logo-img">
+            <img id="start-logo" src="img/logo.png" alt="AWS Certified Cloud Practitioner" class="aws-logo-img">
         </div>
 
+        <!-- Certification switch (built from CERTS, hidden when there is only one) -->
+        <div id="cert-switch" class="cert-switch" style="display:none;"></div>
+
         <h1 class="start-title">Practice Exam Simulator</h1>
-        <p class="start-subtitle">Realistic CLF-C02 practice questions — study smarter, pass faster.</p>
+        <p class="start-subtitle">Realistic <span class="cert-code">CLF-C02</span> practice questions — study smarter, pass faster.</p>
 
         <!-- Cheat sheet button -->
         <button id="btn-cheatsheet" class="btn-cheatsheet">📋 Open Study Cheat Sheet</button>
 
         <div class="domains-overview">
             <h3 class="domains-title">Exam Domains</h3>
-            <div class="domains-grid">
-                <div class="domain-pill">
-                    <span class="d-pct">24%</span>
-                    <span class="d-name">Cloud Concepts</span>
-                </div>
-                <div class="domain-pill">
-                    <span class="d-pct">30%</span>
-                    <span class="d-name">Security &amp; Compliance</span>
-                </div>
-                <div class="domain-pill">
-                    <span class="d-pct">34%</span>
-                    <span class="d-name">Cloud Technology &amp; Services</span>
-                </div>
-                <div class="domain-pill">
-                    <span class="d-pct">12%</span>
-                    <span class="d-name">Billing, Pricing &amp; Support</span>
-                </div>
-            </div>
+            <div id="domains-grid" class="domains-grid"></div>
         </div>
 
         <div class="mode-stats-row">
@@ -74,12 +60,7 @@
         <!-- Domain filter -->
         <div class="domain-filter-wrap">
             <p class="df-label">Filter by domain</p>
-            <div id="domain-filter" class="domain-filter">
-                <button class="df-pill df-pill-active" data-domain="Cloud Concepts">☁️ Cloud Concepts</button>
-                <button class="df-pill df-pill-active" data-domain="Security &amp; Compliance">🔒 Security &amp; Compliance</button>
-                <button class="df-pill df-pill-active" data-domain="Cloud Technology &amp; Services">⚙️ Tech &amp; Services</button>
-                <button class="df-pill df-pill-active" data-domain="Billing, Pricing &amp; Support">💰 Billing &amp; Pricing</button>
-            </div>
+            <div id="domain-filter" class="domain-filter"></div>
         </div>
 
         <div class="exam-modes">
@@ -92,7 +73,7 @@
                 <div class="mode-meta">
                     <span class="mode-q">15 Questions</span>
                     <span class="mode-sep">·</span>
-                    <span class="mode-t">⏱ 20 min</span>
+                    <span class="mode-t"></span>
                 </div>
                 <p class="mode-desc">Super quick round to test a specific area or warm up before studying.</p>
                 <button class="btn-mode">Start Quiz</button>
@@ -107,7 +88,7 @@
                 <div class="mode-meta">
                     <span class="mode-q">35 Questions</span>
                     <span class="mode-sep">·</span>
-                    <span class="mode-t">⏱ 50 min</span>
+                    <span class="mode-t"></span>
                 </div>
                 <p class="mode-desc">Quick assessment across all exam domains to identify weak areas.</p>
                 <button class="btn-mode">Start Practice</button>
@@ -122,14 +103,14 @@
                 <div class="mode-meta">
                     <span class="mode-q">65 Questions</span>
                     <span class="mode-sep">·</span>
-                    <span class="mode-t">⏱ 90 min</span>
+                    <span class="mode-t"></span>
                 </div>
-                <p class="mode-desc">Complete simulation of the official CLF-C02 exam experience.</p>
+                <p class="mode-desc">Complete simulation of the official <span class="cert-code">CLF-C02</span> exam experience.</p>
                 <button class="btn-mode btn-mode-featured">Start Exam</button>
             </div>
         </div>
 
-        <p class="passing-note">Passing score: 700 / 1000 (≈ 70%)</p>
+        <p id="passing-note" class="passing-note"></p>
 
     </div>
 </div>
@@ -139,7 +120,7 @@
     <div class="cs-container">
         <div class="cs-header">
             <button id="btn-cs-back" class="btn-cs-back">&#8592; Back to Home</button>
-            <h1 class="cs-title">CLF-C02 Study Cheat Sheet</h1>
+            <h1 id="cs-title" class="cs-title">CLF-C02 Study Cheat Sheet</h1>
         </div>
         <div id="cs-tabs" class="cs-tabs"></div>
         <div id="cs-content" class="cs-content"></div>
@@ -151,7 +132,7 @@
     <header class="quiz-header">
         <div class="hdr-left">
             <button class="btn-home" id="btn-home" title="Back to Home">&#8592; Home</button>
-            <img src="img/logo.png" alt="AWS Cloud Practitioner" class="hdr-logo">
+            <img id="hdr-logo" src="img/logo.png" alt="AWS Cloud Practitioner" class="hdr-logo">
         </div>
         <div class="hdr-center">
             <span id="progress-text" class="progress-text">Question 1 of 65</span>
@@ -275,7 +256,7 @@
                     <span class="stat-lbl">Unanswered</span>
                 </div>
             </div>
-            <div class="passing-note-result">Passing score: 700 / 1000 (≈ 70%)</div>
+            <div id="passing-note-result" class="passing-note-result"></div>
         </div>
 
         <div class="domain-results-section">
@@ -295,6 +276,7 @@
 </div>
 
 <script src="js/questions.js"></script>
+<script src="js/certs.js"></script>
 <script src="js/state.js"></script>
 <script src="js/timer.js"></script>
 <script src="js/render.js"></script>
