@@ -134,10 +134,7 @@ function startQuiz(mode) {
   state.flagged      = new Set();
   state.current      = 0;
 
-  state.questions = pickQuestions(mode).map(q => ({
-    ...q,
-    options: shuffleOptionsWithMapping(q)
-  }));
+  state.questions = pickQuestions(mode).map(q => buildRuntimeQuestion(q));
   // Scale the time when the domain filter leaves fewer questions than the mode asks for
   const baseSeconds = cert.minutes[mode] * 60;
   state.secondsLeft = Math.ceil((baseSeconds * state.questions.length / mode) / 60) * 60;
@@ -188,10 +185,7 @@ function resumeQuiz() {
   state.answers      = saved.answers;
   state.revealed     = new Set(saved.revealed);
   state.flagged      = new Set(saved.flagged);
-  state.questions    = saved.questions.map(({ id, order }) => {
-    const q = bank.get(id);
-    return { ...q, options: shuffleOptionsWithMapping(q, order) };
-  });
+  state.questions    = saved.questions.map(({ id, order }) => buildRuntimeQuestion(bank.get(id), order));
   openQuizScreen();
 }
 
@@ -213,6 +207,7 @@ function renderResumeBanner() {
 
 function selectOption(idx) {
   const q            = state.questions[state.current];
+  if (!isChoiceType(q)) return;
   const correctCount = q.options.correctNew.filter(Boolean).length;
   if (idx >= q.options.texts.length) return;
   let   selected     = state.answers[q.id] ? [...state.answers[q.id]] : [];
@@ -226,6 +221,35 @@ function selectOption(idx) {
   }
 
   state.answers[q.id] = selected;
+  update();
+}
+
+// ===== ORDERING & MATCHING ANSWERS =====
+
+// Move the item at `pos` one step up (-1) or down (+1)
+function moveOrderingItem(pos, dir) {
+  const q     = state.questions[state.current];
+  const order = [...currentOrder(q)];
+  const to    = pos + dir;
+  if (to < 0 || to >= order.length) return;
+  [order[pos], order[to]] = [order[to], order[pos]];
+  state.answers[q.id] = order;
+  update();
+}
+
+// Accept the order as displayed without moving anything
+function confirmOrdering() {
+  const q = state.questions[state.current];
+  state.answers[q.id] = [...currentOrder(q)];
+  update();
+}
+
+function setMatch(k, value) {
+  const q      = state.questions[state.current];
+  const answer = state.answers[q.id] ? [...state.answers[q.id]] : q.prompts.map(() => null);
+  answer[k] = value === '' ? null : Number(value);
+  if (answer.every(r => r === null)) delete state.answers[q.id];
+  else state.answers[q.id] = answer;
   update();
 }
 
@@ -417,6 +441,16 @@ document.getElementById('options-list').addEventListener('click', e => {
   selectOption(Number(item.dataset.idx));
 });
 
+// Ordering buttons and matching dropdowns (not available once revealed in practice mode)
+document.getElementById('options-list').addEventListener('click', e => {
+  const move = e.target.closest('.ord-btn');
+  if (move) { moveOrderingItem(Number(move.dataset.pos), Number(move.dataset.dir)); return; }
+  if (e.target.closest('.ord-confirm')) confirmOrdering();
+});
+document.getElementById('options-list').addEventListener('change', e => {
+  if (e.target.matches('.match-select')) setMatch(Number(e.target.dataset.k), e.target.value);
+});
+
 // Keyboard access to options: Tab to focus, Enter/Space to select
 document.getElementById('options-list').addEventListener('keydown', e => {
   if (e.key !== 'Enter' && e.key !== ' ') return;
@@ -467,6 +501,7 @@ document.addEventListener('keydown', e => {
   if (!document.getElementById('quiz-screen').classList.contains('active')) return;
   if (document.getElementById('review-modal').style.display !== 'none') return;
   if (e.metaKey || e.ctrlKey || e.altKey) return; // leave browser shortcuts (Cmd+C, Cmd+F…) alone
+  if (e.target.matches('select, input, textarea')) return; // arrows/letters belong to the form control
 
   if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { nextQuestion(); return; }
   if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp') {

@@ -1,12 +1,13 @@
 <div align="center">
   <img src="img/logo.png" alt="AWS Certified Cloud Practitioner" width="180"/>
   <img src="img/logo-saa.png" alt="AWS Certified Solutions Architect – Associate" width="180"/>
+  <img src="img/logo-aif.png" alt="AWS Certified AI Practitioner" width="180"/>
 
   # AWS Practice Exams
   
-  **Simulatore d'esame per le certificazioni AWS Cloud Practitioner (CLF-C02) e Solutions Architect – Associate (SAA-C03)**
+  **Simulatore d'esame per le certificazioni AWS Cloud Practitioner (CLF-C02), Solutions Architect – Associate (SAA-C03) e AI Practitioner (AIF-C01)**
 
-  ![Questions](https://img.shields.io/badge/questions-950-orange)
+  ![Questions](https://img.shields.io/badge/questions-1250-orange)
   ![Domains](https://img.shields.io/badge/domains-4-blue)
   ![No Backend](https://img.shields.io/badge/backend-none-green)
   ![License](https://img.shields.io/badge/license-MIT-lightgrey)
@@ -17,17 +18,17 @@
 
 ## Cosa è
 
-Un simulatore d'esame client-side per prepararsi alle certificazioni **AWS Certified Cloud Practitioner (CLF-C02)** e **AWS Certified Solutions Architect – Associate (SAA-C03)**. La certificazione si sceglie dal selettore in cima alla home (o con il link `?cert=saa`); domini, tempi, soglia e storico cambiano di conseguenza. Gira interamente nel browser — nessun backend, nessuna installazione, nessun account richiesto.
+Un simulatore d'esame client-side per prepararsi alle certificazioni **AWS Certified Cloud Practitioner (CLF-C02)**, **AWS Certified Solutions Architect – Associate (SAA-C03)** e **AWS Certified AI Practitioner (AIF-C01)**. La certificazione si sceglie dal selettore in cima alla home (o con i link `?cert=saa` / `?cert=aif`); domini, tempi, soglia e storico cambiano di conseguenza. Gira interamente nel browser — nessun backend, nessuna installazione, nessun account richiesto.
 
 ## Modalità d'esame
 
-| Modalità | Domande | Tempo CLF-C02 | Tempo SAA-C03 |
-|---|---|---|---|
-| ⚡ Flash Quiz | 15 | 20 min | 30 min |
-| 📝 Short Practice | 35 | 50 min | 70 min |
-| 🎯 Official Simulation | 65 | 90 min | 130 min |
+| Modalità | Domande | Tempo CLF-C02 | Tempo SAA-C03 | Tempo AIF-C01 |
+|---|---|---|---|---|
+| ⚡ Flash Quiz | 15 | 20 min | 30 min | 20 min |
+| 📝 Short Practice | 35 | 50 min | 70 min | 50 min |
+| 🎯 Official Simulation | 65 | 90 min | 130 min | 90 min |
 
-Ogni simulazione estrae le domande casualmente dalla bank, la cui composizione rispetta i pesi ufficiali dei domini. Soglia di superamento: 70% per CLF-C02, 72% per SAA-C03.
+Ogni simulazione estrae le domande casualmente dalla bank, la cui composizione rispetta i pesi ufficiali dei domini. Soglia di superamento: 70% per CLF-C02 e AIF-C01, 72% per SAA-C03. La AIF-C01 include anche domande di **ordinamento** (riordinare i passaggi con ↑ ↓) e di **abbinamento** (associare ogni voce alla risposta giusta), come l'esame reale.
 
 ## Domini e distribuzione
 
@@ -51,9 +52,20 @@ Ogni simulazione estrae le domande casualmente dalla bank, la cui composizione r
 | Design Cost-Optimized Architectures | 20% | 90 |
 | **Totale** | **100%** | **450** |
 
+**AIF-C01**
+
+| Dominio | Peso ufficiale | Domande nel bank |
+|---|---|---|
+| Fundamentals of AI and ML | 20% | 60 |
+| Fundamentals of GenAI | 24% | 72 |
+| Applications of Foundation Models | 28% | 84 |
+| Guidelines for Responsible AI | 14% | 42 |
+| Security, Compliance, and Governance for AI Solutions | 14% | 42 |
+| **Totale** | **100%** | **300** |
+
 ## Funzionalità
 
-- ✅ 950 domande originali (500 CLF-C02 + 450 SAA-C03) con spiegazione dettagliata per ogni opzione
+- ✅ 1250 domande originali (500 CLF-C02 + 450 SAA-C03 + 300 AIF-C01) con spiegazione dettagliata per ogni opzione
 - ✅ Le nuove simulazioni danno la precedenza alle domande non ancora viste
 - ✅ Esame in corso salvato: si riprende dopo un ricaricamento o una chiusura della scheda
 - ✅ Andamento della preparazione (grafico del punteggio e variazione per dominio)
@@ -64,7 +76,7 @@ Ogni simulazione estrae le domande casualmente dalla bank, la cui composizione r
 - ✅ Griglia di navigazione laterale con stato per ogni domanda
 - ✅ Possibilità di segnare le domande con flag per rivederle
 - ✅ Schermata risultati con punteggio, breakdown per dominio e revisione di tutte le risposte
-- ✅ Soglia di superamento come l'esame reale (70% CLF-C02, 72% SAA-C03)
+- ✅ Soglia di superamento come l'esame reale (70% CLF-C02 e AIF-C01, 72% SAA-C03)
 - ✅ Scorciatoie da tastiera (frecce, F per flag, 1–5 / A–E per rispondere)
 - ✅ Funziona offline e via `file://` — nessun server necessario
 
@@ -100,6 +112,8 @@ aws-c02-practice/
 ├── js/
 │   ├── questions.js    # Bank CLF-C02 (500 domande)
 │   ├── questions-saa.js # Bank SAA-C03 (450 domande)
+│   ├── questions-aif.js # Bank AIF-C01 (300 domande)
+│   ├── question-types.js # Tipi di domanda: singola, multipla, ordinamento, abbinamento
 │   ├── session.js      # Quiz in corso e domande già viste (localStorage)
 │   ├── certs.js        # Configurazione per certificazione
 │   ├── state.js        # Stato globale dell'applicazione
@@ -112,6 +126,7 @@ aws-c02-practice/
 └── img/
     ├── logo.png
     ├── logo-saa.png
+    ├── logo-aif.png
     └── favicon.png
 ```
 

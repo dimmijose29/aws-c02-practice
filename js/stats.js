@@ -159,7 +159,7 @@ function renderMissedQuestions(el, sessions) {
 
   el.innerHTML = `<div class="stats-recent">${missed.map(m => {
     const q       = byId.get(m.id);
-    const answers = q.correct.map(i => `<li>${esc(q.options[i])}</li>`).join('');
+
     return `
       <div class="stats-session">
         <div class="stats-row sr-clickable">
@@ -170,7 +170,7 @@ function renderMissedQuestions(el, sessions) {
         <div class="sr-accordion mq-detail" style="display:none">
           <span class="mq-domain">${esc(q.domain)}</span>
           <p class="mq-question">${esc(q.question)}</p>
-          <ul class="mq-answers">${answers}</ul>
+          ${correctAnswerHtml(q)}
           <p class="mq-exp">${esc(q.explanation || '')}</p>
         </div>
       </div>`;

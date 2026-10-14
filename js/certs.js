@@ -44,6 +44,27 @@ const CERTS = {
     questions:  () => SAA_QUESTION_BANK,
     cheatsheet: () => SAA_CHEATSHEET,
   },
+  aif: {
+    id:        'aif',
+    code:      'AIF-C01',
+    name:      'AWS Certified AI Practitioner',
+    shortName: 'AI Practitioner',
+    logo:      'img/logo-aif.png',
+    favicon:   'img/favicon-aif.png',
+    passPct:   70,
+    passScore: 700,
+    statsKey:  'aws_aif_stats_v1',
+    minutes:   { 15: 20, 35: 50, 65: 90 },
+    domains: [
+      { name: 'Fundamentals of AI and ML',                             short: 'AI & ML',               label: 'AI & ML',               icon: '🧠', weight: 20 },
+      { name: 'Fundamentals of GenAI',                                 short: 'GenAI',                 label: 'GenAI',                 icon: '✨', weight: 24 },
+      { name: 'Applications of Foundation Models',                     short: 'Foundation Models',     label: 'Foundation Models',     icon: '🧩', weight: 28 },
+      { name: 'Guidelines for Responsible AI',                         short: 'Responsible AI',        label: 'Responsible AI',        icon: '⚖️', weight: 14 },
+      { name: 'Security, Compliance, and Governance for AI Solutions', short: 'Security & Governance', label: 'Security & Governance', icon: '🔒', weight: 14 },
+    ],
+    questions:  () => AIF_QUESTION_BANK,
+    cheatsheet: () => AIF_CHEATSHEET,
+  },
 };
 
 const CERT_STORAGE_KEY = 'aws_cert_selected';

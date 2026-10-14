@@ -17,6 +17,11 @@ const BANKS = [
     domains: ['Design Secure Architectures', 'Design Resilient Architectures',
               'Design High-Performing Architectures', 'Design Cost-Optimized Architectures'],
   },
+  {
+    file: 'js/questions-aif.js', global: 'AIF_QUESTION_BANK',
+    domains: ['Fundamentals of AI and ML', 'Fundamentals of GenAI', 'Applications of Foundation Models',
+              'Guidelines for Responsible AI', 'Security, Compliance, and Governance for AI Solutions'],
+  },
 ];
 
 function load(bank) {
@@ -41,7 +46,7 @@ for (const bank of BANKS) {
   const errors    = [];
   const ids       = new Set();
   const byDomain  = {};
-  let multi = 0, singles = 0, longestCorrect = 0;
+  let multi = 0, singles = 0, longestCorrect = 0, ordering = 0, matching = 0;
 
   questions.forEach(q => {
     const t = `#${q.id}`;
@@ -52,6 +57,27 @@ for (const bank of BANKS) {
     byDomain[q.domain] = (byDomain[q.domain] || 0) + 1;
 
     if (!q.question || !q.explanation) errors.push(`${t} missing question or explanation`);
+
+    if (q.type === 'ordering') {
+      ordering++;
+      if (!Array.isArray(q.items) || q.items.length < 3 || q.items.length > 5) errors.push(`${t} ordering needs 3-5 items`);
+      else if (new Set(q.items).size !== q.items.length) errors.push(`${t} duplicate items`);
+      if (q.itemExplanations && q.itemExplanations.length !== (q.items || []).length) errors.push(`${t} itemExplanations length differs from items`);
+      return;
+    }
+    if (q.type === 'matching') {
+      matching++;
+      const P = q.prompts, R = q.responses, C = q.correct;
+      if (!Array.isArray(P) || !Array.isArray(R) || !Array.isArray(C)) { errors.push(`${t} prompts/responses/correct must be arrays`); return; }
+      if (P.length < 3 || P.length > 7) errors.push(`${t} matching needs 3-7 prompts`);
+      if (R.length < P.length) errors.push(`${t} fewer responses than prompts`);
+      if (C.length !== P.length) errors.push(`${t} correct must have one entry per prompt`);
+      if (C.some(i => !Number.isInteger(i) || i < 0 || i >= R.length)) errors.push(`${t} correct index out of range`);
+      if (new Set(C).size !== C.length) errors.push(`${t} a response is used for more than one prompt`);
+      if (q.promptExplanations && q.promptExplanations.length !== P.length) errors.push(`${t} promptExplanations length differs from prompts`);
+      return;
+    }
+
     if (!Array.isArray(q.options) || !Array.isArray(q.correct)) { errors.push(`${t} options/correct must be arrays`); return; }
     if (new Set(q.options).size !== q.options.length) errors.push(`${t} duplicate options`);
     if (q.correct.some(i => !Number.isInteger(i) || i < 0 || i >= q.options.length)) errors.push(`${t} correct index out of range`);
@@ -71,7 +97,11 @@ for (const bank of BANKS) {
   });
 
   // Near-duplicate questions (same wording and same correct answer)
-  const signatures = questions.map(q => words(q.question + ' ' + q.correct.map(i => q.options[i]).join(' ')));
+  const answerText = q =>
+    q.type === 'ordering' ? q.items.join(' ') :
+    q.type === 'matching' ? q.prompts.join(' ') + ' ' + q.correct.map(i => q.responses[i]).join(' ') :
+    q.correct.map(i => q.options[i]).join(' ');
+  const signatures = questions.map(q => words(q.question + ' ' + answerText(q)));
   const similar = [];
   for (let i = 0; i < questions.length; i++) {
     for (let j = i + 1; j < questions.length; j++) {
@@ -80,7 +110,9 @@ for (const bank of BANKS) {
     }
   }
 
-  console.log(`\n${bank.file}: ${questions.length} questions, ${multi} multiple-response`);
+  if (!questions.length) { console.log(`\n${bank.file}: empty`); continue; }
+  console.log(`\n${bank.file}: ${questions.length} questions, ${multi} multiple-response` +
+              (ordering || matching ? `, ${ordering} ordering, ${matching} matching` : ''));
   Object.entries(byDomain).forEach(([d, n]) => console.log(`  ${d}: ${n}`));
   console.log(`  correct option is the longest in ${longestCorrect}/${singles} single questions ` +
               `(${Math.round(100 * longestCorrect / singles)}% — aim for ≤ 25%)`);

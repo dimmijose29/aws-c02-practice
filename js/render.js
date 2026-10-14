@@ -8,13 +8,6 @@ function esc(str) {
     .replace(/"/g, '&quot;');
 }
 
-// Exact match only — every correct option selected and no wrong ones (no partial credit)
-function isAnswerCorrect(q) {
-  const selected = state.answers[q.id] || [];
-  return selected.length === q.options.correctNew.filter(Boolean).length &&
-         selected.every(i => q.options.correctNew[i]);
-}
-
 // ===== SCREEN =====
 
 function showScreen(id) {
@@ -52,16 +45,11 @@ function renderQuestion() {
   document.getElementById('q-number').textContent = `Question ${state.current + 1}`;
   document.getElementById('q-text').textContent = q.question;
 
-  // Multi-select hint (hidden when revealed — answer is locked)
-  const hintEl       = document.getElementById('q-hint');
-  const correctCount = q.options.correctNew.filter(Boolean).length;
-  if (q.type === 'multiple' && !isRevealed) {
-    hintEl.style.display = 'flex';
-    const word = correctCount === 2 ? 'TWO' : correctCount === 3 ? 'THREE' : correctCount;
-    document.getElementById('q-hint-count').textContent = word;
-  } else {
-    hintEl.style.display = 'none';
-  }
+  // How-to-answer hint for multiple / ordering / matching (hidden when revealed — answer is locked)
+  const hintEl = document.getElementById('q-hint');
+  const hint   = isRevealed ? null : questionHint(q);
+  hintEl.style.display = hint ? 'flex' : 'none';
+  if (hint) document.getElementById('q-hint-text').innerHTML = hint;
 
   // Flag button (exam mode only)
   if (!state.practiceMode) {
@@ -76,7 +64,11 @@ function renderQuestion() {
   const list     = document.getElementById('options-list');
   list.innerHTML = '';
 
-  if (isRevealed) {
+  if (q.type === 'ordering') {
+    list.innerHTML = isRevealed ? orderingResultHtml(q, state.answers[q.id]) : orderingHtml(q);
+  } else if (q.type === 'matching') {
+    list.innerHTML = isRevealed ? matchingResultHtml(q, state.answers[q.id]) : matchingHtml(q);
+  } else if (isRevealed) {
     renderRevealedOptions(q, selected, list);
   } else {
     renderNormalOptions(q, selected, list);
@@ -98,7 +90,7 @@ function renderQuestion() {
     const isLast = state.current === state.questions.length - 1;
     nextBtn.disabled = false;
     if (!isRevealed) {
-      nextBtn.textContent = (selected.length > 0) ? 'Check Answer ✓' : 'Skip →';
+      nextBtn.textContent = isAnswered(q) ? 'Check Answer ✓' : 'Skip →';
     } else {
       nextBtn.textContent = isLast ? '📊 View Results' : 'Next Question →';
     }
@@ -220,7 +212,7 @@ function updateGridBtn(idx) {
   const btn = document.querySelectorAll('.grid-btn')[idx];
   if (!btn) return;
   const q       = state.questions[idx];
-  const answered = !!(state.answers[q.id] && state.answers[q.id].length);
+  const answered = isAnswered(q);
   const flagged  = state.flagged.has(q.id);
   const revealed = state.revealed.has(q.id);
 
@@ -240,7 +232,7 @@ function updateGridHighlight() {
 
 function showReviewModal() {
   const total      = state.questions.length;
-  const answered   = Object.values(state.answers).filter(a => a.length > 0).length;
+  const answered   = state.questions.filter(isAnswered).length;
   const unanswered = total - answered;
   const flagged    = state.flagged.size;
 
@@ -254,8 +246,7 @@ function showReviewModal() {
   const list = document.getElementById('review-list');
   list.innerHTML = '';
   state.questions.forEach((q, i) => {
-    const ans       = state.answers[q.id];
-    const hasAnswer = !!(ans && ans.length);
+    const hasAnswer = isAnswered(q);
     const isFlagged = state.flagged.has(q.id);
     const div       = document.createElement('div');
     div.className   = 'review-item' +

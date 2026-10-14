@@ -12,7 +12,7 @@ function saveInProgress() {
     practiceMode: state.practiceMode,
     current:      state.current,
     endTime:      state.endTime,
-    questions:    state.questions.map(q => ({ id: q.id, order: q.options.order })),
+    questions:    state.questions.map(q => ({ id: q.id, order: displayOrder(q) })),
     answers:      state.answers,
     revealed:     [...state.revealed],
     flagged:      [...state.flagged],
@@ -27,7 +27,7 @@ function loadInProgress() {
     if (!saved || !CERTS[saved.cert]) return null;
     const bank = new Map(CERTS[saved.cert].questions().map(q => [q.id, q]));
     const ok = saved.questions.every(({ id, order }) =>
-      bank.has(id) && order && order.length === bank.get(id).options.length);
+      bank.has(id) && order && order.length === displayOrderLength(bank.get(id)));
     return ok ? saved : null;
   } catch (e) { return null; }
 }

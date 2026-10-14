@@ -11,7 +11,7 @@ function computeScore() {
 
     const userAnswers = state.answers[q.id] || [];
 
-    if (userAnswers.length === 0) {
+    if (!isAnswered(q)) {
       skipped++;
       outcomes.skipped.push(q.id);
     } else if (isAnswerCorrect(q)) {
@@ -109,7 +109,7 @@ function renderAnswersReview() {
 
   state.questions.forEach((q, idx) => {
     const userAnswers = state.answers[q.id] || [];
-    const isSkipped   = userAnswers.length === 0;
+    const isSkipped   = !isAnswered(q);
     const isCorrect   = !isSkipped && isAnswerCorrect(q);
     const isFlagged   = state.flagged.has(q.id);
 
@@ -119,9 +119,11 @@ function renderAnswersReview() {
     else                { statusClass = 'incorrect'; statusText = '✗ Incorrect'; }
     counts.all++; counts[statusClass]++; if (isFlagged) counts.flagged++;
 
-    // Build options with color coding
+    // Build options with color coding (ordering/matching have their own result view)
     let optionsHtml = '';
-    q.options.texts.forEach((text, i) => {
+    if (q.type === 'ordering') optionsHtml = orderingResultHtml(q, state.answers[q.id]);
+    if (q.type === 'matching') optionsHtml = matchingResultHtml(q, state.answers[q.id]);
+    if (isChoiceType(q)) q.options.texts.forEach((text, i) => {
       const isCorrectOpt   = q.options.correctNew[i];
       const isUserSelected = userAnswers.includes(i);
       let cls = 'opt-normal', mark = '';
