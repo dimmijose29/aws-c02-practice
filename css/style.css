@@ -69,6 +69,37 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
     outline-offset: 2px;
 }
 
+/* Unfinished quiz banner */
+.resume-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px 16px;
+    margin: 0 auto 20px;
+    max-width: 640px;
+    padding: 12px 16px;
+    background: #FFF8EE;
+    border: 1px solid var(--orange);
+    border-radius: 10px;
+    text-align: left;
+}
+
+.resume-text { font-size: 14px; font-weight: 600; color: var(--navy); }
+.resume-actions { display: flex; gap: 8px; }
+
+.btn-resume, .btn-discard {
+    padding: 7px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.btn-resume  { background: var(--orange); border: 1px solid var(--orange); color: var(--navy); }
+.btn-discard { background: none; border: 1px solid var(--border); color: var(--text-sec); }
+.btn-discard:hover { color: var(--incorrect); border-color: var(--incorrect); }
+
 /* Certification switch */
 .cert-switch {
     display: inline-flex;

@@ -16,6 +16,15 @@
             <img id="start-logo" src="img/logo.png" alt="AWS Certified Cloud Practitioner" class="aws-logo-img">
         </div>
 
+        <!-- Unfinished quiz saved in localStorage (filled by renderResumeBanner) -->
+        <div id="resume-banner" class="resume-banner" style="display:none;">
+            <span id="resume-text" class="resume-text"></span>
+            <div class="resume-actions">
+                <button id="btn-resume" class="btn-resume">Resume</button>
+                <button id="btn-discard" class="btn-discard">Discard</button>
+            </div>
+        </div>
+
         <!-- Certification switch (built from CERTS, hidden when there is only one) -->
         <div id="cert-switch" class="cert-switch" style="display:none;"></div>
 
@@ -284,6 +293,7 @@
 <script src="js/stats.js"></script>
 <script src="js/cheatsheet.js"></script>
 <script src="js/cheatsheet-saa.js"></script>
+<script src="js/session.js"></script>
 <script src="js/results.js"></script>
 <script src="js/app.js"></script>
 </body>

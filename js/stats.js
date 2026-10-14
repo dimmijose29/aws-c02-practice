@@ -21,6 +21,7 @@ function loadSessions() {
 
 function clearStats() {
   localStorage.removeItem(cert.statsKey);
+  clearSeen();
 }
 
 // ===== STATS PANEL RENDERING =====
@@ -72,6 +73,7 @@ function renderStatsPanel() {
     best !== null ? `<div class="stats-metric"><span class="sm-val">${best}%</span><span class="sm-lbl">Best Score</span></div>` : '',
     weakest       ? `<div class="stats-metric"><span class="sm-val sm-val-weak">${weakestPct}%</span><span class="sm-lbl">Weakest: ${esc(domainShort(weakest))}</span></div>` : '',
     `<div class="stats-metric"><span class="sm-val">${sessions.length}</span><span class="sm-lbl">Sessions</span></div>`,
+    `<div class="stats-metric"><span class="sm-val">${loadSeen().size}/${cert.questions().length}</span><span class="sm-lbl">Questions seen</span></div>`,
   ].join('');
 
   // Sessions list with accordion

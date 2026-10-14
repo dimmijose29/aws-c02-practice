@@ -1,7 +1,8 @@
 function startTimer(onExpire) {
   stopTimer();
-  // Wall-clock deadline: background-tab throttling can't make the timer drift
-  state.endTime = Date.now() + state.secondsLeft * 1000;
+  // Counts down to the wall-clock deadline in state.endTime (set by startQuiz or a
+  // resumed quiz), so throttled background tabs and reloads can't make it drift
+  state.secondsLeft = Math.max(0, Math.ceil((state.endTime - Date.now()) / 1000));
   updateTimerDisplay();
   state.timer = setInterval(() => {
     state.secondsLeft = Math.max(0, Math.ceil((state.endTime - Date.now()) / 1000));

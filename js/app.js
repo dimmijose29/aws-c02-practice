@@ -76,9 +76,11 @@ function shuffle(arr) {
   return arr;
 }
 
-function shuffleOptionsWithMapping(q) {
-  const indices = shuffle(q.options.map((_, i) => i));
+// `order` (original option indices in display order) is given when resuming a saved quiz
+function shuffleOptionsWithMapping(q, order) {
+  const indices = order || shuffle(q.options.map((_, i) => i));
   return {
+    order:        indices,
     texts:        indices.map(i => q.options[i]),
     correctNew:   indices.map(i => q.correct.includes(i)),
     explanations: q.optionExplanations ? indices.map(i => q.optionExplanations[i]) : null
@@ -89,9 +91,16 @@ function shuffleOptionsWithMapping(q) {
 
 // Draw `count` questions from the selected domains, split by the official domain
 // weights (largest remainder rounding), then shuffle the final order.
+// Within each domain, questions not seen in earlier quizzes come first; once the whole
+// bank has been seen the cycle starts over.
 function pickQuestions(count) {
+  const bank = cert.questions();
+  let seen = loadSeen();
+  if (bank.every(q => seen.has(q.id))) { clearSeen(); seen = new Set(); }
+  const unseenFirst = qs => [...shuffle(qs.filter(q => !seen.has(q.id))), ...shuffle(qs.filter(q => seen.has(q.id)))];
+
   const domains = cert.domains.filter(d => selectedDomains.has(d.name));
-  const pools   = new Map(domains.map(d => [d.name, shuffle(cert.questions().filter(q => q.domain === d.name))]));
+  const pools   = new Map(domains.map(d => [d.name, unseenFirst(bank.filter(q => q.domain === d.name))]));
   const total   = Math.min(count, [...pools.values()].reduce((n, p) => n + p.length, 0));
   const weight  = domains.reduce((n, d) => n + d.weight, 0);
 
@@ -105,7 +114,7 @@ function pickQuestions(count) {
   // A domain with too few questions hands its shortfall to the others
   const picked = [];
   quotas.forEach(q => picked.push(...pools.get(q.name).splice(0, q.n)));
-  const leftovers = shuffle([...pools.values()].flat());
+  const leftovers = unseenFirst([...pools.values()].flat());
   picked.push(...leftovers.slice(0, total - picked.length));
 
   return shuffle(picked);
@@ -114,6 +123,9 @@ function pickQuestions(count) {
 // ===== START =====
 
 function startQuiz(mode) {
+  if (loadInProgress() &&
+      !confirm('You have an unfinished quiz. Start a new one and discard it?')) return;
+
   state.mode         = mode;
   state.practiceMode = selectedModeType === 'practice';
   state.submitted    = false;
@@ -129,20 +141,72 @@ function startQuiz(mode) {
   // Scale the time when the domain filter leaves fewer questions than the mode asks for
   const baseSeconds = cert.minutes[mode] * 60;
   state.secondsLeft = Math.ceil((baseSeconds * state.questions.length / mode) / 60) * 60;
+  state.endTime     = Date.now() + state.secondsLeft * 1000;
 
+  openQuizScreen();
+}
+
+// Shared by a new quiz and a resumed one: show the quiz screen for the current state
+function openQuizScreen() {
   // Apply/remove practice mode class (controls layout via CSS)
   document.getElementById('quiz-screen')
     .classList.toggle('practice-mode', state.practiceMode);
 
   showScreen('quiz-screen');
   buildGrid();
-  renderQuestion();
+  update();
 
   // Show/hide practice score bar
   const scoreBar = document.getElementById('practice-score-bar');
   if (scoreBar) scoreBar.style.display = state.practiceMode ? 'flex' : 'none';
 
-  if (!state.practiceMode) startTimer(submitExam);
+  if (!state.practiceMode) {
+    if (state.endTime <= Date.now()) { submitExam(); return; } // time ran out while away
+    startTimer(submitExam);
+  }
+}
+
+// Re-render after any change to the quiz state and persist it
+function update() {
+  renderQuestion();
+  saveInProgress();
+}
+
+// ===== RESUME =====
+
+function resumeQuiz() {
+  const saved = loadInProgress();
+  if (!saved) { renderResumeBanner(); return; }
+  if (saved.cert !== cert.id) selectCert(saved.cert);
+
+  const bank = new Map(cert.questions().map(q => [q.id, q]));
+  resetState();
+  state.mode         = saved.mode;
+  state.practiceMode = saved.practiceMode;
+  state.current      = saved.current;
+  state.endTime      = saved.endTime;
+  state.answers      = saved.answers;
+  state.revealed     = new Set(saved.revealed);
+  state.flagged      = new Set(saved.flagged);
+  state.questions    = saved.questions.map(({ id, order }) => {
+    const q = bank.get(id);
+    return { ...q, options: shuffleOptionsWithMapping(q, order) };
+  });
+  openQuizScreen();
+}
+
+function renderResumeBanner() {
+  const banner = document.getElementById('resume-banner');
+  const saved  = loadInProgress();
+  if (!saved) { banner.style.display = 'none'; return; }
+
+  const c     = CERTS[saved.cert];
+  const kind  = saved.practiceMode ? 'practice' : 'exam';
+  const left  = Math.max(0, Math.ceil((saved.endTime - Date.now()) / 60000));
+  const time  = saved.practiceMode ? '' : left > 0 ? ` · ${left} min left` : ' · time is up';
+  document.getElementById('resume-text').textContent =
+    `Unfinished ${c.code} ${kind} — question ${saved.current + 1} of ${saved.questions.length}${time}`;
+  banner.style.display = '';
 }
 
 // ===== OPTION SELECTION =====
@@ -162,7 +226,7 @@ function selectOption(idx) {
   }
 
   state.answers[q.id] = selected;
-  renderQuestion();
+  update();
 }
 
 // ===== FLAG (exam mode only) =====
@@ -172,13 +236,13 @@ function toggleFlag() {
   const q = state.questions[state.current];
   if (state.flagged.has(q.id)) state.flagged.delete(q.id);
   else                          state.flagged.add(q.id);
-  renderQuestion();
+  update();
 }
 
 // ===== NAVIGATION =====
 
 function prevQuestion() {
-  if (state.current > 0) { state.current--; renderQuestion(); }
+  if (state.current > 0) { state.current--; update(); }
 }
 
 function nextQuestion() {
@@ -190,23 +254,23 @@ function nextQuestion() {
     if (!isRevealed) {
       // First click: reveal answer and explanations, stay on question
       state.revealed.add(q.id);
-      renderQuestion();
+      update();
     } else if (isLast) {
       // Last question already revealed: go to results
       submitExam();
     } else {
       // Advance to next question
       state.current++;
-      renderQuestion();
+      update();
     }
   } else {
-    if (state.current < state.questions.length - 1) { state.current++; renderQuestion(); }
+    if (state.current < state.questions.length - 1) { state.current++; update(); }
   }
 }
 
 function goToQuestion(idx) {
   state.current = idx;
-  renderQuestion();
+  update();
   // Close sidebar on mobile after selection
   document.getElementById('q-nav').classList.remove('nav-open');
 }
@@ -216,6 +280,8 @@ function goToQuestion(idx) {
 function submitExam() {
   stopTimer();
   state.submitted = true;
+  clearInProgress();
+  markSeen(state.questions.map(q => q.id));
   closeReviewModal();
   calculateResults();
   showScreen('results-screen');
@@ -227,6 +293,7 @@ function restartQuiz() {
   document.getElementById('quiz-screen').classList.remove('practice-mode');
   resetState();
   showScreen('start-screen');
+  renderResumeBanner();
 }
 
 // ===== EVENT WIRING =====
@@ -291,9 +358,16 @@ certSwitch.addEventListener('click', e => {
   if (btn) selectCert(btn.dataset.cert);
 });
 
+// Resume banner (unfinished quiz saved in localStorage)
+document.getElementById('btn-resume').addEventListener('click', resumeQuiz);
+document.getElementById('btn-discard').addEventListener('click', () => {
+  if (confirm('Discard the unfinished quiz?')) { clearInProgress(); renderResumeBanner(); }
+});
+
 // Init start screen (domains, filter, timings, stats) for the initial cert
 cert = CERTS[initialCertId()];
 applyCert();
+renderResumeBanner();
 
 // Start screen: mode cards
 document.querySelectorAll('.mode-card').forEach(card => {
