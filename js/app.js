@@ -192,6 +192,14 @@ document.getElementById('btn-cs-back').addEventListener('click', () => {
   showScreen('start-screen');
 });
 
+// Stats panel view tabs (Sessions / Most missed)
+document.getElementById('stats-tabs').addEventListener('click', e => {
+  const tab = e.target.closest('.st-tab');
+  if (!tab) return;
+  statsView = tab.dataset.view;
+  renderStatsPanel();
+});
+
 // Init stats panel and cheat sheet on load
 renderStatsPanel();
 

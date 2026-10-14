@@ -20,6 +20,7 @@ function sortedIndices(boolArray) {
 function computeScore() {
   let correct = 0, incorrect = 0, skipped = 0;
   const domainMap = {};
+  const outcomes  = { correct: [], wrong: [], skipped: [] }; // question ids, for the stats history
 
   state.questions.forEach(q => {
     if (!domainMap[q.domain]) domainMap[q.domain] = { correct: 0, total: 0 };
@@ -32,21 +33,24 @@ function computeScore() {
 
     if (userAnswers.length === 0) {
       skipped++;
+      outcomes.skipped.push(q.id);
     } else if (isExactMatch) {
       correct++;
       domainMap[q.domain].correct++;
+      outcomes.correct.push(q.id);
     } else {
       incorrect++;
+      outcomes.wrong.push(q.id);
     }
   });
 
   const total = state.questions.length;
   const score = Math.round((correct / total) * 100);
-  return { correct, incorrect, skipped, total, score, domainMap };
+  return { correct, incorrect, skipped, total, score, domainMap, outcomes };
 }
 
 function calculateResults() {
-  const { correct, incorrect, skipped, total, score, domainMap } = computeScore();
+  const { correct, incorrect, skipped, total, score, domainMap, outcomes } = computeScore();
   const pct    = score;
   const passed = pct >= 70;
 
@@ -59,6 +63,7 @@ function calculateResults() {
     correct,
     total,
     domains:  domainMap,
+    questions: outcomes,
   });
 
   // Refresh stats panel on start screen

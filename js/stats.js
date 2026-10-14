@@ -2,6 +2,9 @@
 
 const STATS_KEY     = 'aws_clf_stats_v1';
 const MAX_SESSIONS  = 50;
+const MAX_MISSED    = 15;
+
+let statsView = 'sessions'; // 'sessions' | 'missed'
 
 function saveSession(session) {
   const sessions = loadSessions();
@@ -27,11 +30,16 @@ function renderStatsPanel() {
   const el = document.getElementById('stats-panel');
   if (!el) return;
 
+  document.querySelectorAll('.st-tab').forEach(t =>
+    t.classList.toggle('st-tab-active', t.dataset.view === statsView));
+
   const sessions = loadSessions();
   if (sessions.length === 0) {
     el.innerHTML = '<p class="stats-empty">No sessions yet — complete a quiz to see your history.</p>';
     return;
   }
+
+  if (statsView === 'missed') { renderMissedQuestions(el, sessions); return; }
 
   // Aggregates (exam mode only for meaningful stats)
   const examSessions = sessions.filter(s => s.modeType === 'exam');
@@ -126,19 +134,74 @@ function renderStatsPanel() {
     <button class="btn-clear-stats" id="btn-clear-stats">Clear history</button>
   `;
 
-  // Accordion toggle
+  bindAccordions(el);
+
+  document.getElementById('btn-clear-stats').addEventListener('click', () => {
+    if (confirm('Clear all session history?')) { clearStats(); renderStatsPanel(); }
+  });
+}
+
+// ===== MOST MISSED QUESTIONS =====
+
+// Per-question tally across all sessions that recorded outcomes (older sessions are skipped)
+function aggregateMissed(sessions) {
+  const tally = {};
+  const add = (ids, missed) => (ids || []).forEach(id => {
+    if (!tally[id]) tally[id] = { seen: 0, missed: 0 };
+    tally[id].seen++;
+    if (missed) tally[id].missed++;
+  });
+  sessions.forEach(s => {
+    if (!s.questions) return;
+    add(s.questions.correct, false);
+    add(s.questions.wrong,   true);
+    add(s.questions.skipped, true);
+  });
+  return Object.entries(tally)
+    .filter(([, v]) => v.missed > 0)
+    .map(([id, v]) => ({ id: Number(id), ...v }))
+    .sort((a, b) => b.missed - a.missed || b.missed / b.seen - a.missed / a.seen);
+}
+
+function renderMissedQuestions(el, sessions) {
+  const byId   = new Map(QUESTION_BANK.map(q => [q.id, q]));
+  const missed = aggregateMissed(sessions).filter(m => byId.has(m.id)).slice(0, MAX_MISSED);
+
+  if (missed.length === 0) {
+    el.innerHTML = '<p class="stats-empty">No missed questions recorded yet — they will appear here after your next quiz.</p>';
+    return;
+  }
+
+  el.innerHTML = `<div class="stats-recent">${missed.map(m => {
+    const q       = byId.get(m.id);
+    const answers = q.correct.map(i => `<li>${esc(q.options[i])}</li>`).join('');
+    return `
+      <div class="stats-session">
+        <div class="stats-row sr-clickable">
+          <span class="mq-text">${esc(q.question)}</span>
+          <span class="mq-count">${m.missed}/${m.seen} missed</span>
+          <span class="sr-chevron">▸</span>
+        </div>
+        <div class="sr-accordion mq-detail" style="display:none">
+          <span class="mq-domain">${esc(q.domain)}</span>
+          <p class="mq-question">${esc(q.question)}</p>
+          <ul class="mq-answers">${answers}</ul>
+          <p class="mq-exp">${esc(q.explanation || '')}</p>
+        </div>
+      </div>`;
+  }).join('')}</div>`;
+
+  bindAccordions(el);
+}
+
+function bindAccordions(el) {
   el.querySelectorAll('.sr-clickable').forEach(row => {
     row.addEventListener('click', () => {
-      const session   = row.closest('.stats-session');
-      const accordion = session.querySelector('.sr-accordion');
+      const accordion = row.closest('.stats-session').querySelector('.sr-accordion');
       const chevron   = row.querySelector('.sr-chevron');
       const isOpen    = accordion.style.display !== 'none';
       accordion.style.display = isOpen ? 'none' : 'block';
       chevron.style.transform = isOpen ? '' : 'rotate(90deg)';
     });
-  });
-
-  document.getElementById('btn-clear-stats').addEventListener('click', () => {
-    if (confirm('Clear all session history?')) { clearStats(); renderStatsPanel(); }
   });
 }
