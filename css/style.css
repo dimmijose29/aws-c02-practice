@@ -53,6 +53,11 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
     height: auto;
 }
 
+.option-item:focus-visible {
+    outline: 3px solid var(--orange);
+    outline-offset: 2px;
+}
+
 /* Certification switch */
 .cert-switch {
     display: inline-flex;

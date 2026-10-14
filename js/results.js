@@ -1,20 +1,3 @@
-// ===== HELPERS =====
-
-function esc(str) {
-  return String(str)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
-}
-
-function sortedIndices(boolArray) {
-  return boolArray
-    .map((c, i) => (c ? i : -1))
-    .filter(i => i >= 0)
-    .sort((a, b) => a - b);
-}
-
 // ===== SCORING =====
 
 function computeScore() {
@@ -26,15 +9,12 @@ function computeScore() {
     if (!domainMap[q.domain]) domainMap[q.domain] = { correct: 0, total: 0 };
     domainMap[q.domain].total++;
 
-    const userAnswers  = state.answers[q.id] || [];
-    const correctIdxs  = sortedIndices(q.options.correctNew);
-    const userSorted   = [...userAnswers].sort((a, b) => a - b);
-    const isExactMatch = JSON.stringify(userSorted) === JSON.stringify(correctIdxs);
+    const userAnswers = state.answers[q.id] || [];
 
     if (userAnswers.length === 0) {
       skipped++;
       outcomes.skipped.push(q.id);
-    } else if (isExactMatch) {
+    } else if (isAnswerCorrect(q)) {
       correct++;
       domainMap[q.domain].correct++;
       outcomes.correct.push(q.id);
@@ -125,10 +105,8 @@ function renderAnswersReview() {
 
   state.questions.forEach((q, idx) => {
     const userAnswers = state.answers[q.id] || [];
-    const correctIdxs = sortedIndices(q.options.correctNew);
-    const userSorted  = [...userAnswers].sort((a, b) => a - b);
     const isSkipped   = userAnswers.length === 0;
-    const isCorrect   = !isSkipped && JSON.stringify(userSorted) === JSON.stringify(correctIdxs);
+    const isCorrect   = !isSkipped && isAnswerCorrect(q);
 
     let statusClass, statusText;
     if (isSkipped)      { statusClass = 'skipped';   statusText = 'Not Answered'; }

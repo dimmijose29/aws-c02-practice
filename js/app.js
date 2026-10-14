@@ -66,17 +66,48 @@ function initialCertId() {
 
 // ===== SHUFFLE =====
 
-function shuffleOptionsWithMapping(q) {
-  const indices = q.options.map((_, i) => i);
-  for (let i = indices.length - 1; i > 0; i--) {
+// Fisher-Yates, in place
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [indices[i], indices[j]] = [indices[j], indices[i]];
+    [arr[i], arr[j]] = [arr[j], arr[i]];
   }
+  return arr;
+}
+
+function shuffleOptionsWithMapping(q) {
+  const indices = shuffle(q.options.map((_, i) => i));
   return {
     texts:        indices.map(i => q.options[i]),
     correctNew:   indices.map(i => q.correct.includes(i)),
     explanations: q.optionExplanations ? indices.map(i => q.optionExplanations[i]) : null
   };
+}
+
+// ===== QUESTION SELECTION =====
+
+// Draw `count` questions from the selected domains, split by the official domain
+// weights (largest remainder rounding), then shuffle the final order.
+function pickQuestions(count) {
+  const domains = cert.domains.filter(d => selectedDomains.has(d.name));
+  const pools   = new Map(domains.map(d => [d.name, shuffle(cert.questions().filter(q => q.domain === d.name))]));
+  const total   = Math.min(count, [...pools.values()].reduce((n, p) => n + p.length, 0));
+  const weight  = domains.reduce((n, d) => n + d.weight, 0);
+
+  const quotas = domains.map(d => {
+    const exact = total * d.weight / weight;
+    return { name: d.name, n: Math.floor(exact), rest: exact % 1 };
+  });
+  let missing = total - quotas.reduce((n, q) => n + q.n, 0);
+  [...quotas].sort((a, b) => b.rest - a.rest).forEach(q => { if (missing > 0) { q.n++; missing--; } });
+
+  // A domain with too few questions hands its shortfall to the others
+  const picked = [];
+  quotas.forEach(q => picked.push(...pools.get(q.name).splice(0, q.n)));
+  const leftovers = shuffle([...pools.values()].flat());
+  picked.push(...leftovers.slice(0, total - picked.length));
+
+  return shuffle(picked);
 }
 
 // ===== START =====
@@ -90,18 +121,7 @@ function startQuiz(mode) {
   state.flagged      = new Set();
   state.current      = 0;
 
-  const bank     = cert.questions();
-  const filtered = selectedDomains.size === cert.domains.length
-    ? [...bank]
-    : bank.filter(q => selectedDomains.has(q.domain));
-
-  const pool = filtered;
-  for (let i = pool.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [pool[i], pool[j]] = [pool[j], pool[i]];
-  }
-  const shuffled = pool;
-  state.questions = shuffled.slice(0, mode).map(q => ({
+  state.questions = pickQuestions(mode).map(q => ({
     ...q,
     options: shuffleOptionsWithMapping(q)
   }));
@@ -303,6 +323,19 @@ document.getElementById('options-list').addEventListener('click', e => {
   const q = state.questions[state.current];
   if (state.practiceMode && state.revealed.has(q.id)) return; // locked after reveal
   selectOption(Number(item.dataset.idx));
+});
+
+// Keyboard access to options: Tab to focus, Enter/Space to select
+document.getElementById('options-list').addEventListener('keydown', e => {
+  if (e.key !== 'Enter' && e.key !== ' ') return;
+  const item = e.target.closest('.option-item[tabindex]');
+  if (!item) return;
+  e.preventDefault();
+  const idx = Number(item.dataset.idx);
+  selectOption(idx);
+  // renderQuestion() rebuilt the list — keep focus on the same option
+  const again = document.querySelector(`#options-list .option-item[data-idx="${idx}"]`);
+  if (again) again.focus();
 });
 
 // Sidebar grid — event delegation (disabled in practice mode)

@@ -8,6 +8,13 @@ function esc(str) {
     .replace(/"/g, '&quot;');
 }
 
+// Exact match only — every correct option selected and no wrong ones (no partial credit)
+function isAnswerCorrect(q) {
+  const selected = state.answers[q.id] || [];
+  return selected.length === q.options.correctNew.filter(Boolean).length &&
+         selected.every(i => q.options.correctNew[i]);
+}
+
 // ===== SCREEN =====
 
 function showScreen(id) {
@@ -103,6 +110,9 @@ function renderNormalOptions(q, selected, list) {
       (q.type === 'multiple' ? ' multi' : '') +
       (selected.includes(idx) ? ' opt-selected' : '');
     div.dataset.idx = idx;
+    div.tabIndex    = 0;
+    div.setAttribute('role', q.type === 'multiple' ? 'checkbox' : 'radio');
+    div.setAttribute('aria-checked', String(selected.includes(idx)));
 
     const marker       = document.createElement('div');
     marker.className   = 'option-marker';
@@ -169,12 +179,7 @@ function updatePracticeScore() {
 
   revealed.forEach(id => {
     const q = state.questions.find(q => q.id === id);
-    if (!q) return;
-    const userAnswers = state.answers[id] || [];
-    const correctIdxs = q.options.correctNew
-      .map((c, i) => c ? i : -1).filter(i => i >= 0).sort((a, b) => a - b);
-    const userSorted  = [...userAnswers].sort((a, b) => a - b);
-    if (JSON.stringify(userSorted) === JSON.stringify(correctIdxs)) correct++;
+    if (q && isAnswerCorrect(q)) correct++;
   });
 
   const totalQuestions = state.questions.length;
