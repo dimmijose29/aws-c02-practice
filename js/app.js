@@ -13,6 +13,8 @@ function applyCert() {
   document.title = `${cert.name} — Practice Exam`;
   ['start-logo', 'hdr-logo'].forEach(id => {
     const img = document.getElementById(id);
+    img.style.visibility = '';
+    img.onerror = () => { img.style.visibility = 'hidden'; }; // logo file not added yet
     img.src = cert.logo;
     img.alt = cert.name;
   });

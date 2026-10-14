@@ -23,6 +23,25 @@ const CERTS = {
     questions:  () => QUESTION_BANK,
     cheatsheet: () => CHEATSHEET,
   },
+  saa: {
+    id:        'saa',
+    code:      'SAA-C03',
+    name:      'AWS Certified Solutions Architect – Associate',
+    shortName: 'Solutions Architect',
+    logo:      'img/logo-saa.png',
+    passPct:   72,
+    passScore: 720,
+    statsKey:  'aws_saa_stats_v1',
+    minutes:   { 15: 30, 35: 70, 65: 130 },
+    domains: [
+      { name: 'Design Secure Architectures',          short: 'Secure',          label: 'Secure',          icon: '🔒', weight: 30 },
+      { name: 'Design Resilient Architectures',       short: 'Resilient',       label: 'Resilient',       icon: '🛡️', weight: 26 },
+      { name: 'Design High-Performing Architectures', short: 'High-Performing', label: 'High-Performing', icon: '⚡', weight: 24 },
+      { name: 'Design Cost-Optimized Architectures',  short: 'Cost-Optimized',  label: 'Cost-Optimized',  icon: '💰', weight: 20 },
+    ],
+    questions:  () => SAA_QUESTION_BANK,
+    cheatsheet: () => null,   // not written yet — the cheat sheet button is hidden
+  },
 };
 
 const CERT_STORAGE_KEY = 'aws_cert_selected';
