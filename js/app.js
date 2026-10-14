@@ -50,7 +50,9 @@ function startQuiz(mode) {
     ...q,
     options: shuffleOptionsWithMapping(q)
   }));
-  state.secondsLeft = mode === 65 ? 90 * 60 : mode === 35 ? 50 * 60 : 20 * 60;
+  // Scale the time when the domain filter leaves fewer questions than the mode asks for
+  const baseSeconds = mode === 65 ? 90 * 60 : mode === 35 ? 50 * 60 : 20 * 60;
+  state.secondsLeft = Math.ceil((baseSeconds * state.questions.length / mode) / 60) * 60;
 
   // Apply/remove practice mode class (controls layout via CSS)
   document.getElementById('quiz-screen')
@@ -72,6 +74,7 @@ function startQuiz(mode) {
 function selectOption(idx) {
   const q            = state.questions[state.current];
   const correctCount = q.options.correctNew.filter(Boolean).length;
+  if (idx >= q.options.texts.length) return;
   let   selected     = state.answers[q.id] ? [...state.answers[q.id]] : [];
 
   if (q.type === 'multiple') {
@@ -246,6 +249,7 @@ document.querySelector('.results-footer .btn-primary').addEventListener('click',
 document.addEventListener('keydown', e => {
   if (!document.getElementById('quiz-screen').classList.contains('active')) return;
   if (document.getElementById('review-modal').style.display !== 'none') return;
+  if (e.metaKey || e.ctrlKey || e.altKey) return; // leave browser shortcuts (Cmd+C, Cmd+F…) alone
 
   if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { nextQuestion(); return; }
   if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp') {
@@ -257,7 +261,7 @@ document.addEventListener('keydown', e => {
   const q = state.questions && state.questions[state.current];
   if (q && state.practiceMode && state.revealed.has(q.id)) return;
 
-  const numMap = { '1': 0, '2': 1, '3': 2, '4': 3, 'a': 0, 'b': 1, 'c': 2, 'd': 3 };
+  const numMap = { '1': 0, '2': 1, '3': 2, '4': 3, '5': 4, 'a': 0, 'b': 1, 'c': 2, 'd': 3, 'e': 4 };
   const mapped = numMap[e.key.toLowerCase()];
   if (mapped !== undefined) selectOption(mapped);
 });

@@ -8,6 +8,7 @@ const state = {
   flagged: new Set(),
   timer: null,
   secondsLeft: 0,
+  endTime: 0,            // timestamp (ms) when the exam timer expires
   submitted: false
 };
 
@@ -21,5 +22,6 @@ function resetState() {
   state.flagged = new Set();
   state.timer = null;
   state.secondsLeft = 0;
+  state.endTime = 0;
   state.submitted = false;
 }

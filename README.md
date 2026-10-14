@@ -47,7 +47,7 @@ Ogni simulazione estrae le domande casualmente dalla bank, rispettando i pesi uf
 - ✅ Possibilità di segnare le domande con flag per rivederle
 - ✅ Schermata risultati con punteggio, breakdown per dominio e revisione di tutte le risposte
 - ✅ Soglia di superamento al 70% (come l'esame reale)
-- ✅ Scorciatoie da tastiera (frecce, F per flag, 1–4 / A–D per rispondere)
+- ✅ Scorciatoie da tastiera (frecce, F per flag, 1–5 / A–E per rispondere)
 - ✅ Funziona offline e via `file://` — nessun server necessario
 
 ## Come usarlo
@@ -70,7 +70,7 @@ open index.html
 | `→` / `↓` | Domanda successiva |
 | `←` / `↑` | Domanda precedente |
 | `F` | Aggiungi/rimuovi flag |
-| `1`–`4` o `A`–`D` | Seleziona risposta |
+| `1`–`5` o `A`–`E` | Seleziona risposta |
 
 ## Struttura del progetto
 

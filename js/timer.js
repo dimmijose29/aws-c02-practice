@@ -1,14 +1,16 @@
 function startTimer(onExpire) {
   stopTimer();
+  // Wall-clock deadline: background-tab throttling can't make the timer drift
+  state.endTime = Date.now() + state.secondsLeft * 1000;
   updateTimerDisplay();
   state.timer = setInterval(() => {
-    state.secondsLeft--;
+    state.secondsLeft = Math.max(0, Math.ceil((state.endTime - Date.now()) / 1000));
     updateTimerDisplay();
     if (state.secondsLeft <= 0) {
       stopTimer();
       onExpire();
     }
-  }, 1000);
+  }, 250);
 }
 
 function stopTimer() {
