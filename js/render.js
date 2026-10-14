@@ -25,8 +25,17 @@ function showScreen(id) {
 
 // ===== QUESTION RENDERING =====
 
+let lastRenderedId = null;
+
 function renderQuestion() {
   const q     = state.questions[state.current];
+
+  // New question → start its scroll container from the top (not on reveal of the same one)
+  if (q.id !== lastRenderedId) {
+    document.querySelector('#quiz-screen .quiz-body').scrollTop = 0;
+    document.querySelector('#quiz-screen .q-main').scrollTop    = 0;
+    lastRenderedId = q.id;
+  }
   const total = state.questions.length;
   const isRevealed = state.practiceMode && state.revealed.has(q.id);
 

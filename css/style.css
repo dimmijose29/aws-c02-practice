@@ -26,6 +26,17 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
 .screen { display: none; }
 .screen.active { display: block; }
 
+/* Quiz screen fills the viewport: header and score bar take what they need,
+   the body gets the rest and scrolls internally (no page-level scrolling) */
+#quiz-screen.active {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    height: 100dvh;
+}
+#quiz-screen .quiz-header,
+#quiz-screen .practice-score-bar { flex-shrink: 0; }
+
 /* ===== QUIZ HEADER LOGO ===== */
 .hdr-logo {
     height: 36px;
@@ -451,7 +462,8 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
 /* ===== QUIZ BODY ===== */
 .quiz-body {
     display: flex;
-    height: calc(100vh - 60px);
+    flex: 1;
+    min-height: 0;
     overflow: hidden;
 }
 
@@ -1619,8 +1631,9 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
 .practice-mode .flag-btn       { display: none; }
 .practice-mode .btn-prev       { display: none; }
 
-/* Full width when sidebar is hidden */
-.practice-mode .quiz-body { display: block; }
+/* Full width when sidebar is hidden; the body itself is the scroll container */
+.practice-mode .quiz-body { display: block; overflow-y: auto; }
+.practice-mode .q-main    { overflow-y: visible; }
 .practice-mode .q-main    { padding: 28px 32px 60px; max-width: 760px; margin: 0 auto; }
 
 /* ===== REVEALED OPTIONS (practice mode feedback) ===== */
@@ -1836,8 +1849,7 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
     /* --- Quiz body: sidebar as overlay drawer --- */
     .quiz-body {
         display: block;
-        height: calc(100vh - 52px);
-        overflow: hidden;
+        overflow-y: auto;
         position: relative;
     }
 
