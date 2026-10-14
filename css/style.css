@@ -1279,6 +1279,8 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
     overflow-x: hidden;
 }
 
+.stats-panel.stats-panel-tall { max-height: none; }
+
 .stats-empty {
     font-size: 13px;
     color: var(--text-sec);
@@ -1443,6 +1445,34 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
 .mq-question { margin: 4px 0 6px; color: var(--text); }
 .mq-answers { margin: 0 0 6px 18px; color: var(--correct); font-weight: 600; }
 .mq-exp { margin: 0; color: var(--text-sec); }
+
+/* Progress view */
+.pg-chart { position: relative; margin-bottom: 12px; }
+.pg-chart svg { display: block; width: 100%; height: auto; }
+.pg-title { font-size: 11px; font-weight: 700; color: var(--text-sec); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 6px; }
+.pg-grid  { stroke: var(--border); stroke-width: 1; }
+.pg-axis  { font-size: 9px; fill: var(--text-sec); }
+.pg-pass  { stroke: var(--text-sec); stroke-width: 1; stroke-dasharray: 4 3; }
+.pg-pass-label { font-size: 9px; fill: var(--text-sec); }
+.pg-line  { fill: none; stroke: var(--answered); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.pg-dot   { fill: var(--answered); stroke: var(--white); stroke-width: 2; }
+.pg-hit   { fill: transparent; cursor: pointer; }
+.pg-tip {
+    position: absolute;
+    transform: translate(-50%, -100%);
+    background: var(--navy);
+    color: #fff;
+    font-size: 11px;
+    padding: 4px 8px;
+    border-radius: 5px;
+    white-space: nowrap;
+    pointer-events: none;
+}
+.pg-domains { display: flex; flex-direction: column; gap: 5px; margin-bottom: 12px; }
+.pg-domain-pct { font-size: 11px; font-weight: 700; color: var(--text); min-width: 34px; text-align: right; }
+.pg-delta { font-size: 11px; font-weight: 600; color: var(--text-sec); min-width: 44px; text-align: right; white-space: nowrap; }
+.pg-up    { color: var(--correct); }
+.pg-down  { color: var(--incorrect); }
 
 .btn-clear-stats {
     background: none;

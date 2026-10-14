@@ -3,7 +3,7 @@
 const MAX_SESSIONS  = 50;
 const MAX_MISSED    = 15;
 
-let statsView = 'sessions'; // 'sessions' | 'missed'
+let statsView = 'sessions'; // 'sessions' | 'progress' | 'missed'
 
 function saveSession(session) {
   const sessions = loadSessions();
@@ -32,6 +32,7 @@ function renderStatsPanel() {
 
   document.querySelectorAll('.st-tab').forEach(t =>
     t.classList.toggle('st-tab-active', t.dataset.view === statsView));
+  el.classList.toggle('stats-panel-tall', statsView === 'progress');
 
   const sessions = loadSessions();
   if (sessions.length === 0) {
@@ -39,7 +40,8 @@ function renderStatsPanel() {
     return;
   }
 
-  if (statsView === 'missed') { renderMissedQuestions(el, sessions); return; }
+  if (statsView === 'missed')   { renderMissedQuestions(el, sessions); return; }
+  if (statsView === 'progress') { renderProgress(el, sessions); return; }
 
   // Aggregates (exam mode only for meaningful stats)
   const examSessions = sessions.filter(s => s.modeType === 'exam');
@@ -187,4 +189,99 @@ function bindAccordions(el) {
       chevron.style.transform = isOpen ? '' : 'rotate(90deg)';
     });
   });
+}
+
+// ===== PROGRESS (score over time + per-domain trend) =====
+
+const PROGRESS_SESSIONS = 20;  // points on the chart
+const TREND_WINDOW      = 5;   // sessions compared: last N vs the N before
+
+function renderProgress(el, sessions) {
+  const chrono = sessions.slice(0, PROGRESS_SESSIONS).reverse();   // oldest → newest
+  if (chrono.length < 2) {
+    el.innerHTML = '<p class="stats-empty">Complete at least two quizzes to see your progress.</p>';
+    return;
+  }
+  el.innerHTML = `${progressChart(chrono)}${domainTrend(sessions)}`;
+  bindProgressTooltip(el, chrono);
+}
+
+// Single-series line chart, 0–100% y axis, dashed line at the passing threshold
+function progressChart(points) {
+  const W = 400, H = 140, L = 30, R = 8, T = 10, B = 18;
+  const x = i => L + (points.length === 1 ? 0 : i * (W - L - R) / (points.length - 1));
+  const y = v => T + (100 - v) * (H - T - B) / 100;
+  const path = points.map((s, i) => `${i ? 'L' : 'M'}${x(i).toFixed(1)},${y(s.score).toFixed(1)}`).join(' ');
+  const grid = [0, 50, 100].map(v => `
+    <line class="pg-grid" x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}"/>
+    <text class="pg-axis" x="${L - 6}" y="${y(v) + 3}" text-anchor="end">${v}%</text>`).join('');
+  const dots = points.map((s, i) => `
+    <circle class="pg-dot" cx="${x(i)}" cy="${y(s.score)}" r="4"/>
+    <circle class="pg-hit" cx="${x(i)}" cy="${y(s.score)}" r="12" data-i="${i}"/>`).join('');
+  return `
+    <div class="pg-chart">
+      <div class="pg-title">Score per session (last ${points.length})</div>
+      <svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Score per session over time">
+        ${grid}
+        <line class="pg-pass" x1="${L}" x2="${W - R}" y1="${y(cert.passPct)}" y2="${y(cert.passPct)}"/>
+        <text class="pg-pass-label" x="${L + 4}" y="${y(cert.passPct) - 4}">pass ${cert.passPct}%</text>
+        <path class="pg-line" d="${path}"/>
+        ${dots}
+      </svg>
+      <div class="pg-tip" style="display:none"></div>
+    </div>`;
+}
+
+function bindProgressTooltip(el, points) {
+  const tip = el.querySelector('.pg-tip');
+  const MODE_LABEL = { 65: 'Full', 35: 'Short', 15: 'Flash' };
+  el.querySelectorAll('.pg-hit').forEach(hit => {
+    hit.addEventListener('mouseenter', () => {
+      const s    = points[Number(hit.dataset.i)];
+      const date = new Date(s.date).toLocaleDateString('it-IT', { day: '2-digit', month: 'short' });
+      tip.textContent = `${date} · ${s.modeType === 'practice' ? 'Practice' : 'Exam'} ${MODE_LABEL[s.mode] || s.mode} · ${s.correct}/${s.total} · ${s.score}%`;
+      const box = el.querySelector('.pg-chart').getBoundingClientRect();
+      const dot = hit.getBoundingClientRect();
+      tip.style.display = 'block';
+      tip.style.left = `${Math.min(dot.left - box.left + dot.width / 2, box.width - tip.offsetWidth / 2)}px`;
+      tip.style.top  = `${dot.top - box.top - 6}px`;
+    });
+    hit.addEventListener('mouseleave', () => { tip.style.display = 'none'; });
+  });
+}
+
+// Per domain: accuracy over the last TREND_WINDOW sessions vs the TREND_WINDOW before
+function domainTrend(sessions) {
+  const accuracy = (list, d) => {
+    let c = 0, t = 0;
+    list.forEach(s => { const v = (s.domains || {})[d]; if (v) { c += v.correct; t += v.total; } });
+    return t ? Math.round(100 * c / t) : null;
+  };
+  const recent = sessions.slice(0, TREND_WINDOW);
+  const before = sessions.slice(TREND_WINDOW, TREND_WINDOW * 2);
+
+  const rows = cert.domains.map(d => {
+    const now  = accuracy(recent, d.name);
+    if (now === null) return '';
+    const prev  = accuracy(before, d.name);
+    const delta = prev === null ? null : now - prev;
+    const trend = delta === null ? '<span class="pg-delta">—</span>'
+      : delta > 0 ? `<span class="pg-delta pg-up">▲ +${delta}</span>`
+      : delta < 0 ? `<span class="pg-delta pg-down">▼ ${delta}</span>`
+      : '<span class="pg-delta">= 0</span>';
+    const color = scoreColor(now);
+    return `
+      <div class="sr-domain-row">
+        <span class="sr-domain-name">${esc(d.short)}</span>
+        <div class="sr-domain-bar-wrap"><div class="sr-domain-bar" style="width:${now}%;background:${color}"></div></div>
+        <span class="pg-domain-pct">${now}%</span>
+        ${trend}
+      </div>`;
+  }).join('');
+
+  return `
+    <div class="pg-domains">
+      <div class="pg-title">By domain — last ${Math.min(TREND_WINDOW, sessions.length)} sessions vs previous ${TREND_WINDOW}</div>
+      ${rows}
+    </div>`;
 }
