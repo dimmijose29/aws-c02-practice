@@ -40,7 +40,7 @@ const CERTS = {
       { name: 'Design Cost-Optimized Architectures',  short: 'Cost-Optimized',  label: 'Cost-Optimized',  icon: '💰', weight: 20 },
     ],
     questions:  () => SAA_QUESTION_BANK,
-    cheatsheet: () => null,   // not written yet — the cheat sheet button is hidden
+    cheatsheet: () => SAA_CHEATSHEET,
   },
 };
 
