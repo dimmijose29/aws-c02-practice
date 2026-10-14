@@ -6,7 +6,7 @@
   
   **Simulatore d'esame per le certificazioni AWS Cloud Practitioner (CLF-C02) e Solutions Architect – Associate (SAA-C03)**
 
-  ![Questions](https://img.shields.io/badge/questions-800-orange)
+  ![Questions](https://img.shields.io/badge/questions-950-orange)
   ![Domains](https://img.shields.io/badge/domains-4-blue)
   ![No Backend](https://img.shields.io/badge/backend-none-green)
   ![License](https://img.shields.io/badge/license-MIT-lightgrey)
@@ -45,15 +45,15 @@ Ogni simulazione estrae le domande casualmente dalla bank, la cui composizione r
 
 | Dominio | Peso ufficiale | Domande nel bank |
 |---|---|---|
-| Design Secure Architectures | 30% | 90 |
-| Design Resilient Architectures | 26% | 78 |
-| Design High-Performing Architectures | 24% | 72 |
-| Design Cost-Optimized Architectures | 20% | 60 |
-| **Totale** | **100%** | **300** |
+| Design Secure Architectures | 30% | 135 |
+| Design Resilient Architectures | 26% | 117 |
+| Design High-Performing Architectures | 24% | 108 |
+| Design Cost-Optimized Architectures | 20% | 90 |
+| **Totale** | **100%** | **450** |
 
 ## Funzionalità
 
-- ✅ 800 domande originali (500 CLF-C02 + 300 SAA-C03) con spiegazione dettagliata per ogni opzione
+- ✅ 950 domande originali (500 CLF-C02 + 450 SAA-C03) con spiegazione dettagliata per ogni opzione
 - ✅ Le nuove simulazioni danno la precedenza alle domande non ancora viste
 - ✅ Esame in corso salvato: si riprende dopo un ricaricamento o una chiusura della scheda
 - ✅ Andamento della preparazione (grafico del punteggio e variazione per dominio)
@@ -99,7 +99,7 @@ aws-c02-practice/
 │   └── style.css       # Tutti gli stili
 ├── js/
 │   ├── questions.js    # Bank CLF-C02 (500 domande)
-│   ├── questions-saa.js # Bank SAA-C03 (300 domande)
+│   ├── questions-saa.js # Bank SAA-C03 (450 domande)
 │   ├── session.js      # Quiz in corso e domande già viste (localStorage)
 │   ├── certs.js        # Configurazione per certificazione
 │   ├── state.js        # Stato globale dell'applicazione
