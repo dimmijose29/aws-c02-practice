@@ -370,7 +370,9 @@ document.getElementById('stats-tabs').addEventListener('click', e => {
 // Certification switch (only shown when more than one cert is available)
 const certSwitch = document.getElementById('cert-switch');
 if (Object.keys(CERTS).length > 1) {
-  certSwitch.innerHTML = Object.values(CERTS).map(c =>
+  // Ordered by exam version suffix (C01, C02, C03…), independent of the order in CERTS
+  const byVersion = (a, b) => a.code.slice(-2).localeCompare(b.code.slice(-2)) || a.code.localeCompare(b.code);
+  certSwitch.innerHTML = Object.values(CERTS).sort(byVersion).map(c =>
     `<button class="cert-btn" data-cert="${c.id}">
        <span class="cert-btn-name">${esc(c.shortName)}</span>
        <span class="cert-btn-code">${c.code}</span>
