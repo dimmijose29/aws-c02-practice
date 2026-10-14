@@ -1604,40 +1604,40 @@ const QUESTION_BANK = [
     id: 80,
     domain: "Billing, Pricing & Support",
     type: "single",
-    question: "A financial company runs mission-critical trading systems on AWS. It wants 24/7 phone, chat, and email access to Cloud Support Engineers, plus a designated Technical Account Manager (TAM) who proactively reviews its architecture and operations. Which AWS Support plan meets these requirements?",
+    question: "A global manufacturer runs business-critical workloads on AWS across several business units. It wants 24/7 technical support plus a designated Technical Account Manager (TAM) who knows its environment and gives proactive guidance. It does not need dedicated incident management engineers or domain specialist engineers. Which AWS Support plan is the BEST fit?",
     options: [
-      "Basic Support",
-      "Developer Support",
-      "Business Support",
-      "Enterprise Support"
+      "AWS Business Support+",
+      "AWS Enterprise Support",
+      "AWS Unified Operations",
+      "Basic Support"
     ],
-    correct: [3],
-    explanation: "Enterprise Support includes 24/7 phone, chat, and email access to Cloud Support Engineers and a designated Technical Account Manager who provides proactive guidance. It also has the fastest response times for business-critical outages.",
+    correct: [1],
+    explanation: "AWS Enterprise Support is aimed at business-critical workloads across organizations that want expert guidance, and it includes a designated Technical Account Manager. Business Support+ provides 24/7 technical support without a TAM, while Unified Operations adds incident management and domain specialist engineers for mission-critical workloads.",
     optionExplanations: [
-      "Basic Support includes only account and billing support, documentation, and a limited set of Trusted Advisor checks. It has no technical support engineers or TAM.",
-      "Developer Support offers email access to technical support during business hours. It has no 24/7 phone support and no TAM.",
-      "Business Support includes 24/7 access to Cloud Support Engineers, but it does not include a designated TAM.",
-      "Correct — Enterprise Support combines 24/7 technical support with a designated TAM who gives proactive guidance."
+      "Business Support+ is the minimum recommended plan for production workloads and offers 24/7 technical support, but it does not include a designated TAM.",
+      "Correct — Enterprise Support is designed for business-critical workloads across organizations and includes a designated TAM who gives proactive guidance.",
+      "Unified Operations adds designated domain specialist engineers and incident management engineers for mission-critical workloads, which the company says it does not need.",
+      "Basic Support includes customer service, documentation, and AWS re:Post, but no technical support engineers and no TAM."
     ]
   },
   {
     id: 81,
     domain: "Billing, Pricing & Support",
     type: "single",
-    question: "A small company just signed up for AWS and wants the minimum level of support to access AWS documentation, whitepapers, and support forums. Which plan should they choose?",
+    question: "A company's operations team uses its own incident management system. Instead of having staff check a console, it wants the system to automatically retrieve information about AWS scheduled maintenance and service issues that affect the company's resources. What should the company use?",
     options: [
-      "Basic Support (free)",
-      "Developer Support",
-      "Business Support",
-      "Enterprise On-Ramp Support"
+      "AWS Health API",
+      "AWS CloudTrail",
+      "AWS Trusted Advisor",
+      "AWS Config"
     ],
     correct: [0],
-    explanation: "AWS Basic Support is free and included for all AWS customers. It provides access to documentation, whitepapers, AWS re:Post (community forums), AWS Personal Health Dashboard, and the six core Trusted Advisor checks. It does not include access to Cloud Support Engineers.",
+    explanation: "AWS Health provides a personalized view of events, such as scheduled maintenance and service issues, that affect the resources in an account. The AWS Health Dashboard shows these events in the console, and the AWS Health API lets tools and systems retrieve them programmatically.",
     optionExplanations: [
-      "Correct — Basic Support is free for all AWS accounts and provides documentation, AWS re:Post, Personal Health Dashboard, and 6 core Trusted Advisor checks with no monthly fee.",
-      "Developer Support ($29/month minimum) provides email-based technical support — it costs money and is more than needed just for documentation access.",
-      "Business Support ($100/month minimum) provides 24/7 phone, chat, and email to engineers — significantly more expensive and comprehensive than needed.",
-      "Enterprise On-Ramp Support carries a substantial monthly cost and includes a pool of TAMs — far beyond the minimum documentation and forums access needed."
+      "Correct — the AWS Health API gives programmatic access to the same personalized events shown in the AWS Health Dashboard.",
+      "CloudTrail records the API calls made in the account for auditing. It does not report AWS service issues or scheduled maintenance.",
+      "Trusted Advisor checks the account against best practices for cost, security, and quotas. It does not report AWS service events.",
+      "AWS Config records and evaluates resource configurations. It does not provide information about AWS maintenance or service issues."
     ]
   },
   {
@@ -1684,20 +1684,20 @@ const QUESTION_BANK = [
     id: 84,
     domain: "Billing, Pricing & Support",
     type: "single",
-    question: "Which AWS offering allows new customers to explore and try certain AWS services for free for 12 months following initial sign-up, with a defined monthly limit?",
+    question: "A student is creating a new AWS account to learn cloud skills. She wants to use the credits that AWS offers to new customers, and she must be certain that the account cannot generate any charges. Which option should she choose when she signs up?",
     options: [
-      "AWS Spot Instances",
-      "AWS Free Tier",
-      "AWS On-Demand pricing",
-      "AWS Dev/Test accounts"
+      "The Paid account plan",
+      "The Free account plan",
+      "The Basic Support plan",
+      "A No Upfront Savings Plan"
     ],
     correct: [1],
-    explanation: "The AWS Free Tier provides 12-month free access to certain services (like 750 hours/month of EC2 t2.micro, 5 GB of S3, and 25 GB of DynamoDB) for new accounts. It also includes always-free offers (like Lambda's 1M free requests/month) and short-term trials for some services.",
+    explanation: "New AWS customers choose between a Free plan and a Paid plan. The Free plan provides credits that can be used for up to six months and incurs no charges; the account closes when that period ends or the credits run out unless it is upgraded to the Paid plan. Always free offers are available on both plans.",
     optionExplanations: [
-      "Spot Instances use spare EC2 capacity at a discount but always charge for usage — they are a purchasing model, not a free tier program.",
-      "Correct — The AWS Free Tier includes 12-month free offers for new accounts (e.g., 750 hrs/month EC2 t2.micro, 5 GB S3), plus always-free and short-term trial offers.",
-      "On-Demand pricing is the standard pay-per-use model — it always charges for usage and is not a free offering.",
-      "AWS does not have a specific 'Dev/Test accounts' free program — the Free Tier is the relevant offering for exploring AWS at no cost."
+      "The Paid plan lets the account use AWS beyond the free offers and be charged for that usage, so it does not guarantee zero charges.",
+      "Correct — the Free plan gives new customers credits to explore AWS and does not charge the account.",
+      "Basic Support is the support plan included with every account. It does not determine whether the account can incur charges for AWS usage.",
+      "A Savings Plan is a commitment to a consistent amount of usage in exchange for lower prices. It creates charges rather than preventing them."
     ]
   },
   {
@@ -2696,20 +2696,20 @@ const QUESTION_BANK = [
     id: 134,
     domain: "Security & Compliance",
     type: "single",
-    question: "A company has dozens of AWS accounts and uses Amazon GuardDuty, Amazon Inspector, and Amazon Macie. The security team is tired of checking each service in each account separately. It wants one place that collects, normalizes, and prioritizes all these findings and also runs automated checks against security standards. Which AWS service should the team use?",
+    question: "A company's security team already uses a specific vendor's endpoint protection product on premises. It wants to deploy the same vendor's product in its AWS accounts, choosing from curated listings it can subscribe to quickly, with the charges added to its AWS bill. Where should the team find the product?",
     options: [
-      "AWS Config aggregator",
-      "Amazon Detective",
       "AWS Security Hub",
-      "AWS CloudTrail Lake"
+      "AWS Marketplace",
+      "AWS Artifact",
+      "AWS Firewall Manager"
     ],
-    correct: [2],
-    explanation: "AWS Security Hub aggregates security findings from GuardDuty, Inspector, Macie, and partner tools across accounts and Regions into one normalized view. It also runs automated checks against standards such as the CIS AWS Foundations Benchmark.",
+    correct: [1],
+    explanation: "AWS Marketplace is a curated digital catalog where customers find, buy, and deploy third-party software, including many security products such as endpoint protection, firewalls, and vulnerability scanners. Charges appear on the AWS bill, and products can be deployed directly into AWS accounts.",
     optionExplanations: [
-      "A Config aggregator collects configuration and compliance data from AWS Config across accounts. It does not aggregate findings from GuardDuty, Inspector, and Macie.",
-      "Detective helps investigate the root cause of a specific finding. It is not the central dashboard that aggregates and prioritizes findings.",
-      "Correct — Security Hub gives the team one central, prioritized view of findings from all these services across accounts.",
-      "CloudTrail Lake stores and queries API activity events. It does not aggregate findings from the security services."
+      "Security Hub collects and prioritizes findings, including findings from partner tools, but it does not sell or deploy third-party products.",
+      "Correct — AWS Marketplace offers third-party security software that customers can find, subscribe to, and deploy, with charges on their AWS bill.",
+      "AWS Artifact provides AWS compliance reports and agreements. It does not offer third-party security products.",
+      "Firewall Manager centrally manages firewall rules, such as AWS WAF rules, across accounts. It is not a catalog of third-party security software."
     ]
   },
   {
@@ -3788,40 +3788,40 @@ const QUESTION_BANK = [
     id: 188,
     domain: "Billing, Pricing & Support",
     type: "single",
-    question: "Which AWS Support plan provides email-based technical support during business hours, designed for development and testing in non-production environments?",
+    question: "A regional retailer wants hands-on help to migrate its applications to AWS. Leadership prefers to hire a local third-party consulting firm with AWS-validated expertise rather than consultants employed by AWS. Where should the retailer look for such a firm?",
     options: [
-      "Basic Support",
-      "Developer Support",
-      "Business Support",
-      "Enterprise On-Ramp Support"
+      "AWS Professional Services",
+      "AWS Partner Network",
+      "AWS re:Post community",
+      "AWS Trust & Safety team"
     ],
     correct: [1],
-    explanation: "Developer Support provides email-based technical support during business hours with response times of less than 24 hours for general guidance and 12 hours for impaired system cases. It does not include phone or chat access to Cloud Support Engineers and is designed for development/test environments.",
+    explanation: "The AWS Partner Network (APN) is the global community of partners, including consulting firms, that build solutions and deliver services on AWS. AWS validates partner expertise through programs such as AWS Competencies, which helps customers choose a qualified partner. AWS Professional Services, by contrast, is made up of AWS employees.",
     optionExplanations: [
-      "Basic Support provides only documentation and forum access — it has no technical support contacts or case-based email support.",
-      "Correct — Developer Support provides email-based technical support during business hours, designed for development and testing in non-production environments.",
-      "Business Support provides 24/7 phone, chat, and email access to engineers — more than needed for a dev/test environment and significantly more expensive.",
-      "Enterprise On-Ramp provides a pool of TAMs and faster response SLAs — designed for production workloads, not development environments."
+      "AWS Professional Services is a team of experts employed by AWS, which is exactly what leadership wants to avoid.",
+      "Correct — the AWS Partner Network includes consulting partners whose expertise AWS validates, so the retailer can find a qualified local firm.",
+      "re:Post is a community Q&A service. It answers questions but does not provide a firm to carry out the migration.",
+      "The Trust & Safety team handles reports of abuse coming from AWS resources. It does not recommend consulting firms."
     ]
   },
   {
     id: 189,
     domain: "Billing, Pricing & Support",
     type: "single",
-    question: "A mid-sized company is moving its customer-facing production systems to AWS. It needs 24/7 phone, chat, and email access to Cloud Support Engineers and a response within one hour if a production system goes down, and it wants the lowest-cost plan that provides this. Which AWS Support plan should it choose?",
+    question: "A mid-sized company is about to move its customer-facing production systems to AWS. Today it has only the Support plan that comes with every account. It wants 24/7 access to AWS technical support by phone, chat, and email, and it wants the plan that AWS recommends as the minimum for production workloads. Which plan should it choose?",
     options: [
-      "Developer Support",
-      "Business Support",
-      "Enterprise On-Ramp Support",
-      "Enterprise Support"
+      "Basic Support",
+      "AWS Business Support+",
+      "AWS Enterprise Support",
+      "AWS Unified Operations"
     ],
     correct: [1],
-    explanation: "Business Support is the lowest-cost AWS Support plan that provides 24/7 phone, chat, and email access to Cloud Support Engineers and a response time of under one hour for production system-down cases. It also includes the full set of AWS Trusted Advisor checks. The Enterprise plans include these features but cost more.",
+    explanation: "AWS positions Business Support+ as the minimum recommended plan for production workloads. It provides 24/7 technical support by phone, web, chat, and email, with faster responses when a production system is down. Enterprise Support and Unified Operations add more expertise for business-critical and mission-critical workloads.",
     optionExplanations: [
-      "Developer Support offers email access to support during business hours only and no one-hour response for production outages.",
-      "Correct — Business Support is the most cost-effective plan with 24/7 phone, chat, and email access and under one-hour response for production outages.",
-      "Enterprise On-Ramp also meets these requirements, but it costs more because it adds services such as access to a pool of Technical Account Managers.",
-      "Enterprise Support meets the requirements too, but it is the most expensive plan, with a designated Technical Account Manager the company did not ask for."
+      "Basic Support is the plan the company already has. It includes customer service and documentation but not 24/7 technical support from AWS engineers.",
+      "Correct — Business Support+ is the minimum recommended plan for production workloads and includes 24/7 phone, web, chat, and email technical support.",
+      "Enterprise Support also includes 24/7 technical support, but it targets business-critical workloads and adds a designated TAM that the company did not ask for.",
+      "Unified Operations is designed for mission-critical workloads that need incident management and domain specialist engineers, far beyond the stated need."
     ]
   },
   {
@@ -3988,62 +3988,62 @@ const QUESTION_BANK = [
     id: 198,
     domain: "Billing, Pricing & Support",
     type: "single",
-    question: "A developer is designing a small hobby project that should keep running for years. She wants to use only AWS Free Tier offers that do not expire after an introductory period and that are available to all AWS customers. Which type of AWS Free Tier offer should she look for?",
+    question: "A developer is designing a small hobby project that should keep running for years. She wants to rely only on AWS Free Tier offers that do not expire after an introductory period. Which type of AWS Free Tier offer should she look for?",
     options: [
-      "12-month free tier",
-      "Always free",
-      "Free trials",
-      "Free Tier promotional credits"
+      "Always free offers",
+      "Free plan sign-up credits",
+      "Short-term free trials",
+      "Staying on the Free plan"
     ],
-    correct: [1],
-    explanation: "Always free offers do not expire and are available to all AWS customers, within monthly usage limits. Some services, such as AWS Lambda, include an always-free amount of usage. Other Free Tier offers, such as 12-month offers, short-term free trials, and credits, end after a set period.",
+    correct: [0],
+    explanation: "The AWS Free Tier includes always free offers for more than 30 services, available within monthly limits on both the Free plan and the Paid plan. Credits and short-term trials end after a set period, and a Free plan account closes after six months unless it is upgraded, so a long-running project should stay within always free limits on a Paid plan account.",
     optionExplanations: [
-      "12-month offers end one year after account creation, so they would not keep the project free for years.",
-      "Correct — always free offers have no expiration date and are available to all customers.",
-      "Free trials are short-term offers for specific services that end after the trial period.",
-      "Promotional credits are used up or expire after a period, so they do not keep the project free for years."
+      "Correct — always free offers remain available within monthly usage limits and do not expire, on both the Free plan and the Paid plan.",
+      "Free plan credits can be used for up to six months and run out as they are spent, so they cannot keep a project free for years.",
+      "Short-term free trials apply to selected services for a limited period, so they end long before the project does.",
+      "A Free plan account closes after six months or when its credits run out unless it is upgraded, so it cannot host a project for years."
     ]
   },
   {
     id: 199,
     domain: "Billing, Pricing & Support",
     type: "single",
-    question: "Which AWS support resource provides a community-based Q&A platform where customers can ask technical questions and get answers from AWS experts and the broader community?",
+    question: "A developer at a small company on Basic Support is stuck on a configuration question that is not urgent. She wants to post the question publicly and get answers from AWS experts and other community members, without opening a paid support case. Which AWS resource should she use?",
     options: [
-      "AWS IQ",
       "AWS re:Post",
       "AWS Knowledge Center",
-      "AWS Premium Support"
+      "AWS Trust & Safety team",
+      "AWS Health Dashboard"
     ],
-    correct: [1],
-    explanation: "AWS re:Post (formerly the AWS Developer Forums) is a community-based Q&A service where customers can ask technical questions and get answers from AWS experts and community members. It is accessible to all AWS customers including those on the Basic (free) support plan.",
+    correct: [0],
+    explanation: "AWS re:Post is a community-driven question-and-answer service where customers get answers from AWS experts and community members. It is available to every AWS customer as part of Basic Support, so no paid plan is needed.",
     optionExplanations: [
-      "AWS IQ connects customers with AWS-certified third-party experts for paid project work — it is not a free community Q&A forum.",
-      "Correct — AWS re:Post is a community-based Q&A platform (successor to AWS Developer Forums) where anyone can ask and answer technical questions, accessible on all support tiers.",
-      "AWS Knowledge Center is a curated collection of FAQs with AWS-authored answers — it is read-only and not a community-driven discussion platform.",
-      "AWS Premium Support (Business/Enterprise) provides access to Cloud Support Engineers via official support cases — it is not a community forum."
+      "Correct — AWS re:Post lets anyone ask questions and get answers from AWS experts and the community, and it is included with Basic Support.",
+      "The Knowledge Center offers AWS-authored articles and videos about common questions. It is not where she posts her own question for community answers.",
+      "The Trust & Safety team handles reports of abuse coming from AWS resources. It does not answer technical configuration questions.",
+      "The AWS Health Dashboard shows events that affect AWS services and the account's resources. It is not a question-and-answer forum."
     ]
   },
   {
     id: 200,
     domain: "Billing, Pricing & Support",
     type: "multiple",
-    question: "A startup uses the AWS Developer Support plan. As its production workload grows, it is considering an upgrade to the Business Support plan. Which benefits would the startup gain by upgrading that it does NOT have with Developer Support? (Select TWO)",
+    question: "A startup has used the Basic Support plan while building its product. Before launching to production, it upgrades to AWS Business Support+. Which benefits does the startup gain that Basic Support does NOT include? (Select TWO)",
     options: [
-      "Access to AWS documentation and whitepapers",
-      "24/7 phone and chat access to Cloud Support Engineers",
-      "Access to the full set of AWS Trusted Advisor checks",
-      "Access to the AWS re:Post community forums",
-      "Email access to technical support during business hours"
+      "Access to AWS documentation and technical whitepapers",
+      "24/7 technical support by phone, chat, and email",
+      "Architecture guidance tailored to its use cases",
+      "Access to the AWS re:Post community",
+      "A designated Technical Account Manager (TAM)"
     ],
     correct: [1, 2],
-    explanation: "Business Support adds 24/7 phone, chat, and email access to Cloud Support Engineers and the full set of AWS Trusted Advisor checks. It also offers faster response times for production systems. Developer Support offers technical support by email during business hours and only a limited set of Trusted Advisor checks.",
+    explanation: "Basic Support gives every customer customer service, documentation, whitepapers, AWS re:Post, AWS Trusted Advisor core checks, and AWS Health. Business Support+, the minimum recommended plan for production workloads, adds 24/7 technical support and architectural guidance contextual to the customer's use cases. A designated TAM requires Enterprise Support.",
     optionExplanations: [
-      "Documentation and whitepapers are available to every customer, including Basic Support. The startup already has them.",
-      "Correct — Business Support adds 24/7 phone and chat access to Cloud Support Engineers, which Developer Support does not include.",
-      "Correct — Business Support unlocks the full set of Trusted Advisor checks; Developer Support has only a limited set.",
-      "AWS re:Post is available to all customers, so the startup already has it.",
-      "Business-hours email access to technical support is already part of Developer Support, so the startup gains nothing new here."
+      "Documentation and whitepapers are available to every customer through Basic Support, so the startup already has them.",
+      "Correct — Business Support+ adds 24/7 technical support by phone, web, chat, and email, which Basic Support does not include.",
+      "Correct — Business Support+ provides architectural guidance contextual to the customer's own use cases.",
+      "AWS re:Post is part of Basic Support and open to all customers, so the startup already has it.",
+      "A designated TAM is a feature of Enterprise Support, not of Business Support+."
     ]
   },
 
@@ -4701,7 +4701,7 @@ const QUESTION_BANK = [
       "It guarantees a fixed, predictable monthly cost",
       "It trades upfront CapEx for ongoing variable OpEx",
       "It eliminates all infrastructure costs for the customer",
-      "It provides free tier access indefinitely"
+      "It gives free access to every AWS service indefinitely"
     ],
     correct: [1],
     explanation: "Pay-as-you-go converts CapEx (buying servers) to OpEx (paying for usage). This improves cash flow, removes financial risk of over-buying, and aligns costs with actual business value delivered.",
@@ -4709,7 +4709,7 @@ const QUESTION_BANK = [
       "Pay-as-you-go does not guarantee a fixed monthly cost — your bill varies with usage, which is the opposite of a fixed cost.",
       "Correct — Pay-as-you-go converts large upfront CapEx (buying servers) to smaller ongoing OpEx (paying for what you use), improving cash flow and reducing financial risk.",
       "Pay-as-you-go does not eliminate all infrastructure costs — you still pay for the resources you consume; it only changes how costs are structured (variable vs. fixed).",
-      "The Free Tier provides limited free access for new or all accounts, but it is not a feature of the pay-as-you-go pricing model and is not indefinitely free."
+      "Pay-as-you-go charges for what you use. Free usage comes only from AWS Free Tier offers, which are a separate program with their own limits."
     ]
   },
   {
@@ -5025,20 +5025,20 @@ const QUESTION_BANK = [
     id: 255,
     domain: "Security & Compliance",
     type: "single",
-    question: "After an outage, a company's operations team needs to see exactly how a security group was configured last Tuesday and every change made to it since then. The team also wants to be alerted automatically when resources drift from the company's required settings. Which AWS service should the team use?",
+    question: "An application running on Amazon EC2 instances needs to read files from an Amazon S3 bucket. A developer plans to save an IAM user's access keys in a configuration file on each instance. What should the company do instead to follow AWS security best practices?",
     options: [
-      "AWS CloudTrail",
-      "Amazon CloudWatch",
-      "AWS Config",
-      "AWS Trusted Advisor"
+      "Attach an IAM role to the instances",
+      "Use the root user's access keys",
+      "Make the S3 bucket publicly readable",
+      "Email the keys to each administrator"
     ],
-    correct: [2],
-    explanation: "AWS Config continuously records the configuration of AWS resources and keeps a history of changes, so the team can see a resource's state at any point in time. Config rules evaluate resources against desired settings and flag non-compliant resources.",
+    correct: [0],
+    explanation: "An IAM role attached to EC2 instances gives the application temporary credentials that AWS rotates automatically, so no long-term access keys are stored on the instances. The role's policy can grant only the S3 permissions the application needs.",
     optionExplanations: [
-      "CloudTrail records the API calls that made changes. It does not show the full configuration of the security group at a point in time or evaluate it against desired settings.",
-      "CloudWatch collects metrics, logs, and alarms about performance. It does not keep a history of resource configurations.",
-      "Correct — Config shows the security group's configuration history and evaluates resources against rules for the required settings.",
-      "Trusted Advisor runs best-practice checks on the account. It does not keep a configuration timeline for each resource or evaluate custom required settings."
+      "Correct — an IAM role provides temporary, automatically rotated credentials to the instances, so no access keys need to be stored.",
+      "The root user's keys have unrestricted access to the account and should never be used by applications.",
+      "A public bucket would let anyone on the internet read the files, which is far less secure.",
+      "Sharing long-term keys by email increases the risk of leaks and still leaves keys stored on the instances."
     ]
   },
   {
@@ -6919,20 +6919,20 @@ const QUESTION_BANK = [
     id: 360,
     domain: "Cloud Technology & Services",
     type: "single",
-    question: "A company's on-premises applications save files to a local file server that is running out of space. The company wants the applications to keep using standard file-share protocols while the data is stored in Amazon S3, with frequently used files cached locally. Which AWS service should it use?",
+    question: "A logistics company receives daily shipment files from dozens of business partners, who upload them over SFTP to an on-premises server. The company wants to retire this server while partners keep using SFTP unchanged, with the files stored directly in Amazon S3 and no servers to manage. Which AWS service should it use?",
     options: [
       "AWS DataSync",
-      "Amazon Elastic File System (Amazon EFS)",
+      "AWS Transfer Family",
       "AWS Storage Gateway",
-      "AWS Direct Connect"
+      "Amazon S3 Transfer Acceleration"
     ],
-    correct: [2],
-    explanation: "AWS Storage Gateway is a hybrid cloud storage service. Its file gateway presents standard file shares (NFS or SMB) to on-premises applications, stores the data in Amazon S3, and keeps a local cache of frequently accessed files for low-latency access.",
+    correct: [1],
+    explanation: "AWS Transfer Family is a fully managed service for file transfers over protocols such as SFTP, FTPS, and FTP directly into and out of Amazon S3 or Amazon EFS. Partners keep their existing SFTP workflows, and the company no longer manages a file transfer server.",
     optionExplanations: [
-      "DataSync transfers data between on-premises storage and AWS; it does not present an ongoing file share with a local cache.",
-      "EFS is a managed file system for AWS compute; it does not keep data in S3 or provide a local cache for on-premises applications.",
-      "Correct — Storage Gateway gives on-premises applications standard file shares backed by S3, with frequently used files cached locally.",
-      "Direct Connect is a dedicated network connection to AWS; it does not provide storage or file shares."
+      "DataSync moves data between storage systems, for example during a migration. It does not give external partners a managed SFTP endpoint.",
+      "Correct — Transfer Family provides a fully managed SFTP endpoint that stores the uploaded files directly in Amazon S3.",
+      "Storage Gateway gives on-premises applications file shares backed by S3. It is not a managed SFTP endpoint for external partners.",
+      "Transfer Acceleration speeds up uploads to S3 over long distances, but partners would have to switch from SFTP to S3 uploads."
     ]
   },
   {
@@ -7228,50 +7228,60 @@ const QUESTION_BANK = [
     id: 377,
     domain: "Billing, Pricing & Support",
     type: "single",
-    question: "Which AWS support plan provides a dedicated Technical Account Manager (TAM) and proactive guidance for enterprise customers?",
-    options: ["Basic", "Developer", "Business", "Enterprise"],
+    question: "A payment processor runs mission-critical workloads where even short outages are very costly. It wants its AWS Support plan to provide designated domain specialist engineers who know its applications, incident management engineers who engage within minutes during critical incidents, and continuous resiliency reviews. Which AWS Support plan meets these requirements?",
+    options: [
+      "Basic Support",
+      "AWS Business Support+",
+      "AWS Enterprise Support",
+      "AWS Unified Operations"
+    ],
     correct: [3],
-    explanation: "Enterprise Support includes a dedicated Technical Account Manager (TAM) who provides proactive guidance, architectural reviews, and coordinates access to AWS subject matter experts. It also includes Concierge Support and Infrastructure Event Management.",
+    explanation: "AWS Unified Operations is the Support option for mission-critical workloads that need enhanced resilience and application-specific expertise. It adds designated domain specialist engineers, incident management engineers who respond within minutes to critical incidents, and continuous architectural and resiliency reviews.",
     optionExplanations: [
-      "Basic Support is free and provides no technical support contacts — only documentation and community forums, no account management.",
-      "Developer Support provides email-based general guidance — no dedicated TAM or proactive account-level management.",
-      "Business Support provides 24/7 access to Cloud Support Engineers but does not include a dedicated TAM — proactive guidance is not a built-in feature.",
-      "Correct — Enterprise Support includes a dedicated Technical Account Manager (TAM) who provides proactive guidance, reviews, and coordinates specialized AWS subject matter experts."
+      "Basic Support covers customer service, documentation, AWS re:Post, and Trusted Advisor core checks. It has no engineers assigned to the company's workloads.",
+      "Business Support+ is the minimum recommended plan for production workloads, with 24/7 technical support, but it has no designated domain specialists or incident management engineers.",
+      "Enterprise Support provides a designated TAM and consultative reviews for business-critical workloads, but the domain specialist and incident management engineers described are part of Unified Operations.",
+      "Correct — Unified Operations is designed for mission-critical workloads, with domain specialist engineers, incident management engineers, and continuous resiliency reviews."
     ]
   },
   {
     id: 378,
     domain: "Billing, Pricing & Support",
     type: "single",
-    question: "What is the minimum monthly cost for AWS Business Support?",
-    options: ["Free", "$29/month", "$100/month", "$15,000/month"],
-    correct: [2],
-    explanation: "AWS Business Support starts at $100/month (or a percentage of AWS usage, whichever is greater). It includes 24/7 phone, chat, and email access to Cloud Support Engineers and full Trusted Advisor checks.",
+    question: "A development team stops its Amazon EBS-backed EC2 On-Demand instances every evening and over weekends to save money. While the instances are stopped, which cost continues to accrue?",
+    options: [
+      "Hourly compute charges for the instances",
+      "Storage charges for the attached EBS volumes",
+      "Data transfer charges for incoming internet traffic",
+      "License charges included in the instance hourly price"
+    ],
+    correct: [1],
+    explanation: "When an EBS-backed instance is stopped, AWS stops charging for instance usage, but its EBS volumes still exist and continue to incur storage charges. To remove that cost as well, the team would need to delete volumes it no longer needs, for example after taking snapshots.",
     optionExplanations: [
-      "Basic Support is free — Business Support always carries a minimum monthly fee.",
-      "$29/month is the minimum for Developer Support, not Business Support.",
-      "Correct — Business Support starts at $100/month (or a percentage of AWS usage, whichever is greater), providing 24/7 engineer access and full Trusted Advisor checks.",
-      "$15,000/month is closer to the Enterprise Support minimum — Business Support is much less expensive."
+      "Compute charges for an On-Demand instance stop while the instance is in the stopped state.",
+      "Correct — the EBS volumes remain provisioned while the instance is stopped, so their storage is still billed.",
+      "Inbound data transfer from the internet is generally not charged, and a stopped instance is not receiving traffic anyway.",
+      "Software licenses included in the instance price, such as a Windows license, are billed with instance usage, so they stop too."
     ]
   },
   {
     id: 379,
     domain: "Billing, Pricing & Support",
     type: "single",
-    question: "A three-person startup is building and testing an application on AWS, and nothing is in production yet. The team wants to open technical support cases by email during business hours and receive general architectural guidance, at the lowest cost that includes these features. Which AWS Support plan should the startup choose?",
+    question: "A startup moves a small API to AWS Lambda. The API receives very few requests at night and many during business hours. How will the startup be charged for running its Lambda functions?",
     options: [
-      "Basic",
-      "Developer",
-      "Business",
-      "Enterprise"
+      "A fixed monthly fee per deployed function",
+      "Per request and per execution duration",
+      "Hourly for underlying servers, even when idle",
+      "By the peak number of users each month"
     ],
     correct: [1],
-    explanation: "AWS Developer Support is designed for experimenting and testing on AWS. It includes business-hours email access to technical support and general architectural guidance, at a lower cost than the plans aimed at production workloads.",
+    explanation: "AWS Lambda charges for the number of requests and for the time the code runs, based on the memory allocated to the function. With the default on-demand model there is no charge when the code is not running, so the quiet night hours cost very little.",
     optionExplanations: [
-      "Basic Support does not include technical support cases; it covers only account and billing support, documentation, and community resources.",
-      "Correct — Developer Support adds business-hours email technical support and general architectural guidance for non-production workloads at the lowest cost.",
-      "Business Support is aimed at production workloads, with 24/7 phone and chat access. It costs more than the startup needs for testing.",
-      "Enterprise Support is designed for business-critical workloads and includes a Technical Account Manager. It is far more than a startup with no production workloads needs."
+      "Lambda has no fixed monthly fee per function; the cost depends on how much the functions are actually used.",
+      "Correct — Lambda bills for each request and for the duration of each execution, so cost follows actual usage.",
+      "Lambda is serverless: the startup does not pay for idle servers, only for requests and execution time.",
+      "Lambda pricing is not based on the number of users; it is based on requests and execution duration."
     ]
   },
   {
@@ -7405,33 +7415,38 @@ const QUESTION_BANK = [
     type: "single",
     question: "A student creates a new AWS account to learn about cloud computing and does not want to pay for support. The student checks which support plan the account has automatically and confirms that it includes documentation, whitepapers, AWS re:Post, and the AWS Health Dashboard. Which AWS Support plan does the account have?",
     options: [
-      "Developer",
-      "Business",
-      "Enterprise",
-      "Basic"
+      "AWS Business Support+",
+      "AWS Enterprise Support",
+      "AWS Unified Operations",
+      "Basic Support"
     ],
     correct: [3],
-    explanation: "AWS Basic Support is included automatically with every AWS account at no cost. It provides access to documentation, whitepapers, AWS re:Post, the AWS Health Dashboard, core Trusted Advisor checks, and account and billing support, but no technical support cases.",
+    explanation: "AWS Basic Support is included automatically with every AWS account at no extra cost. It provides 24/7 customer service, documentation, whitepapers, AWS re:Post, AWS Trusted Advisor core checks, and a personalized view of service health through AWS Health. Technical support from AWS engineers requires a paid plan such as Business Support+.",
     optionExplanations: [
-      "Developer Support is a paid plan that the account owner must choose. A new account does not have it automatically.",
-      "Business Support is a paid plan for production workloads. It is not included automatically with a new account.",
-      "Enterprise Support is the paid plan for business-critical workloads. It is not included automatically with a new account.",
-      "Correct — Basic Support is included free with every AWS account and provides documentation, whitepapers, AWS re:Post, and the AWS Health Dashboard."
+      "Business Support+ is a paid plan for production workloads that the account owner must choose. It is not included automatically with a new account.",
+      "Enterprise Support is a paid plan for business-critical workloads. It is not included automatically with a new account.",
+      "Unified Operations is a paid option for mission-critical workloads. It is not included automatically with a new account.",
+      "Correct — Basic Support is included with every AWS account and provides documentation, whitepapers, AWS re:Post, and AWS Health."
     ]
   },
   {
     id: 388,
     domain: "Billing, Pricing & Support",
     type: "single",
-    question: "Which AWS support plan offers a response time of less than 15 minutes for a business-critical system-down case?",
-    options: ["Developer", "Business", "Enterprise On-Ramp", "Enterprise"],
-    correct: [3],
-    explanation: "Enterprise Support guarantees less than 15-minute response time for critical business system-down (Severity 1) cases, along with 24/7 phone/chat/email access and a dedicated TAM. Business Support offers less than 1-hour response for the same severity.",
+    question: "A company runs a nightly analytics job on Amazon EC2. The results are not latency-sensitive, and the company has no data residency requirements. It wants to lower the job's cost without changing the instance type or the purchasing option. What should the company evaluate?",
+    options: [
+      "Running the job in a Region with lower prices",
+      "Running the job in an AWS Local Zone near users",
+      "Upgrading the account to AWS Business Support+",
+      "Moving the job to an Amazon CloudFront edge location"
+    ],
+    correct: [0],
+    explanation: "AWS prices for the same service and instance type can differ between Regions. When latency and data residency are not constraints, running the workload in a lower-priced Region can reduce cost, as long as the company also considers any data transfer charges between Regions.",
     optionExplanations: [
-      "Developer Support only provides email during business hours — there is no phone/chat and no SLA for critical production system-down cases.",
-      "Business Support provides a less-than-1-hour response for Severity 1 cases — close, but the 15-minute SLA is exclusively available in Enterprise Support.",
-      "Enterprise On-Ramp provides a 30-minute response for critical cases — better than Business but still not the 15-minute guarantee.",
-      "Correct — Enterprise Support guarantees a less-than-15-minute response for critical business system-down (Severity 1) cases, along with a dedicated TAM."
+      "Correct — prices vary by Region, so a Region with a lower price for the same instance type can reduce the job's cost.",
+      "Local Zones place compute close to end users for low latency. The job is not latency-sensitive, and this does not target lower prices.",
+      "A Support plan adds technical support. It does not lower the price of EC2 instances.",
+      "CloudFront edge locations cache and deliver content. They cannot run the company's EC2 analytics job."
     ]
   },
   {
@@ -7481,16 +7496,16 @@ const QUESTION_BANK = [
     question: "A small company uses only the AWS Basic Support plan. Its finance team has a question about an unexpected charge on the monthly invoice. What can the team do?",
     options: [
       "Open an account and billing support case at no extra cost",
-      "Upgrade to Developer Support before AWS answers billing questions",
+      "Upgrade to Business Support+ before AWS answers billing questions",
       "Ask the Technical Account Manager assigned to the account",
       "Post the invoice details on AWS re:Post for community help only"
     ],
     correct: [0],
-    explanation: "Every AWS Support plan, including the free Basic plan, includes 24/7 access to customer service for account and billing questions. The team can open an account and billing support case without upgrading. Technical support cases, by contrast, require a paid plan.",
+    explanation: "Every AWS Support plan, including the free Basic plan, includes 24/7 customer service for account and billing questions. The team can open an account and billing support case without upgrading, while technical support cases require a paid plan.",
     optionExplanations: [
       "Correct — Basic Support includes customer service for account and billing questions, so the team can open a billing case at no additional cost.",
-      "Upgrading is needed for technical support cases, not for account and billing questions, which are covered in every plan.",
-      "Technical Account Managers are available only with Enterprise On-Ramp and Enterprise Support, not with Basic Support.",
+      "Upgrading adds technical support. Account and billing questions are already covered by customer service in every plan, including Basic.",
+      "A designated Technical Account Manager comes with Enterprise Support, not with Basic Support, so this account has none.",
       "re:Post is a community Q&A site and is not the right place for private invoice details. AWS customer service handles billing questions directly."
     ]
   },
@@ -7501,9 +7516,9 @@ const QUESTION_BANK = [
     question: "A company has five AWS accounts that each use a moderate amount of Amazon S3 storage. The finance team wants the accounts to benefit from lower tiered pricing based on their combined usage. What should the company do?",
     options: [
       "Enable consolidated billing with AWS Organizations",
-      "Buy a separate Savings Plan for each account",
+      "Buy a separate Savings Plan for each of the five accounts",
       "Activate cost allocation tags in every account",
-      "Upgrade every account to Business Support"
+      "Upgrade every account to Business Support+"
     ],
     correct: [0],
     explanation: "With consolidated billing in AWS Organizations, usage from all accounts is combined for pricing purposes, so the organization reaches volume pricing tiers (such as S3 storage tiers) sooner. Cost allocation tags only help track costs; they do not change prices.",
@@ -7518,20 +7533,20 @@ const QUESTION_BANK = [
     id: 393,
     domain: "Billing, Pricing & Support",
     type: "single",
-    question: "A company on the AWS Enterprise Support plan has complex questions about its invoices and account structure. Which AWS resource specializes in billing and account inquiries for these customers?",
+    question: "A company on the AWS Enterprise Support plan has complex questions about its invoices and account structure. Which AWS resource included in its plan specializes in billing and account inquiries?",
     options: [
-      "AWS Trust & Safety team",
-      "AWS Concierge Support team",
-      "AWS Professional Services",
-      "AWS Partner Network"
+      "The AWS Trust & Safety team",
+      "The Enterprise billing concierge",
+      "AWS Professional Services consultants",
+      "AWS Partner Network firms"
     ],
     correct: [1],
-    explanation: "The Concierge Support team, included with Enterprise Support, is made up of billing and account experts who help with billing questions, account structure, and cost management. Professional Services and partners help with technical projects, not invoices.",
+    explanation: "Enterprise Support includes a white-glove billing concierge: billing and account experts who help with invoices, account structure, and other billing inquiries. The Trust & Safety team handles abuse reports, and Professional Services and partners help with technical projects, not invoices.",
     optionExplanations: [
-      "The Trust & Safety team handles reports of abuse, such as spam or attacks coming from AWS resources; it does not answer billing questions.",
-      "Correct — the Concierge Support team provides billing and account expertise to Enterprise Support customers.",
-      "AWS Professional Services helps customers with migration and architecture projects; it does not handle invoices and account inquiries.",
-      "The AWS Partner Network consists of third-party consulting and technology partners; it is not the AWS team for billing support."
+      "The Trust & Safety team handles reports of abuse, such as spam or attacks coming from AWS resources. It does not answer billing questions.",
+      "Correct — Enterprise Support includes a white-glove billing concierge that helps with billing and account inquiries.",
+      "AWS Professional Services helps customers with migration and architecture projects. It does not handle invoices and account inquiries.",
+      "The AWS Partner Network consists of third-party consulting and technology partners. It is not the AWS team for billing support."
     ]
   },
   {
@@ -7541,7 +7556,7 @@ const QUESTION_BANK = [
     question: "Which AWS offering provides the global network of AWS partners (consulting firms, ISVs, resellers) that complement AWS services?",
     options: [
       "AWS Marketplace software catalog",
-      "AWS IQ freelance experts",
+      "AWS Knowledge Center",
       "AWS Partner Network (APN)",
       "AWS re:Post community"
     ],
@@ -7549,7 +7564,7 @@ const QUESTION_BANK = [
     explanation: "The AWS Partner Network (APN) is the global community of AWS partners, including Consulting Partners (implement AWS solutions) and Technology Partners (software products that run on or integrate with AWS). APN Partners are vetted by AWS.",
     optionExplanations: [
       "AWS Marketplace is an online store for buying third-party software and SaaS products — it is not a network of certified consulting and technology partner companies.",
-      "AWS IQ is for hiring individual AWS-certified freelance experts for project work — it is not the global ecosystem of partner firms and ISVs.",
+      "The AWS Knowledge Center is a collection of articles answering common support questions; it is not a network of partner companies.",
       "Correct — The AWS Partner Network (APN) is the global community of Consulting Partners (implementation firms) and Technology Partners (ISVs) that build on or work with AWS.",
       "AWS re:Post is a community Q&A forum — it is not a program for certifying or organizing business partners."
     ]
@@ -7559,14 +7574,19 @@ const QUESTION_BANK = [
     domain: "Billing, Pricing & Support",
     type: "single",
     question: "Which AWS service is an online catalog of third-party software, SaaS products, and data products that can be deployed directly to AWS accounts?",
-    options: ["AWS Partner Network", "AWS Service Catalog", "AWS Marketplace", "AWS IQ"],
+    options: [
+      "AWS Partner Network",
+      "AWS Service Catalog",
+      "AWS Marketplace",
+      "AWS License Manager"
+    ],
     correct: [2],
     explanation: "AWS Marketplace is a digital catalog of thousands of software listings from independent vendors. Customers can find, test, buy, and deploy software on AWS. Purchases are billed through the AWS account, simplifying procurement.",
     optionExplanations: [
       "The AWS Partner Network is a certification program for consulting and technology partner companies — it is not a storefront for purchasing software products.",
       "AWS Service Catalog allows organizations to create internal catalogs of approved IT services for employees — it is for internal governance, not buying third-party products.",
       "Correct — AWS Marketplace is the digital storefront where customers can find, test, buy, and deploy thousands of third-party software and SaaS products, billed through their AWS account.",
-      "AWS IQ is for hiring individual AWS-certified freelance experts — it is not a software product marketplace."
+      "AWS License Manager tracks and controls software license usage; it is not a catalog where you discover and buy third-party products."
     ]
   },
   {
@@ -7593,15 +7613,20 @@ const QUESTION_BANK = [
     id: 397,
     domain: "Billing, Pricing & Support",
     type: "single",
-    question: "Which of the following is NOT included in the AWS Free Tier for 12 months after account creation?",
-    options: ["750 hours/month of Amazon EC2 t2.micro", "5 GB of Amazon S3 Standard storage", "750 hours/month of Amazon RDS (db.t2.micro)", "Unlimited AWS Lambda invocations"],
-    correct: [3],
-    explanation: "AWS Lambda's Free Tier (1 million requests and 400,000 GB-seconds of compute per month) is a permanent free tier, not limited to 12 months. The 12-month free tier includes EC2 t2.micro (750 hrs), S3 (5 GB), and RDS db.t2.micro (750 hrs).",
+    question: "A developer created an AWS account on the Free plan. The account is approaching the end of its first six months, and the developer wants the workloads to keep running afterward. What must the developer do?",
+    options: [
+      "Upgrade the account to the Paid plan",
+      "Earn more credits by trying more services",
+      "Subscribe to AWS Business Support+",
+      "Enable consolidated billing for the account"
+    ],
+    correct: [0],
+    explanation: "A Free plan account can use its credits for up to six months. When that period ends or the credits run out, the account closes unless the owner upgrades it to the Paid plan. After upgrading, always free offers still apply and other usage is charged.",
     optionExplanations: [
-      "750 hours/month of EC2 t2.micro is a genuine 12-month Free Tier offer, available for 12 months after account creation.",
-      "5 GB of S3 Standard storage is a genuine 12-month Free Tier offer, available for 12 months after account creation.",
-      "750 hours/month of RDS db.t2.micro is a genuine 12-month Free Tier offer, available for 12 months after account creation.",
-      "Correct — Lambda's free tier (1M requests + 400,000 GB-seconds/month) is an 'Always Free' offer with no expiration, not a 12-month offer, and the claim of 'unlimited invocations' is false."
+      "Correct — upgrading to the Paid plan keeps the account open after the Free plan period ends, with usage beyond free offers charged.",
+      "Exploring services can add credits, but the Free plan still ends after six months, and the account closes unless it is upgraded.",
+      "Business Support+ is a technical support plan. Buying support does not replace upgrading the account to the Paid plan.",
+      "Consolidated billing combines the bills of accounts in an organization. It does not extend the Free plan period."
     ]
   },
   {
@@ -7628,15 +7653,20 @@ const QUESTION_BANK = [
     id: 399,
     domain: "Billing, Pricing & Support",
     type: "single",
-    question: "Which AWS service provides a personalized view of AWS service health events (outages, maintenance) that may affect resources in your account?",
-    options: ["AWS Service Health Dashboard", "Amazon CloudWatch", "AWS Personal Health Dashboard", "AWS Trusted Advisor"],
-    correct: [2],
-    explanation: "AWS Personal Health Dashboard (now called AWS Health Dashboard — Your account health) provides alerts and remediation guidance for AWS events that specifically affect your resources, such as scheduled maintenance on your EC2 host or regional outages affecting your services.",
+    question: "An operations team wants to be notified when AWS schedules maintenance on the underlying hosts of its EC2 instances or when an AWS service issue affects resources in its own account. Where should the team look for these account-specific events?",
+    options: [
+      "Amazon CloudWatch metrics",
+      "AWS Health Dashboard",
+      "AWS Trusted Advisor",
+      "AWS Config timeline"
+    ],
+    correct: [1],
+    explanation: "The AWS Health Dashboard shows AWS events that affect your own account and resources, such as scheduled maintenance or service issues, together with remediation guidance; the same information is available programmatically through the AWS Health API. It also includes a public view of the overall health of AWS services.",
     optionExplanations: [
-      "The AWS Service Health Dashboard (status.aws.amazon.com) shows the general health of all AWS services globally — it is not personalized to your specific account resources.",
-      "Amazon CloudWatch monitors application metrics and logs — it does not provide notifications about AWS-side service events or scheduled maintenance on your infrastructure.",
-      "Correct — The AWS Personal Health Dashboard provides personalized alerts about AWS events (outages, maintenance) that specifically affect your account's resources.",
-      "Trusted Advisor provides best-practice recommendations across five categories — it does not alert you about AWS service health events or planned maintenance for your resources."
+      "CloudWatch metrics show the performance of your resources, but they do not report AWS-side events such as scheduled host maintenance.",
+      "Correct — the AWS Health Dashboard lists AWS events that affect your account's resources, including scheduled maintenance and service issues.",
+      "Trusted Advisor gives best-practice recommendations; it does not notify you about AWS maintenance or service events.",
+      "AWS Config records how your resource configurations change over time; it does not report AWS service events."
     ]
   },
   {
@@ -8458,18 +8488,18 @@ const QUESTION_BANK = [
     options: [
       "Low utilization Amazon EC2 instances",
       "MFA on root account",
-      "Idle load balancers",
+      "Amazon EC2 Reserved Instance lease expiration",
       "Security groups – specific ports unrestricted",
       "Underutilized Amazon EBS volumes"
     ],
     correct: [1, 3],
-    explanation: "All AWS customers, including those on Basic Support, get Trusted Advisor's core checks, which include security checks such as MFA on root account and security groups with unrestricted ports, plus service quota checks. Cost optimization checks such as low utilization EC2 instances or idle load balancers require Business Support or higher.",
+    explanation: "All AWS customers, including those on Basic Support, get the AWS Trusted Advisor core checks, which include security checks such as MFA on root account and security groups with unrestricted ports, plus service quota checks. Cost optimization checks such as low utilization EC2 instances are not part of the core checks, so they are not available with Basic Support.",
     optionExplanations: [
-      "Low utilization EC2 instances is a cost optimization check that requires Business Support or higher.",
+      "Low utilization EC2 instances is a cost optimization check, not one of the core checks included with Basic Support.",
       "Correct — MFA on root account is one of the core security checks available to every customer.",
-      "Idle load balancers is a cost optimization check, which is not included with Basic Support.",
+      "Reserved Instance lease expiration is a cost optimization check, not one of the core checks included with Basic Support.",
       "Correct — checking for security groups that allow unrestricted access to specific ports is a core security check.",
-      "Underutilized EBS volumes is a cost optimization check that needs Business Support or higher."
+      "Underutilized EBS volumes is a cost optimization check, not one of the core checks included with Basic Support."
     ]
   },
   {
@@ -9588,20 +9618,20 @@ const QUESTION_BANK = [
     id: 496,
     domain: "Billing, Pricing & Support",
     type: "single",
-    question: "A growing company runs business-critical workloads on AWS. It wants access to a pool of Technical Account Managers for proactive guidance, but at a lower cost than the highest support tier. Which AWS Support plan BEST fits?",
+    question: "A retailer runs business-critical workloads on AWS and is preparing a major product launch. It wants its AWS Support plan to include consultative help such as support for this planned launch event, Well-Architected reviews, and a proactive security review. Which option meets these requirements?",
     options: [
-      "Developer Support",
-      "Business Support",
-      "Enterprise Support",
-      "Enterprise On-Ramp"
+      "Basic Support",
+      "AWS Business Support+",
+      "AWS Enterprise Support",
+      "The AWS re:Post community"
     ],
-    correct: [3],
-    explanation: "Enterprise On-Ramp provides access to a pool of Technical Account Managers and faster response for business-critical issues, at a lower price than Enterprise Support. Enterprise Support provides a designated TAM but costs more. Business Support does not include a TAM.",
+    correct: [2],
+    explanation: "Enterprise Support is designed for business-critical workloads and includes consultative reviews: Well-Architected reviews, proactive security reviews, planned event and launch support, and a strategic support plan. It also provides a designated Technical Account Manager, while Basic Support and Business Support+ do not include these consultative reviews.",
     optionExplanations: [
-      "Developer Support is intended for testing and development and does not include any Technical Account Manager.",
-      "Business Support offers 24/7 technical support for production workloads but does not include a Technical Account Manager.",
-      "Enterprise Support includes a designated TAM, but it is the most expensive tier, which the company wants to avoid.",
-      "Correct — Enterprise On-Ramp includes access to a pool of TAMs at a lower cost than Enterprise Support."
+      "Basic Support provides customer service, documentation, and Trusted Advisor core checks, but no consultative reviews or launch support.",
+      "Business Support+ gives 24/7 technical support and architectural guidance for production workloads, but consultative reviews and planned event support are Enterprise Support features.",
+      "Correct — Enterprise Support includes consultative reviews such as Well-Architected reviews, proactive security reviews, and planned event and launch support.",
+      "re:Post provides community answers to questions. It does not deliver structured reviews or launch support for the company's workloads."
     ]
   },
   {
@@ -9610,15 +9640,15 @@ const QUESTION_BANK = [
     type: "single",
     question: "A large enterprise is planning a complex data center migration and wants to work directly with a global team of experts employed by AWS. Which AWS offering should it engage?",
     options: [
-      "AWS IQ",
+      "AWS Marketplace Professional Services",
       "AWS Marketplace",
       "AWS Professional Services",
       "AWS Partner Network (APN) consultants"
     ],
     correct: [2],
-    explanation: "AWS Professional Services is a global team of AWS experts who help customers achieve business outcomes such as large migrations, often working alongside AWS Partners. AWS IQ connects customers with independent third-party AWS Certified experts, not AWS employees.",
+    explanation: "AWS Professional Services is a global team of AWS experts who help customers achieve business outcomes such as large migrations, often working alongside AWS Partners.",
     optionExplanations: [
-      "AWS IQ connects customers with independent, third-party AWS Certified experts, not a team employed by AWS.",
+      "AWS Marketplace Professional Services lists third-party consultants and service providers; the company wants experts employed by AWS itself.",
       "AWS Marketplace is a catalog for buying third-party software and services, not a direct engagement with AWS's own experts.",
       "Correct — AWS Professional Services is AWS's own team of experts that helps customers with large initiatives such as migrations.",
       "APN consulting partners are third-party companies, not experts employed directly by AWS."

@@ -185,13 +185,12 @@ const CHEATSHEET = [
         title: "Databases",
         items: [
           "RDS — managed relational DB (MySQL, PostgreSQL, Oracle, SQL Server, MariaDB, Aurora)",
-          "Aurora — AWS-native; 5x faster MySQL, 3x PostgreSQL; auto-scales storage",
+          "Aurora — AWS-built, MySQL/PostgreSQL-compatible; higher performance; auto-scales storage",
           "DynamoDB — serverless NoSQL; single-digit ms at any scale; DAX for caching",
           "ElastiCache — in-memory cache; Redis or Memcached",
           "Redshift — columnar data warehouse; OLAP; petabyte-scale",
           "DocumentDB — MongoDB-compatible managed document DB",
           "Neptune — graph database (Gremlin / SPARQL)",
-          "QLDB — immutable ledger database; cryptographically verifiable",
           "Keyspaces — serverless Apache Cassandra-compatible",
         ]
       },
