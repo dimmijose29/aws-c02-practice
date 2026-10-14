@@ -83,7 +83,9 @@ Ogni simulazione estrae le domande casualmente dalla bank, la cui composizione r
 ## Come usarlo
 
 ### Online
-Visita il sito deployato su Vercel *(link in arrivo)*.
+Il simulatore è online su **[aws-certification-practice.vercel.app](https://aws-certification-practice.vercel.app)**.
+
+Link diretti: [CLF-C02](https://aws-certification-practice.vercel.app/?cert=clf) · [SAA-C03](https://aws-certification-practice.vercel.app/?cert=saa) · [AIF-C01](https://aws-certification-practice.vercel.app/?cert=aif)
 
 ### In locale
 ```bash
