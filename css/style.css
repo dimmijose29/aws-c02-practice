@@ -18,6 +18,69 @@
     --radius:    8px;
     --shadow:    0 2px 8px rgba(0,0,0,0.12);
     --shadow-lg: 0 4px 20px rgba(0,0,0,0.16);
+    --heading:   #232F3E;
+    --surface-2: #F8F8F8;
+    --track:     #E8E8E8;
+    --muted:     #AAB7B8;
+    --tint-orange:    #FFF8EE;
+    --tint-orange-lt: #FFFDF5;
+    --tint-blue:      #EAF4FB;
+    --tint-blue-border: #AAD4EA;
+    --tint-green:     #E9F7EF;
+    --tint-red:       #FDEDEA;
+    color-scheme: light;
+}
+
+/* Dark theme: follows the OS unless the user picked one (data-theme on <html>) */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:        #0F1419;
+    --white:     #1B232D;
+    --text:      #E6E9EC;
+    --text-sec:  #9AA5B1;
+    --border:    #2E3A47;
+    --heading:   #F2F4F6;
+    --correct:   #3FB66B;
+    --incorrect: #F2674A;
+    --flagged:   #F0932B;
+    --answered:  #3B9EE0;
+    --surface-2: #232C37;
+    --track:     #2E3A47;
+    --muted:     #6B7785;
+    --tint-orange:    #3A2A10;
+    --tint-orange-lt: #2A2215;
+    --tint-blue:      #10283A;
+    --tint-blue-border: #1F4E6E;
+    --tint-green:     #12301E;
+    --tint-red:       #3A1712;
+    --shadow:    0 2px 8px rgba(0,0,0,0.4);
+    --shadow-lg: 0 4px 20px rgba(0,0,0,0.5);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+    --bg:        #0F1419;
+    --white:     #1B232D;
+    --text:      #E6E9EC;
+    --text-sec:  #9AA5B1;
+    --border:    #2E3A47;
+    --heading:   #F2F4F6;
+    --correct:   #3FB66B;
+    --incorrect: #F2674A;
+    --flagged:   #F0932B;
+    --answered:  #3B9EE0;
+    --surface-2: #232C37;
+    --track:     #2E3A47;
+    --muted:     #6B7785;
+    --tint-orange:    #3A2A10;
+    --tint-orange-lt: #2A2215;
+    --tint-blue:      #10283A;
+    --tint-blue-border: #1F4E6E;
+    --tint-green:     #12301E;
+    --tint-red:       #3A1712;
+    --shadow:    0 2px 8px rgba(0,0,0,0.4);
+    --shadow-lg: 0 4px 20px rgba(0,0,0,0.5);
+    color-scheme: dark;
 }
 
 html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-serif; background: var(--bg); color: var(--text); }
@@ -69,6 +132,25 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
     outline-offset: 2px;
 }
 
+/* Theme toggle (start screen, top right) */
+.theme-toggle {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: var(--white);
+    font-size: 18px;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+}
+
+.theme-toggle:hover { border-color: var(--orange); }
+
+#start-screen { position: relative; }
+
 /* Unfinished quiz banner */
 .resume-banner {
     display: flex;
@@ -79,13 +161,13 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
     margin: 0 auto 20px;
     max-width: 640px;
     padding: 12px 16px;
-    background: #FFF8EE;
+    background: var(--tint-orange);
     border: 1px solid var(--orange);
     border-radius: 10px;
     text-align: left;
 }
 
-.resume-text { font-size: 14px; font-weight: 600; color: var(--navy); }
+.resume-text { font-size: 14px; font-weight: 600; color: var(--heading); }
 .resume-actions { display: flex; gap: 8px; }
 
 .btn-resume, .btn-discard {
@@ -96,7 +178,7 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
     cursor: pointer;
 }
 
-.btn-resume  { background: var(--orange); border: 1px solid var(--orange); color: var(--navy); }
+.btn-resume  { background: var(--orange); border: 1px solid var(--orange); color: var(--heading); }
 .btn-discard { background: none; border: 1px solid var(--border); color: var(--text-sec); }
 .btn-discard:hover { color: var(--incorrect); border-color: var(--incorrect); }
 
@@ -127,14 +209,14 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
 .cert-btn:hover { background: var(--bg); }
 
 .cert-btn.cert-btn-active {
-    background: #FFF8EE;
+    background: var(--tint-orange);
     box-shadow: inset 0 0 0 2px var(--orange);
 }
 
 .cert-btn-name {
     font-size: 14px;
     font-weight: 700;
-    color: var(--navy);
+    color: var(--heading);
 }
 
 .cert-btn-code {
@@ -145,7 +227,7 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
 .start-title {
     font-size: 30px;
     font-weight: 800;
-    color: var(--navy);
+    color: var(--heading);
     margin-bottom: 10px;
 }
 
@@ -207,7 +289,7 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
 
 .mtt-btn.mtt-active {
     border-color: var(--orange);
-    background: #FFF8EE;
+    background: var(--tint-orange);
     box-shadow: 0 0 0 3px rgba(255,153,0,.15);
 }
 
@@ -216,7 +298,7 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
 .mtt-label {
     font-size: 15px;
     font-weight: 700;
-    color: var(--navy);
+    color: var(--heading);
 }
 
 .mtt-desc {
@@ -269,7 +351,7 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
     letter-spacing: 1px;
     padding: 3px 10px;
     border-radius: 20px;
-    background: #EEF0F2;
+    background: var(--surface-2);
     color: var(--text-sec);
 }
 
@@ -283,7 +365,7 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
 .mode-title {
     font-size: 20px;
     font-weight: 700;
-    color: var(--navy);
+    color: var(--heading);
     margin-bottom: 8px;
 }
 
@@ -310,13 +392,13 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
     font-size: 14px;
     font-weight: 700;
     cursor: pointer;
-    border: 2px solid var(--navy);
+    border: 2px solid var(--heading);
     background: transparent;
-    color: var(--navy);
+    color: var(--heading);
     transition: background .15s, color .15s;
 }
 
-.btn-mode:hover { background: var(--navy); color: #fff; }
+.btn-mode:hover { background: var(--heading); color: var(--white); }
 
 .btn-mode-featured {
     background: var(--orange);
@@ -355,7 +437,7 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
     display: flex;
     align-items: center;
     gap: 8px;
-    background: #F8F8F8;
+    background: var(--surface-2);
     border: 1px solid var(--border);
     border-radius: 20px;
     padding: 6px 14px;
@@ -433,7 +515,7 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
 .progress-text {
     display: block;
     font-size: 12px;
-    color: #AAB7B8;
+    color: var(--muted);
     margin-bottom: 6px;
 }
 
@@ -543,7 +625,7 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
 .leg-answered         { background: var(--answered); }
 .leg-flagged          { background: var(--flagged); }
 .leg-flagged-answered { background: linear-gradient(135deg, var(--flagged) 50%, var(--answered) 50%); }
-.leg-unanswered       { background: #D5DBDB; }
+.leg-unanswered       { background: var(--border); }
 
 .question-grid {
     display: grid;
@@ -555,7 +637,7 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
     aspect-ratio: 1;
     border-radius: 4px;
     border: 1px solid var(--border);
-    background: #F8F8F8;
+    background: var(--surface-2);
     font-size: 11px;
     font-weight: 600;
     cursor: pointer;
@@ -604,8 +686,8 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1px;
-    color: var(--navy);
-    background: #EEF0F2;
+    color: var(--heading);
+    background: var(--surface-2);
     padding: 4px 10px;
     border-radius: 20px;
 }
@@ -626,7 +708,7 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
 }
 
 .flag-btn:hover { border-color: var(--flagged); color: var(--flagged); }
-.flag-btn.flagged { background: #FFF5E6; border-color: var(--flagged); color: var(--flagged); }
+.flag-btn.flagged { background: var(--tint-orange); border-color: var(--flagged); color: var(--flagged); }
 
 .q-number {
     font-size: 12px;
@@ -649,9 +731,9 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
     align-items: center;
     gap: 6px;
     font-size: 13px;
-    color: #0073BB;
-    background: #EAF4FB;
-    border: 1px solid #AAD4EA;
+    color: var(--answered);
+    background: var(--tint-blue);
+    border: 1px solid var(--tint-blue-border);
     border-radius: 6px;
     padding: 6px 12px;
     margin-bottom: 18px;
@@ -676,11 +758,11 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
     line-height: 1.5;
 }
 
-.option-item:hover:not(.opt-selected) { border-color: var(--orange); background: #FFFDF5; }
+.option-item:hover:not(.opt-selected) { border-color: var(--orange); background: var(--tint-orange-lt); }
 
 .option-item.opt-selected {
     border-color: var(--answered);
-    background: #EAF4FB;
+    background: var(--tint-blue);
 }
 
 .option-marker {
@@ -738,7 +820,7 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
     color: var(--text);
 }
 
-.btn-prev:hover { border-color: var(--navy); color: var(--navy); }
+.btn-prev:hover { border-color: var(--heading); color: var(--heading); }
 .btn-prev:disabled { opacity: .4; cursor: not-allowed; }
 
 .btn-next {
@@ -775,7 +857,7 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
 .modal-title {
     font-size: 20px;
     font-weight: 800;
-    color: var(--navy);
+    color: var(--heading);
     margin-bottom: 20px;
 }
 
@@ -799,7 +881,7 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
     display: block;
     font-size: 24px;
     font-weight: 800;
-    color: var(--navy);
+    color: var(--heading);
 }
 
 .rs-lbl {
@@ -820,7 +902,7 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
     height: 36px;
     border-radius: 4px;
     border: 1px solid var(--border);
-    background: #F8F8F8;
+    background: var(--surface-2);
     font-size: 12px;
     font-weight: 600;
     cursor: pointer;
@@ -853,7 +935,7 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
     transition: all .15s;
 }
 
-.btn-secondary:hover { border-color: var(--navy); color: var(--navy); }
+.btn-secondary:hover { border-color: var(--heading); color: var(--heading); }
 
 .btn-danger {
     padding: 9px 20px;
@@ -889,7 +971,7 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
 .result-title {
     font-size: 28px;
     font-weight: 800;
-    color: var(--navy);
+    color: var(--heading);
     margin-bottom: 8px;
 }
 
@@ -932,7 +1014,7 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
 .score-pct {
     font-size: 28px;
     font-weight: 900;
-    color: var(--navy);
+    color: var(--heading);
 }
 
 .score-sub {
@@ -981,7 +1063,7 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
 .section-title {
     font-size: 18px;
     font-weight: 800;
-    color: var(--navy);
+    color: var(--heading);
     margin-bottom: 20px;
 }
 
@@ -1014,7 +1096,7 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
 .domain-row-name {
     font-weight: 700;
     font-size: 14px;
-    color: var(--navy);
+    color: var(--heading);
 }
 
 .domain-row-score {
@@ -1025,7 +1107,7 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
 
 .domain-bar-wrap {
     height: 8px;
-    background: #E8E8E8;
+    background: var(--track);
     border-radius: 4px;
     overflow: hidden;
 }
@@ -1077,9 +1159,9 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
     border-radius: 20px;
 }
 
-.rc-status.correct   { background: #E9F7EF; color: var(--correct); }
-.rc-status.incorrect { background: #FDEDEA; color: var(--incorrect); }
-.rc-status.skipped   { background: #EEF0F2; color: var(--text-sec); }
+.rc-status.correct   { background: var(--tint-green); color: var(--correct); }
+.rc-status.incorrect { background: var(--tint-red); color: var(--incorrect); }
+.rc-status.skipped   { background: var(--surface-2); color: var(--text-sec); }
 
 .rc-body {
     padding: 18px 20px;
@@ -1110,8 +1192,8 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
     line-height: 1.5;
 }
 
-.rc-opt.opt-correct   { background: #E9F7EF; border-color: #1E8A44; color: var(--text); }
-.rc-opt.opt-wrong     { background: #FDEDEA; border-color: var(--incorrect); color: var(--text); }
+.rc-opt.opt-correct   { background: var(--tint-green); border-color: var(--correct); color: var(--text); }
+.rc-opt.opt-wrong     { background: var(--tint-red); border-color: var(--incorrect); color: var(--text); }
 .rc-opt.opt-normal    { color: var(--text-sec); }
 
 .rc-opt-mark {
@@ -1130,7 +1212,7 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
 .rc-wrong-exp {
     font-size: 13px;
     line-height: 1.6;
-    background: #FDEDEA;
+    background: var(--tint-red);
     border-left: 3px solid var(--incorrect);
     padding: 10px 14px;
     border-radius: 0 6px 6px 0;
@@ -1148,7 +1230,7 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
     font-size: 13px;
     line-height: 1.6;
     color: var(--text-sec);
-    background: #F8F9FA;
+    background: var(--surface-2);
     border-left: 3px solid var(--orange);
     padding: 10px 14px;
     border-radius: 0 6px 6px 0;
@@ -1213,7 +1295,7 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
 .df-pill:hover { border-color: var(--orange); color: var(--text); }
 
 .df-pill.df-pill-active {
-    border-color: var(--navy);
+    border-color: var(--heading);
     background: var(--navy);
     color: #fff;
 }
@@ -1263,14 +1345,14 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
 
 .st-tab-active {
     background: var(--white);
-    color: var(--navy);
+    color: var(--heading);
     box-shadow: 0 1px 2px rgba(0, 0, 0, .08);
 }
 
 .stats-panel-title {
     font-size: 14px;
     font-weight: 700;
-    color: var(--navy);
+    color: var(--heading);
 }
 
 .stats-panel {
@@ -1308,7 +1390,7 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
     display: block;
     font-size: 20px;
     font-weight: 800;
-    color: var(--navy);
+    color: var(--heading);
 }
 
 .sm-val-weak { color: var(--incorrect); }
@@ -1340,7 +1422,7 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
 .sr-bar-wrap {
     flex: 1;
     height: 6px;
-    background: #E8E8E8;
+    background: var(--track);
     border-radius: 3px;
     overflow: hidden;
 }
@@ -1406,7 +1488,7 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
 .sr-domain-bar-wrap {
     flex: 1;
     height: 5px;
-    background: #E8E8E8;
+    background: var(--track);
     border-radius: 3px;
     overflow: hidden;
 }
@@ -1494,8 +1576,8 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
     padding: 11px 28px;
     border-radius: 8px;
     background: var(--white);
-    border: 2px solid var(--navy);
-    color: var(--navy);
+    border: 2px solid var(--heading);
+    color: var(--heading);
     font-size: 14px;
     font-weight: 700;
     cursor: pointer;
@@ -1503,7 +1585,7 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
     margin-bottom: 20px;
 }
 
-.btn-cheatsheet:hover { background: var(--navy); color: #fff; }
+.btn-cheatsheet:hover { background: var(--heading); color: var(--white); }
 
 /* ===== CHEAT SHEET SCREEN ===== */
 .cs-container {
@@ -1533,12 +1615,12 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
     white-space: nowrap;
 }
 
-.btn-cs-back:hover { border-color: var(--navy); color: var(--navy); }
+.btn-cs-back:hover { border-color: var(--heading); color: var(--heading); }
 
 .cs-title {
     font-size: 22px;
     font-weight: 800;
-    color: var(--navy);
+    color: var(--heading);
 }
 
 .cs-tabs {
@@ -1590,7 +1672,7 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
 .cs-domain-title {
     font-size: 20px;
     font-weight: 800;
-    color: var(--navy);
+    color: var(--heading);
 }
 
 .cs-sections {
@@ -1613,7 +1695,7 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: .8px;
-    color: var(--navy);
+    color: var(--heading);
     margin-bottom: 12px;
     padding-bottom: 8px;
     border-bottom: 1px solid var(--border);
@@ -1654,7 +1736,7 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: .8px;
-    color: var(--navy);
+    color: var(--heading);
     margin-bottom: 12px;
 }
 
@@ -1705,7 +1787,7 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
 
 .option-item.opt-rev-correct {
     border-color: var(--correct);
-    background: #E9F7EF;
+    background: var(--tint-green);
 }
 
 .option-item.opt-rev-correct .option-marker {
@@ -1716,7 +1798,7 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
 
 .option-item.opt-rev-wrong {
     border-color: var(--incorrect);
-    background: #FDEDEA;
+    background: var(--tint-red);
 }
 
 .option-item.opt-rev-wrong .option-marker {
@@ -1752,7 +1834,7 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
     font-size: 13px;
     line-height: 1.6;
     color: var(--text-sec);
-    background: #FFF8EE;
+    background: var(--tint-orange);
     border-left: 3px solid var(--orange);
     padding: 12px 16px;
     border-radius: 0 6px 6px 0;
@@ -1808,7 +1890,7 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
 
 .ps-fraction {
     font-weight: 700;
-    color: var(--navy);
+    color: var(--heading);
     white-space: nowrap;
     min-width: 48px;
 }
@@ -1816,7 +1898,7 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
 .ps-bar-wrap {
     flex: 1;
     height: 6px;
-    background: #E8E8E8;
+    background: var(--track);
     border-radius: 3px;
     overflow: hidden;
     min-width: 60px;
@@ -1880,7 +1962,7 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #AAB7B8; }
+::-webkit-scrollbar-thumb:hover { background: var(--muted); }
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {

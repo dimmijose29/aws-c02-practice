@@ -67,7 +67,7 @@ function calculateResults() {
   // Animated score arc
   const circ = 326.7;
   const arc  = document.getElementById('score-arc');
-  arc.style.stroke = passed ? '#1E8A44' : (pct >= 50 ? '#FF9900' : '#D13212');
+  arc.style.stroke = passed ? 'var(--correct)' : (pct >= 50 ? 'var(--orange)' : 'var(--incorrect)');
   setTimeout(() => { arc.style.strokeDashoffset = circ - (pct / 100) * circ; }, 100);
 
   // Domain breakdown

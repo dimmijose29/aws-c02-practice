@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AWS Cloud Practitioner — Practice Exam</title>
+    <script>
+      // Apply the saved theme before first paint (no light flash in dark mode)
+      try { const t = localStorage.getItem('aws_theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+    </script>
     <link rel="stylesheet" href="css/style.css">
     <link id="favicon" rel="icon" type="image/png" href="img/favicon.png">
 </head>
@@ -11,6 +15,7 @@
 
 <!-- ======================== START SCREEN ======================== -->
 <div id="start-screen" class="screen active">
+    <button id="theme-toggle" class="theme-toggle" title="Toggle dark mode" aria-label="Toggle dark mode"></button>
     <div class="start-container">
         <div class="aws-logo-block">
             <img id="start-logo" src="img/logo.png" alt="AWS Certified Cloud Practitioner" class="aws-logo-img">
@@ -240,7 +245,7 @@
         <div class="score-card">
             <div class="score-circle-wrap">
                 <svg class="score-svg" viewBox="0 0 120 120">
-                    <circle cx="60" cy="60" r="52" fill="none" stroke="#E8E8E8" stroke-width="12"/>
+                    <circle cx="60" cy="60" r="52" fill="none" stroke="var(--track)" stroke-width="12"/>
                     <circle id="score-arc" cx="60" cy="60" r="52" fill="none" stroke="#FF9900" stroke-width="12"
                             stroke-linecap="round"
                             stroke-dasharray="326.7"

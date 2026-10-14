@@ -358,6 +358,23 @@ certSwitch.addEventListener('click', e => {
   if (btn) selectCert(btn.dataset.cert);
 });
 
+// Theme toggle: starts from the OS preference, a click stores an explicit choice
+function isDarkTheme() {
+  const t = document.documentElement.dataset.theme;
+  return t ? t === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+}
+function renderThemeToggle() {
+  document.getElementById('theme-toggle').textContent = isDarkTheme() ? '☀️' : '🌙';
+}
+document.getElementById('theme-toggle').addEventListener('click', () => {
+  const next = isDarkTheme() ? 'light' : 'dark';
+  document.documentElement.dataset.theme = next;
+  try { localStorage.setItem('aws_theme', next); } catch (e) {}
+  renderThemeToggle();
+});
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', renderThemeToggle);
+renderThemeToggle();
+
 // Resume banner (unfinished quiz saved in localStorage)
 document.getElementById('btn-resume').addEventListener('click', resumeQuiz);
 document.getElementById('btn-discard').addEventListener('click', () => {
