@@ -1243,7 +1243,7 @@ const QUESTION_BANK = [
     question: "Which AWS service allows you to define and provision AWS infrastructure using code (templates), enabling consistent and repeatable deployments?",
     options: [
       "AWS Elastic Beanstalk",
-      "AWS OpsWorks",
+      "AWS CodeDeploy",
       "AWS CloudFormation",
       "AWS Systems Manager"
     ],
@@ -1251,7 +1251,7 @@ const QUESTION_BANK = [
     explanation: "AWS CloudFormation is an Infrastructure as Code (IaC) service that lets you model, provision, and manage AWS resources using JSON or YAML templates. CloudFormation stacks ensure consistent, repeatable infrastructure deployments and allow version control of infrastructure.",
     optionExplanations: [
       "AWS Elastic Beanstalk deploys application code and manages the surrounding infrastructure — it is not an IaC tool for defining infrastructure as templates.",
-      "AWS OpsWorks is a configuration management service using Chef/Puppet — it manages server configurations, not the full infrastructure definition through code templates.",
+      "AWS CodeDeploy automates the deployment of application code to compute targets — it does not define or provision infrastructure from templates.",
       "Correct — AWS CloudFormation uses JSON/YAML templates to define, provision, and manage entire AWS infrastructure stacks repeatably and consistently.",
       "AWS Systems Manager handles operational management (patching, inventory, run commands) — it is not an IaC service for defining and deploying infrastructure through templates."
     ]
@@ -1283,7 +1283,7 @@ const QUESTION_BANK = [
     question: "Which AWS service allows customers to migrate on-premises databases to AWS with minimal downtime and supports migrations between different database engines (e.g., Oracle to Amazon Aurora)?",
     options: [
       "AWS Snowball",
-      "AWS Server Migration Service (SMS)",
+      "AWS Application Migration Service",
       "AWS Database Migration Service (DMS)",
       "AWS Schema Conversion Tool (SCT)"
     ],
@@ -1291,7 +1291,7 @@ const QUESTION_BANK = [
     explanation: "AWS DMS (Database Migration Service) helps migrate databases to AWS quickly and securely. It supports homogeneous (e.g., MySQL to RDS MySQL) and heterogeneous (e.g., Oracle to Aurora) migrations. The source database remains operational during migration, minimizing downtime.",
     optionExplanations: [
       "AWS Snowball is used for physically transferring large amounts of data to AWS — it does not support live database migrations or cross-engine schema conversion.",
-      "AWS Server Migration Service migrates entire virtual machine workloads — it is for server migrations, not specifically for database migrations with live replication.",
+      "AWS Application Migration Service rehosts entire servers on Amazon EC2; it is not designed for database migrations between different engines.",
       "Correct — AWS DMS migrates databases with minimal downtime, supporting both homogeneous and heterogeneous (cross-engine) database migrations while keeping the source operational.",
       "AWS Schema Conversion Tool (SCT) converts the database schema from one engine to another — it works alongside DMS but is not the service that performs the actual data migration."
     ]
@@ -1704,20 +1704,20 @@ const QUESTION_BANK = [
     id: 85,
     domain: "Billing, Pricing & Support",
     type: "single",
-    question: "A company is evaluating the total cost of migrating from on-premises to AWS. Which AWS tool helps compare the cost of running on-premises infrastructure versus running the equivalent workloads on AWS?",
+    question: "A company has several AWS accounts in one AWS Organizations organization with consolidated billing. One account bought Reserved Instances, but at night its instances are stopped while another account runs matching instances. What happens to the unused Reserved Instance discount?",
     options: [
-      "AWS Cost Explorer with forecasting",
-      "AWS Migration Hub",
-      "AWS Pricing Calculator",
-      "AWS Trusted Advisor cost checks"
+      "It is lost for those hours",
+      "It can apply to the other account",
+      "It is refunded as AWS credits",
+      "It moves to the next billing month"
     ],
-    correct: [2],
-    explanation: "The AWS Pricing Calculator can model total cost of ownership (TCO) comparisons between on-premises and AWS. By entering on-premises infrastructure details (servers, storage, networking, labor), you can compare the full cost against equivalent AWS services to build a business case for migration.",
+    correct: [1],
+    explanation: "With consolidated billing, Reserved Instance and Savings Plans discounts are shared across the accounts in the organization by default, so unused discounts in one account can apply to matching usage in another account. Discount sharing can be turned off if needed.",
     optionExplanations: [
-      "Cost Explorer analyzes existing AWS spending — it cannot compare on-premises infrastructure costs against AWS alternatives.",
-      "AWS Migration Hub tracks the status of active migrations — it does not perform cost comparisons between on-premises and AWS.",
-      "Correct — AWS Pricing Calculator supports TCO modeling: you enter on-premises hardware and operational costs and compare them against equivalent AWS services to build a migration business case.",
-      "Trusted Advisor checks your existing AWS environment for optimization opportunities — it does not provide on-premises-to-cloud cost comparisons."
+      "Discounts are not simply lost while other accounts in the organization have matching usage, because sharing is enabled by default.",
+      "Correct — consolidated billing shares Reserved Instance and Savings Plans discounts across the organization's accounts by default.",
+      "AWS does not refund unused Reserved Instance hours as credits.",
+      "Unused Reserved Instance hours do not roll over to a later billing period."
     ]
   },
 
@@ -2193,7 +2193,7 @@ const QUESTION_BANK = [
     question: "Which AWS service helps organizations plan cloud migrations using a structured framework of six perspectives — Business, People, Governance, Platform, Security, and Operations?",
     options: [
       "AWS Well-Architected Tool",
-      "AWS Migration Hub",
+      "AWS Control Tower",
       "AWS Cloud Adoption Framework",
       "AWS Professional Services consultants"
     ],
@@ -2201,7 +2201,7 @@ const QUESTION_BANK = [
     explanation: "The AWS Cloud Adoption Framework (CAF) organizes guidance into six perspectives covering responsibilities for different stakeholder groups. It helps organizations develop a comprehensive cloud adoption plan aligned to their business goals and readiness.",
     optionExplanations: [
       "The AWS Well-Architected Tool reviews existing workload architectures against best practices across six pillars — it does not provide a migration planning framework with organizational perspectives.",
-      "AWS Migration Hub tracks the progress of active migration projects — it does not provide organizational guidance or a structured adoption framework.",
+      "AWS Control Tower sets up and governs a multi-account AWS environment — it does not provide organizational guidance or a structured adoption framework.",
       "Correct — The AWS CAF organizes cloud adoption guidance into six perspectives (Business, People, Governance, Platform, Security, Operations) to help plan a comprehensive cloud adoption strategy.",
       "AWS Professional Services is a direct AWS consulting team — it is not a framework or tool that organizations use independently for self-guided cloud adoption planning."
     ]
@@ -6550,14 +6550,19 @@ const QUESTION_BANK = [
     domain: "Cloud Technology & Services",
     type: "single",
     question: "Which AWS infrastructure as code service allows you to model and provision AWS resources using JSON or YAML templates?",
-    options: ["AWS CDK", "AWS Elastic Beanstalk", "AWS CloudFormation", "AWS OpsWorks"],
+    options: [
+      "AWS CDK",
+      "AWS Elastic Beanstalk",
+      "AWS CloudFormation",
+      "AWS Systems Manager"
+    ],
     correct: [2],
     explanation: "AWS CloudFormation is an IaC service that provisions and manages AWS resources from declarative templates (JSON or YAML). Templates define the desired state; CloudFormation handles dependency ordering, rollback, and drift detection.",
     optionExplanations: [
       "AWS CDK (Cloud Development Kit) generates CloudFormation templates using programming languages — while CDK is IaC, CloudFormation is the underlying service that uses JSON/YAML templates directly.",
       "AWS Elastic Beanstalk deploys application code and manages surrounding infrastructure — it is a PaaS service, not an IaC service for defining arbitrary AWS resource configurations.",
       "Correct — AWS CloudFormation provisions and manages AWS resources from JSON or YAML templates, with dependency ordering, rollback, and drift detection.",
-      "AWS OpsWorks is a configuration management service using Chef/Puppet — it manages server configurations, not infrastructure provisioning through declarative templates."
+      "AWS Systems Manager handles operational tasks such as patching and running commands on managed nodes — it does not provision resources from declarative JSON or YAML templates."
     ]
   },
   {
@@ -6851,7 +6856,7 @@ const QUESTION_BANK = [
     type: "single",
     question: "Which AWS service automatically detects, classifies, and migrates on-premises workloads to AWS with minimal downtime?",
     options: [
-      "AWS Migration Hub progress tracking",
+      "AWS Database Migration Service (DMS)",
       "AWS Application Migration Service",
       "AWS DataSync for file transfers",
       "AWS Transfer Family (SFTP/FTPS)"
@@ -6859,7 +6864,7 @@ const QUESTION_BANK = [
     correct: [1],
     explanation: "AWS Application Migration Service (AWS MGN) is the primary migration service for lift-and-shift migrations. It replicates source servers continuously and cutover causes minimal downtime. It replaced AWS Server Migration Service (SMS).",
     optionExplanations: [
-      "AWS Migration Hub provides a centralized view of migration progress across multiple tools — it tracks migrations but does not perform the actual workload replication and cutover.",
+      "AWS DMS migrates and replicates databases — it does not replicate entire servers and cut them over to run on AWS.",
       "Correct — AWS Application Migration Service (MGN) is the primary lift-and-shift migration service, continuously replicating source servers and minimizing downtime during cutover.",
       "AWS DataSync transfers files between on-premises storage and AWS storage — it is for data transfer, not entire server workload migration with cutover.",
       "AWS Transfer Family provides managed file transfer (SFTP, FTPS) — it is for file transfer protocols, not workload migration."
@@ -6869,34 +6874,39 @@ const QUESTION_BANK = [
     id: 357,
     domain: "Cloud Technology & Services",
     type: "single",
-    question: "A company is moving dozens of applications to AWS. Its servers are being moved with AWS Application Migration Service and its databases with AWS Database Migration Service. The migration program manager wants one dashboard that groups servers into applications and shows each application's migration status across both tools. Which AWS service should the manager use?",
+    question: "A gaming company stores player profiles in Amazon DynamoDB. Its players are in North America, Europe, and Asia. The company wants each player to read and write profile data in a nearby AWS Region, with changes replicated automatically to the other Regions. Which option meets these requirements?",
     options: [
-      "AWS Application Migration Service",
-      "AWS Migration Hub",
-      "AWS Control Tower",
-      "AWS DataSync"
+      "Amazon DynamoDB Accelerator (DAX)",
+      "Amazon DynamoDB global tables",
+      "Amazon RDS cross-Region read replicas",
+      "Amazon CloudFront edge caching"
     ],
     correct: [1],
-    explanation: "AWS Migration Hub provides a single place to track the progress of application migrations across multiple AWS and partner migration tools. Servers can be grouped into applications, and the status of each application's migration is shown in one dashboard.",
+    explanation: "Amazon DynamoDB global tables replicate a table automatically across the AWS Regions that you choose. Every replica accepts reads and writes, so players use the copy closest to them while changes propagate to the other Regions.",
     optionExplanations: [
-      "AWS Application Migration Service performs server migrations, but it is only one of the tools in use. It does not track database migrations done with AWS DMS.",
-      "Correct — Migration Hub groups servers into applications and tracks migration status across the different migration tools in one place.",
-      "AWS Control Tower sets up and governs multi-account environments. It does not track migration progress.",
-      "AWS DataSync transfers files between storage systems. It does not track the overall status of application migrations."
+      "DAX is an in-memory cache that speeds up reads for a DynamoDB table. It does not create writable copies of the table in other Regions.",
+      "Correct — DynamoDB global tables keep writable replicas of a table in multiple Regions and replicate changes between them automatically.",
+      "RDS read replicas are for relational databases and serve only reads. The company uses DynamoDB and needs local writes in every Region.",
+      "CloudFront caches content at edge locations to speed up delivery. It does not replicate database writes between Regions."
     ]
   },
   {
     id: 358,
     domain: "Cloud Technology & Services",
     type: "single",
-    question: "Which physical device does AWS provide to transfer large amounts of data (up to 80 TB) to AWS when internet bandwidth is insufficient?",
-    options: ["AWS Storage Gateway", "AWS DataSync", "AWS Snowball Edge", "AWS Transfer Family"],
+    question: "A company needs to move a large amount of data to AWS, but its internet bandwidth is too limited for an online transfer. Which AWS option ships a physical device to the company for offline data transfer?",
+    options: [
+      "AWS Storage Gateway",
+      "AWS DataSync",
+      "AWS Snowball Edge",
+      "AWS Transfer Family"
+    ],
     correct: [2],
-    explanation: "AWS Snowball Edge is a physical device for offline data transfer. Customers load data onto the device and ship it to AWS. Each Snowball Edge stores up to 80 TB and can also run EC2 compute at the edge. For larger migrations, Snowmobile (truck) is used.",
+    explanation: "AWS Snowball Edge is a physical device for offline data transfer. Customers load data onto the device and ship it back to AWS, which imports it into Amazon S3. For larger datasets, several Snowball Edge devices can be used in parallel.",
     optionExplanations: [
       "AWS Storage Gateway bridges on-premises storage with AWS cloud storage online — it is not a physical device shipped to customers for offline bulk data transfer.",
       "AWS DataSync transfers data online between on-premises and AWS — it operates over network connections, not as a physical device for offline bulk transfer.",
-      "Correct — AWS Snowball Edge is the physical device shipped to customers for offline data transfer of up to 80 TB, useful when internet bandwidth is insufficient.",
+      "Correct — AWS Snowball Edge is a physical device shipped to the customer for offline data transfer, useful when internet bandwidth is insufficient.",
       "AWS Transfer Family provides managed SFTP/FTPS — it is an online file transfer service, not a physical device for bulk data migration."
     ]
   },
@@ -7013,7 +7023,7 @@ const QUESTION_BANK = [
     options: [
       "Amazon DocumentDB",
       "Amazon Neptune",
-      "Amazon Timestream",
+      "Amazon Redshift",
       "Amazon Keyspaces"
     ],
     correct: [1],
@@ -7021,7 +7031,7 @@ const QUESTION_BANK = [
     optionExplanations: [
       "Amazon DocumentDB is a MongoDB-compatible document database. It stores JSON documents and is not optimized for traversing many relationships.",
       "Correct — Amazon Neptune is a graph database designed to traverse highly connected data, such as finding all suppliers affected by a closed port.",
-      "Amazon Timestream is a time series database for data such as metrics and sensor readings over time, not for relationship-heavy queries.",
+      "Amazon Redshift is a data warehouse for analytical SQL queries over large datasets, not for traversing many relationships in highly connected data.",
       "Amazon Keyspaces is an Apache Cassandra-compatible wide-column database. It is not designed for traversing complex relationships."
     ]
   },
@@ -7105,11 +7115,16 @@ const QUESTION_BANK = [
     domain: "Cloud Technology & Services",
     type: "single",
     question: "Which AWS service provides automated operations through runbooks and playbooks, enabling you to patch, configure, and manage EC2 instances and on-premises servers at scale?",
-    options: ["AWS OpsWorks", "Amazon EC2 Auto Scaling", "AWS Systems Manager", "AWS Config"],
+    options: [
+      "AWS CloudTrail",
+      "Amazon EC2 Auto Scaling",
+      "AWS Systems Manager",
+      "AWS Config"
+    ],
     correct: [2],
     explanation: "AWS Systems Manager provides operational tooling to manage AWS and on-premises resources: patch management (Patch Manager), configuration (State Manager), run commands (Run Command), parameter storage (Parameter Store), and more.",
     optionExplanations: [
-      "AWS OpsWorks is a configuration management service using Chef/Puppet — it manages server configurations but is less comprehensive than Systems Manager's full operational toolkit.",
+      "AWS CloudTrail records API activity in your account for auditing — it does not patch, configure, or run commands on servers.",
       "Amazon EC2 Auto Scaling adjusts the number of EC2 instances based on demand — it manages capacity, not patching, run commands, or configuration management.",
       "Correct — AWS Systems Manager provides runbooks, patch management, run commands, configuration management, and parameter storage for AWS and on-premises servers.",
       "AWS Config evaluates resource configurations against compliance rules — it monitors compliance but does not perform operational tasks like patching or executing remote commands."
@@ -7323,35 +7338,40 @@ const QUESTION_BANK = [
     id: 382,
     domain: "Billing, Pricing & Support",
     type: "single",
-    question: "Which AWS service provides the most granular and detailed data about AWS costs and usage, suitable for ingestion into data analysis tools?",
+    question: "A company has tagged its AWS resources with a \"CostCenter\" tag. The finance team wants to break down costs by this tag in AWS Cost Explorer, but the tag does not appear there. What must the team do?",
     options: [
-      "AWS Cost Explorer saved reports",
-      "AWS Budgets",
-      "AWS Pricing Calculator",
-      "AWS Cost and Usage Report"
+      "Activate it as a cost allocation tag",
+      "Rename it to start with aws:",
+      "Recreate every tagged resource",
+      "Upgrade to a paid Support plan"
     ],
-    correct: [3],
-    explanation: "The AWS Cost and Usage Report (CUR) is the most comprehensive billing dataset. It delivers hourly/daily line items for all usage across all services to an S3 bucket, usable with Athena, Redshift, or QuickSight for custom analysis.",
+    correct: [0],
+    explanation: "User-defined tags must be activated as cost allocation tags in the Billing and Cost Management console before they can be used to filter and group costs in Cost Explorer and billing reports. Only tags applied after activation appear in cost data.",
     optionExplanations: [
-      "Cost Explorer provides summarized visualizations and 13 months of data — it does not export raw, line-item granularity data for custom querying with tools like Athena.",
-      "AWS Budgets tracks spending against defined thresholds — it does not provide raw line-item data or support export to external data analysis platforms.",
-      "AWS Pricing Calculator estimates future architecture costs — it has no data about actual usage or historical charges.",
-      "Correct — The CUR is the most granular billing dataset, providing hourly/daily line items per resource ID for every charge, delivered to S3 and queryable with Athena or QuickSight."
+      "Correct — user-defined tags appear in Cost Explorer and billing reports only after they are activated as cost allocation tags.",
+      "The aws: prefix is reserved for AWS-generated tags; customers cannot create tags with it.",
+      "Resources do not need to be recreated; activating the tag is enough for new cost data.",
+      "Cost allocation tags are available without any paid Support plan."
     ]
   },
   {
     id: 383,
     domain: "Billing, Pricing & Support",
     type: "single",
-    question: "Which AWS tool helps estimate the cost of a new AWS architecture before deploying it, by inputting expected service usage?",
-    options: ["AWS Cost Explorer", "AWS Budgets", "AWS Pricing Calculator", "AWS Migration Evaluator"],
-    correct: [2],
-    explanation: "AWS Pricing Calculator (calc.aws) lets you model new architectures and estimate monthly costs before deployment. You configure services (EC2 instance types, storage, data transfer, etc.) and get a cost breakdown. Useful for budgeting new projects.",
+    question: "A company runs a batch job on Amazon EC2 On-Demand Linux instances that finishes in about 12 minutes. A manager assumes the company pays for a full hour each time. How is this usage actually billed?",
+    options: [
+      "Per second, after a short minimum",
+      "Per full hour, rounded up",
+      "Per day the instance exists",
+      "A flat monthly fee per instance"
+    ],
+    correct: [0],
+    explanation: "On-Demand Linux instances are billed per second with a one-minute minimum, so the company pays only for the time the instances actually run. This pay-as-you-go model is one of the key benefits of cloud pricing.",
     optionExplanations: [
-      "Cost Explorer analyzes actual historical costs — it cannot project the cost of a new, not-yet-deployed architecture.",
-      "AWS Budgets monitors current spending against limits — it is not a planning or estimation tool for future architecture costs.",
-      "Correct — AWS Pricing Calculator lets you configure any combination of AWS services and get a cost estimate before deploying a single resource.",
-      "AWS Migration Evaluator analyzes on-premises workloads to build a migration business case — it is not a general architecture pricing tool for new AWS deployments."
+      "Correct — On-Demand Linux instances use per-second billing with a short minimum, so a 12-minute job is not charged as a full hour.",
+      "Hourly rounding does not apply to On-Demand Linux instances, which are billed per second.",
+      "EC2 instances are billed for running time, not for each day they exist.",
+      "On-Demand instances have no flat monthly fee; you pay only for the time used."
     ]
   },
   {
@@ -7755,15 +7775,15 @@ const QUESTION_BANK = [
     question: "A company wants to lift and shift many physical and virtual servers to Amazon EC2. It wants to replicate the servers continuously so that the final cutover causes only minimal downtime. Which AWS service should the company use?",
     options: [
       "AWS DataSync",
-      "AWS Migration Hub",
+      "AWS Transfer Family",
       "AWS Database Migration Service (AWS DMS)",
       "AWS Application Migration Service"
     ],
     correct: [3],
-    explanation: "AWS Application Migration Service is the primary AWS service for rehosting (lift and shift). It continuously replicates source servers to AWS and launches them as EC2 instances at cutover with minimal downtime. AWS Migration Hub only tracks migration progress; it does not replicate servers itself.",
+    explanation: "AWS Application Migration Service is the primary AWS service for rehosting (lift and shift). It continuously replicates source servers to AWS and launches them as EC2 instances at cutover with minimal downtime. AWS DataSync moves files and AWS DMS moves databases; neither replicates entire servers.",
     optionExplanations: [
       "AWS DataSync transfers files and objects between storage systems. It does not replicate entire servers to run as EC2 instances.",
-      "AWS Migration Hub provides a single place to track migration progress. It does not perform the server replication.",
+      "AWS Transfer Family provides managed SFTP, FTPS, and FTP endpoints for exchanging files. It does not replicate servers to Amazon EC2.",
       "AWS DMS migrates databases, not entire physical or virtual servers.",
       "Correct — AWS Application Migration Service continuously replicates servers to AWS and launches them as EC2 instances, which simplifies rehosting with minimal cutover downtime."
     ]
@@ -7812,20 +7832,20 @@ const QUESTION_BANK = [
     id: 407,
     domain: "Cloud Concepts",
     type: "single",
-    question: "A company is migrating many applications by using several AWS and partner migration tools. Leadership wants a single place to track the status of all these migrations. Which AWS service meets this requirement?",
+    question: "A company has used the AWS Cloud Adoption Framework (AWS CAF) to define its cloud vision and to align its leaders on the changes needed. It is now running a small number of pilot projects in production to show early business value. Which phase of the cloud transformation journey is the company in?",
     options: [
-      "AWS Migration Hub",
-      "AWS Config",
-      "AWS Control Tower",
-      "AWS Service Catalog"
+      "Envision",
+      "Align",
+      "Launch",
+      "Scale"
     ],
-    correct: [0],
-    explanation: "AWS Migration Hub provides a central location to discover, plan, and track the progress of application migrations across multiple AWS and partner tools. AWS Control Tower is about setting up and governing a multi-account environment, not tracking migrations.",
+    correct: [2],
+    explanation: "The AWS CAF describes four iterative phases of cloud transformation: Envision, Align, Launch, and Scale. In the Launch phase, an organization delivers pilot initiatives in production and demonstrates incremental business value. It then applies what it learns before expanding in the Scale phase.",
     optionExplanations: [
-      "Correct — AWS Migration Hub gives a single view to track migration progress across multiple AWS and partner tools.",
-      "AWS Config records and evaluates resource configurations. It does not track application migration status.",
-      "AWS Control Tower sets up and governs a multi-account AWS environment. It does not track migration progress.",
-      "AWS Service Catalog lets organizations offer approved products to their users. It is not a migration tracking tool."
+      "The Envision phase identifies and prioritizes transformation opportunities that support business goals. The company has already defined its vision.",
+      "The Align phase identifies capability gaps across the CAF perspectives and creates an action plan with stakeholders. The company has already aligned its leaders.",
+      "Correct — The Launch phase delivers pilot initiatives in production and demonstrates incremental business value.",
+      "The Scale phase expands successful production pilots to the desired scale and business impact. The company is still running only a few pilots."
     ]
   },
   {
@@ -8138,20 +8158,20 @@ const QUESTION_BANK = [
     id: 423,
     domain: "Cloud Concepts",
     type: "single",
-    question: "Before planning its migration, a company wants to collect information about its on-premises servers, including their configuration, utilization, and the dependencies between applications. Which AWS service should the company use?",
+    question: "A company plans to move its on-premises Oracle database to Amazon Aurora PostgreSQL to stop paying for commercial database licenses. Before moving the data, its team must convert the database schema and stored procedures to a format that PostgreSQL supports. Which AWS tool is designed for this conversion?",
     options: [
-      "AWS Application Discovery Service",
-      "AWS Application Migration Service",
-      "AWS Database Migration Service (AWS DMS)",
-      "AWS Snowcone"
+      "AWS Application Migration Service (AWS MGN)",
+      "AWS Glue Data Catalog",
+      "AWS Schema Conversion Tool (AWS SCT)",
+      "AWS DataSync"
     ],
-    correct: [0],
-    explanation: "AWS Application Discovery Service collects data about on-premises servers, such as configuration, utilization, and network dependencies, to help plan a migration. AWS Application Migration Service is used later, to actually rehost the servers on AWS.",
+    correct: [2],
+    explanation: "AWS Schema Conversion Tool (AWS SCT) converts a source database schema, including views, stored procedures, and functions, to a format compatible with a different target engine. It is used for heterogeneous migrations such as Oracle to Amazon Aurora PostgreSQL; the data itself is then typically moved with AWS Database Migration Service (AWS DMS).",
     optionExplanations: [
-      "Correct — AWS Application Discovery Service gathers server configuration, utilization, and dependency data to help plan migrations.",
-      "AWS Application Migration Service performs the actual lift-and-shift migration. It is not the tool for discovering servers and dependencies.",
-      "AWS DMS migrates databases. It does not discover servers or map application dependencies.",
-      "AWS Snowcone is a small physical device for edge computing and data transfer. It does not discover servers."
+      "AWS Application Migration Service rehosts whole servers on Amazon EC2 without changes. It does not convert a database schema to a different engine.",
+      "The AWS Glue Data Catalog stores metadata about data sources for analytics. It does not convert Oracle schemas or code to PostgreSQL.",
+      "Correct — AWS SCT converts the schema and database code, such as stored procedures, from the source engine to the target engine.",
+      "AWS DataSync copies files and objects between storage systems. It does not convert database schemas or stored procedures."
     ]
   },
   {
