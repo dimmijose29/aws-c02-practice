@@ -5,7 +5,7 @@
   
   **Simulatore d'esame per la certificazione AWS Certified Cloud Practitioner (CLF-C02)**
 
-  ![Questions](https://img.shields.io/badge/questions-400-orange)
+  ![Questions](https://img.shields.io/badge/questions-500-orange)
   ![Domains](https://img.shields.io/badge/domains-4-blue)
   ![No Backend](https://img.shields.io/badge/backend-none-green)
   ![License](https://img.shields.io/badge/license-MIT-lightgrey)
@@ -32,15 +32,16 @@ Ogni simulazione estrae le domande casualmente dalla bank, rispettando i pesi uf
 
 | Dominio | Peso ufficiale | Domande nel bank |
 |---|---|---|
-| Cloud Concepts | 24% | 96 |
-| Security & Compliance | 30% | 120 |
-| Cloud Technology & Services | 34% | 136 |
-| Billing, Pricing & Support | 12% | 48 |
-| **Totale** | **100%** | **400** |
+| Cloud Concepts | 24% | 120 |
+| Security & Compliance | 30% | 150 |
+| Cloud Technology & Services | 34% | 170 |
+| Billing, Pricing & Support | 12% | 60 |
+| **Totale** | **100%** | **500** |
 
 ## Funzionalità
 
-- ✅ 400 domande originali con spiegazione dettagliata
+- ✅ 500 domande originali con spiegazione dettagliata per ogni opzione
+- ✅ Storico delle sessioni con le domande sbagliate più spesso
 - ✅ Domande singole e multi-risposta
 - ✅ Timer con avvisi visivi (arancione < 10 min, rosso < 5 min)
 - ✅ Griglia di navigazione laterale con stato per ogni domanda
@@ -80,10 +81,12 @@ aws-c02-practice/
 ├── css/
 │   └── style.css       # Tutti gli stili
 ├── js/
-│   ├── questions.js    # Bank da 400 domande
+│   ├── questions.js    # Bank da 500 domande
 │   ├── state.js        # Stato globale dell'applicazione
 │   ├── timer.js        # Logica timer
 │   ├── render.js       # Rendering UI
+│   ├── stats.js        # Storico sessioni (localStorage)
+│   ├── cheatsheet.js   # Cheat sheet di studio
 │   ├── results.js      # Calcolo e visualizzazione risultati
 │   └── app.js          # Entry point, logica e event listeners
 └── img/
