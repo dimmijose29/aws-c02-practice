@@ -346,9 +346,12 @@ function renderCheatsheet() {
     <button class="cs-tab ${i === activeDomain ? 'cs-tab-active' : ''}"
             data-idx="${i}" style="${i === activeDomain ? `border-bottom-color:${d.color};color:${d.color}` : ''}">
       <span class="cs-tab-icon">${d.icon}</span>
-      <span class="cs-tab-label">${d.domain}</span>
+      <span class="cs-tab-label">${domainShort(d.domain)}</span>
     </button>
   `).join('');
+
+  // Tabs scroll horizontally on narrow screens — keep the active one visible
+  tabs.querySelector('.cs-tab-active')?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
 
   tabs.querySelectorAll('.cs-tab').forEach(btn => {
     btn.addEventListener('click', () => {
