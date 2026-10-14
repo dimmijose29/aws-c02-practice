@@ -20,10 +20,9 @@ const CHEATSHEET = [
       {
         title: "Cloud Deployment Models",
         items: [
-          "Public cloud — AWS manages infrastructure; shared with other tenants",
-          "Private cloud — dedicated infrastructure on-premises or hosted",
-          "Hybrid cloud — combination of on-premises + public cloud",
-          "Community cloud — shared by organizations with common needs",
+          "Cloud (cloud-native) — everything runs in the cloud; AWS manages the infrastructure",
+          "Hybrid — on-premises infrastructure connected to cloud resources",
+          "On-premises (private cloud) — dedicated infrastructure in your own data center",
         ]
       },
       {
@@ -271,7 +270,8 @@ const CHEATSHEET = [
           "Pay-as-you-go — no upfront, no minimum commitment, per-second billing",
           "Pay less when you reserve — RIs and Savings Plans: up to 72% off On-Demand",
           "Pay less with more usage — tiered pricing (S3, data transfer)",
-          "Free Tier — 12-month free (EC2 t2.micro 750h, S3 5GB, RDS 750h) + always free (Lambda 1M req/mo)",
+          "Free Tier — Free plan: up to $200 in credits for 6 months (account closes unless upgraded to the Paid plan)",
+          "Always free — 30+ services free within monthly limits on Free and Paid plans; plus short-term trials",
         ]
       },
       {
@@ -301,24 +301,23 @@ const CHEATSHEET = [
       {
         title: "Support Plans",
         items: [
-          "Basic (free) — docs, re:Post, 6 Trusted Advisor checks, Health Dashboard",
-          "Developer ($29/mo) — email support, business hours, 1 contact, general guidance",
-          "Business ($100/mo) — 24/7 phone/chat/email, all Trusted Advisor checks, <1h critical",
-          "Enterprise On-Ramp — pool of TAMs, <30min critical response",
-          "Enterprise ($15k/mo) — dedicated TAM, <15min critical, Concierge, Infrastructure Event Mgmt",
+          "Basic (included) — customer service, docs, re:Post, Trusted Advisor core checks, AWS Health",
+          "Business Support+ — minimum recommended for production: 24/7 phone/web/chat, AI-assisted troubleshooting, billing support",
+          "Enterprise Support — business-critical: designated Technical Account Manager (TAM), billing concierge, Well-Architected and security reviews",
+          "Unified Operations — mission-critical: Incident Management Engineers, designated domain specialists, resiliency reviews",
+          "Developer, Business and Enterprise On-Ramp are legacy plans no longer in the CLF-C02 exam guide",
         ]
       },
       {
         title: "AWS Support Resources",
         items: [
-          "Trusted Advisor — 5 categories: Cost, Performance, Security, Fault Tolerance, Service Limits",
+          "Trusted Advisor — checks for cost, performance, security, fault tolerance, service limits, operational excellence",
           "re:Post — community Q&A forum (successor to Developer Forums)",
-          "AWS IQ — hire certified AWS experts for hands-on project work",
           "AWS Professional Services — direct AWS consulting engagement",
           "AWS Partner Network (APN) — consulting and technology partners",
           "AWS Marketplace — third-party software catalog; billed via AWS account",
-          "Personal Health Dashboard — alerts specific to your account resources",
-          "Service Health Dashboard — global AWS service status",
+          "AWS Health Dashboard — your account's events (personalized) and public service health; AWS Health API",
+          "AWS Trust & Safety — report abuse coming from AWS resources (spam, attacks)",
         ]
       },
     ],
@@ -326,7 +325,7 @@ const CHEATSHEET = [
       { label: "AWS Pricing Overview", url: "https://aws.amazon.com/pricing/" },
       { label: "AWS Free Tier", url: "https://aws.amazon.com/free/" },
       { label: "AWS Support Plans", url: "https://aws.amazon.com/premiumsupport/plans/" },
-      { label: "AWS Total Cost of Ownership", url: "https://aws.amazon.com/tco-calculator/" },
+      { label: "Migration Evaluator (TCO)", url: "https://aws.amazon.com/migration-evaluator/" },
     ]
   },
 ];
