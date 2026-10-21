@@ -20,8 +20,9 @@ const CERTS = {
       { name: 'Cloud Technology & Services', short: 'Tech & Services', label: 'Tech & Services',       icon: '⚙️', weight: 34 },
       { name: 'Billing, Pricing & Support',  short: 'Billing',         label: 'Billing & Pricing',     icon: '💰', weight: 12 },
     ],
-    // Functions, so banks and cheat sheets can live in scripts loaded after this one
+    // Functions, so banks, translations and cheat sheets can live in scripts loaded after this one
     questions:  () => QUESTION_BANK,
+    translations: () => QUESTION_BANK_IT,   // Italian, keyed by question id
     cheatsheet: () => CHEATSHEET,
   },
   saa: {
@@ -42,6 +43,7 @@ const CERTS = {
       { name: 'Design Cost-Optimized Architectures',  short: 'Cost-Optimized',  label: 'Cost-Optimized',  icon: '💰', weight: 20 },
     ],
     questions:  () => SAA_QUESTION_BANK,
+    translations: () => SAA_QUESTION_BANK_IT,
     cheatsheet: () => SAA_CHEATSHEET,
   },
   aif: {
@@ -63,6 +65,7 @@ const CERTS = {
       { name: 'Security, Compliance, and Governance for AI Solutions', short: 'Security & Governance', label: 'Security & Governance', icon: '🔒', weight: 14 },
     ],
     questions:  () => AIF_QUESTION_BANK,
+    translations: () => AIF_QUESTION_BANK_IT,
     cheatsheet: () => AIF_CHEATSHEET,
   },
 };

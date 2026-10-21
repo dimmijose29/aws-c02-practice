@@ -70,7 +70,7 @@ function orderingHtml(q) {
   const rows = order.map((item, pos) => `
     <div class="ord-row">
       <span class="ord-num">${pos + 1}</span>
-      <span class="ord-text">${esc(q.items[item])}</span>
+      <span class="ord-text">${esc(q.items[item])}${itHtml(tr(q, 'items', item))}</span>
       <span class="ord-btns">
         <button class="ord-btn" data-pos="${pos}" data-dir="-1" aria-label="Move up" ${pos === 0 ? 'disabled' : ''}>↑</button>
         <button class="ord-btn" data-pos="${pos}" data-dir="1" aria-label="Move down" ${pos === order.length - 1 ? 'disabled' : ''}>↓</button>
@@ -89,7 +89,7 @@ function orderingResultHtml(q, answer) {
     return `
       <div class="ord-row ${ok ? 'ord-ok' : 'ord-wrong'}">
         <span class="ord-num">${ok ? '✓' : '✗'}</span>
-        <span class="ord-text">${esc(q.items[item])}</span>
+        <span class="ord-text">${esc(q.items[item])}${itHtml(tr(q, 'items', item))}</span>
         ${ok ? '' : `<span class="ord-should">should be #${item + 1}</span>`}
       </div>`;
   }).join('') : '<p class="qt-none">Not answered.</p>';
@@ -97,8 +97,8 @@ function orderingResultHtml(q, answer) {
     <div class="ord-row ord-ok">
       <span class="ord-num">${i + 1}</span>
       <div class="option-content">
-        <div class="ord-text">${esc(text)}</div>
-        ${q.itemExplanations ? `<div class="option-inline-exp">${esc(q.itemExplanations[i])}</div>` : ''}
+        <div class="ord-text">${esc(text)}</div>${itHtml(tr(q, 'items', i))}
+        ${q.itemExplanations ? `<div class="option-inline-exp">${esc(q.itemExplanations[i])}</div>${itExpHtml(tr(q, 'itemExplanations', i))}` : ''}
       </div>
     </div>`).join('');
   return `
@@ -108,14 +108,16 @@ function orderingResultHtml(q, answer) {
 
 // ===== MATCHING =====
 
+// A <select> cannot hold the hidden .it-text, so its labels carry the translation only while it is shown
 function matchingHtml(q) {
   const answer = state.answers[q.id] || [];
+  const label  = r => esc(q.responses[r]) + (showItalian && tr(q, 'responses', r) ? ` — ${esc(tr(q, 'responses', r))}` : '');
   const rows = q.prompts.map((prompt, k) => {
     const options = q.matching.order.map(r =>
-      `<option value="${r}" ${answer[k] === r ? 'selected' : ''}>${esc(q.responses[r])}</option>`).join('');
+      `<option value="${r}" ${answer[k] === r ? 'selected' : ''}>${label(r)}</option>`).join('');
     return `
       <div class="match-row">
-        <span class="match-prompt">${esc(prompt)}</span>
+        <span class="match-prompt">${esc(prompt)}${itHtml(tr(q, 'prompts', k))}</span>
         <select class="match-select" data-k="${k}" aria-label="Match for: ${esc(prompt)}">
           <option value="" ${answer[k] == null ? 'selected' : ''}>Choose…</option>${options}
         </select>
@@ -133,10 +135,11 @@ function matchingResultHtml(q, answer) {
       <div class="match-row match-result ${ok ? 'ord-ok' : 'ord-wrong'}">
         <span class="ord-num">${ok ? '✓' : '✗'}</span>
         <div class="option-content">
-          <div class="match-prompt">${esc(prompt)}</div>
+          <div class="match-prompt">${esc(prompt)}${itHtml(tr(q, 'prompts', k))}</div>
           <div class="match-answer">→ ${esc(q.responses[q.correct[k]])}${ok ? '' :
             `<span class="match-yours"> (your answer: ${chosen == null ? 'none' : esc(q.responses[chosen])})</span>`}</div>
-          ${q.promptExplanations ? `<div class="option-inline-exp">${esc(q.promptExplanations[k])}</div>` : ''}
+          ${itHtml(tr(q, 'responses', q.correct[k]) && `→ ${tr(q, 'responses', q.correct[k])}`)}
+          ${q.promptExplanations ? `<div class="option-inline-exp">${esc(q.promptExplanations[k])}</div>${itExpHtml(tr(q, 'promptExplanations', k))}` : ''}
         </div>
       </div>`;
   }).join('')}</div>`;

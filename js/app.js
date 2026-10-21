@@ -44,6 +44,7 @@ function applyCert() {
   document.getElementById('passing-note').textContent        = passText;
   document.getElementById('passing-note-result').textContent = passText;
 
+  applyTranslationToggle();
   renderStatsPanel();
 }
 
@@ -473,6 +474,11 @@ document.getElementById('question-grid').addEventListener('click', e => {
   if (btn) goToQuestion(Number(btn.dataset.idx));
 });
 
+// Italian translation toggle (quiz meta row and results review) — delegated, same handler for both
+document.addEventListener('click', e => {
+  if (e.target.closest('.tr-btn')) toggleTranslation();
+});
+
 // Review modal
 document.getElementById('review-list').addEventListener('click', e => {
   const item = e.target.closest('.review-item');
@@ -510,6 +516,7 @@ document.addEventListener('keydown', e => {
     if (!state.practiceMode) { prevQuestion(); } return;
   }
   if (e.key === 'f' || e.key === 'F') { toggleFlag(); return; }
+  if ((e.key === 't' || e.key === 'T') && hasTranslations()) { toggleTranslation(); return; }
 
   // Number/letter shortcuts disabled when revealed (answer locked)
   const q = state.questions && state.questions[state.current];

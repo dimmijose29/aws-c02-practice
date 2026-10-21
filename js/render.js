@@ -44,6 +44,7 @@ function renderQuestion() {
   document.getElementById('q-domain-badge').textContent = q.domain;
   document.getElementById('q-number').textContent = `Question ${state.current + 1}`;
   document.getElementById('q-text').textContent = q.question;
+  document.getElementById('q-text-it').textContent = tr(q, 'question') || '';
 
   // How-to-answer hint for multiple / ordering / matching (hidden when revealed — answer is locked)
   const hintEl = document.getElementById('q-hint');
@@ -123,7 +124,13 @@ function renderNormalOptions(q, selected, list) {
     textEl.className   = 'option-text';
     textEl.textContent = text;
 
-    div.append(marker, textEl);
+    const content      = document.createElement('div');
+    content.className  = 'option-content';
+    content.append(textEl);
+    const itEl = itElement(trOption(q, 'options', idx));
+    if (itEl) content.append(itEl);
+
+    div.append(marker, content);
     list.appendChild(div);
   });
 }
@@ -154,6 +161,8 @@ function renderRevealedOptions(q, selected, list) {
     textEl.className   = 'option-text';
     textEl.textContent = text;
     content.appendChild(textEl);
+    const itEl = itElement(trOption(q, 'options', idx));
+    if (itEl) content.appendChild(itEl);
 
     // Per-option explanation (if available on this question)
     if (q.options.explanations && q.options.explanations[idx]) {
@@ -161,6 +170,8 @@ function renderRevealedOptions(q, selected, list) {
       expEl.className   = 'option-inline-exp';
       expEl.textContent = q.options.explanations[idx];
       content.appendChild(expEl);
+      const itExp = itElement(trOption(q, 'optionExplanations', idx));
+      if (itExp) { itExp.classList.add('it-exp'); content.appendChild(itExp); }
     }
 
     div.append(marker, content);

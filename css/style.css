@@ -1654,6 +1654,8 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
 .match-prompt { flex: 1 1 220px; font-size: 15px; color: var(--text); line-height: 1.5; }
 .match-select {
     flex: 1 1 220px;
+    min-width: 0;
+    max-width: 100%;
     padding: 9px 10px;
     border-radius: 8px;
     border: 1px solid var(--border);
@@ -2176,3 +2178,39 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
     /* --- Modal --- */
     .modal-box { padding: 24px 18px; }
 }
+
+/* ===== ITALIAN TRANSLATION ===== */
+/* Rendered next to every English text, shown only while body.show-it is set (toggle: .tr-btn / T key) */
+.it-text { display: none; }
+body.show-it .it-text:not(:empty) {
+    display: block;
+    font-size: .92em;
+    font-style: italic;
+    color: var(--answered);
+    line-height: 1.55;
+    margin-top: 4px;
+}
+body.show-it .q-text-it:not(:empty) { margin: -16px 0 24px; padding-left: 10px; border-left: 3px solid var(--tint-blue-border); }
+body.show-it .it-exp:not(:empty) { font-size: 12px; color: var(--text-sec); margin-top: 0; }
+.rc-opt-exp + .it-exp { margin-left: 24px; padding: 0 10px; }
+
+.q-meta-actions { display: flex; gap: 8px; margin-left: auto; }
+.q-meta-actions .flag-btn { margin-left: 0; }
+
+.tr-btn {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-sec);
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 5px 12px;
+    cursor: pointer;
+    transition: all .15s;
+    white-space: nowrap;
+}
+.tr-btn:hover { border-color: var(--answered); color: var(--answered); }
+.tr-btn.tr-btn-active { background: var(--tint-blue); border-color: var(--answered); color: var(--answered); }
+
+.section-title-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+.section-title-row .section-title { margin-bottom: 0; }

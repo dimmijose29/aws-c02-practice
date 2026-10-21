@@ -169,9 +169,9 @@ function renderMissedQuestions(el, sessions) {
         </div>
         <div class="sr-accordion mq-detail" style="display:none">
           <span class="mq-domain">${esc(q.domain)}</span>
-          <p class="mq-question">${esc(q.question)}</p>
+          <p class="mq-question">${esc(q.question)}${itHtml(tr(q, 'question'))}</p>
           ${correctAnswerHtml(q)}
-          <p class="mq-exp">${esc(q.explanation || '')}</p>
+          <p class="mq-exp">${esc(q.explanation || '')}${itHtml(tr(q, 'explanation'))}</p>
         </div>
       </div>`;
   }).join('')}</div>`;

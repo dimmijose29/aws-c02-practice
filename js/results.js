@@ -133,14 +133,14 @@ function renderAnswersReview() {
       // Per-option explanation shown for ALL options (if available)
       const optExp = q.options.explanations ? q.options.explanations[i] : null;
       const optExpHtml = optExp
-        ? `<div class="rc-opt-exp">${esc(optExp)}</div>`
+        ? `<div class="rc-opt-exp">${esc(optExp)}</div>${itExpHtml(trOption(q, 'optionExplanations', i))}`
         : '';
 
       optionsHtml += `
         <div class="rc-opt ${cls}">
           <div class="rc-opt-left">
             <span class="rc-opt-mark">${mark || String.fromCharCode(65 + i)}</span>
-            <span>${esc(text)}</span>
+            <span>${esc(text)}${itHtml(trOption(q, 'options', i))}</span>
           </div>
           ${optExpHtml}
         </div>`;
@@ -156,7 +156,7 @@ function renderAnswersReview() {
           </span>
         </div>
         <div class="rc-body">
-          <div class="rc-question">${esc(q.question)}</div>
+          <div class="rc-question">${esc(q.question)}${itHtml(tr(q, 'question'))}</div>
           <div class="rc-options">${optionsHtml}</div>
         </div>
       </div>`;
