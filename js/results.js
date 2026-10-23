@@ -200,5 +200,76 @@ function applyReviewFilter() {
     c.classList.toggle('rf-chip-active', c.dataset.status === reviewFilter.status));
   document.querySelector('.rf-showing').textContent =
     shown === cards.length ? '' : shown ? `Showing ${shown} of ${cards.length} questions` : 'No questions match these filters.';
+  const copyBtn = document.querySelector('.copy-review-btn');
+  copyBtn.disabled = shown === 0;
+  copyBtn.textContent = `📋 Copy ${shown === cards.length ? 'all' : shown} for review`;
+}
+
+// ===== COPY FOR REVIEW =====
+// Plain-text recap of the questions the filters show, to paste into a chat and go over the doubts
+
+function reviewText() {
+  const { score, correct, total } = computeScore();
+  const cards = [...document.querySelectorAll('#answers-review .review-card')];
+  const shown = state.questions.map((q, idx) => ({ q, idx })).filter(({ idx }) => cards[idx].style.display !== 'none');
+  const letter = i => String.fromCharCode(65 + i);
+
+  const blocks = shown.map(({ q, idx }) => {
+    const a      = state.answers[q.id] || [];
+    const status = !isAnswered(q) ? 'NOT ANSWERED' : isAnswerCorrect(q) ? 'CORRECT' : 'INCORRECT';
+    const lines  = [`### Question ${idx + 1} · ${q.domain} · ${status}${state.flagged.has(q.id) ? ' · flagged' : ''}`, q.question, ''];
+
+    if (isChoiceType(q)) {
+      q.options.texts.forEach((text, i) => {
+        const tags = [q.options.correctNew[i] && 'correct', a.includes(i) && 'my answer'].filter(Boolean);
+        lines.push(`${letter(i)}) ${text}${tags.length ? `  [${tags.join(', ')}]` : ''}`);
+      });
+      if (q.options.explanations) {
+        lines.push('', 'Explanations:');
+        q.options.explanations.forEach((exp, i) => lines.push(`${letter(i)}) ${exp}`));
+      }
+    }
+    if (q.type === 'ordering') {
+      lines.push('My order:', ...(a.length ? a.map((item, pos) => `${pos + 1}. ${q.items[item]}`) : ['(not answered)']));
+      lines.push('', 'Correct order:', ...q.items.map((text, i) =>
+        `${i + 1}. ${text}${q.itemExplanations ? ` — ${q.itemExplanations[i]}` : ''}`));
+    }
+    if (q.type === 'matching') {
+      q.prompts.forEach((prompt, k) => {
+        const chosen = a[k];
+        lines.push(`- ${prompt} → ${q.responses[q.correct[k]]}` +
+          (chosen === q.correct[k] ? '  [my answer]' : `  [my answer: ${chosen == null ? 'none' : q.responses[chosen]}]`));
+        if (q.promptExplanations) lines.push(`  ${q.promptExplanations[k]}`);
+      });
+    }
+    if (q.explanation) lines.push('', `Summary: ${q.explanation}`);
+    return lines.join('\n');
+  });
+
+  const header = `${cert.code} ${state.practiceMode ? 'practice' : 'exam'} — score ${score}% (${correct}/${total}). ` +
+    `${shown.length} question${shown.length === 1 ? '' : 's'} to review:`;
+  return [header, ...blocks].join('\n\n');
+}
+
+function copyForReview() {
+  const btn  = document.querySelector('.copy-review-btn');
+  const text = reviewText();
+  const done = () => {
+    const label = btn.textContent;
+    btn.textContent = '✓ Copied — paste it in the chat';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = label; btn.classList.remove('copied'); }, 2500);
+  };
+  const fallback = () => { // file:// or older browsers without the async clipboard API
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    ta.remove();
+    done();
+  };
+  if (navigator.clipboard) navigator.clipboard.writeText(text).then(done, fallback);
+  else fallback();
 }
 

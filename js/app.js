@@ -490,6 +490,7 @@ document.querySelector('.modal-actions .btn-danger').addEventListener('click', s
 
 // Results screen
 document.querySelector('.results-footer .btn-primary').addEventListener('click', restartQuiz);
+document.querySelector('.copy-review-btn').addEventListener('click', copyForReview);
 
 // Results review filters — status chips and domain select (delegated: rebuilt on every result)
 document.getElementById('review-filters').addEventListener('click', e => {
