@@ -290,6 +290,7 @@ function nextQuestion() {
     }
   } else {
     if (state.current < state.questions.length - 1) { state.current++; update(); }
+    else showReviewModal(); // last question: same as "Submit Exam"
   }
 }
 

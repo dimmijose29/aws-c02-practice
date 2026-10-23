@@ -98,8 +98,8 @@ function renderQuestion() {
   } else {
     prevBtn.style.display = '';
     prevBtn.disabled = state.current === 0;
-    nextBtn.disabled  = state.current === state.questions.length - 1;
-    nextBtn.textContent = 'Next →';
+    nextBtn.disabled  = false;
+    nextBtn.textContent = state.current === state.questions.length - 1 ? 'Review & Submit →' : 'Next →';
   }
 
   updateGridHighlight();
