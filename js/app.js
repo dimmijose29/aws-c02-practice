@@ -432,6 +432,7 @@ document.getElementById('nav-close-btn').addEventListener('click', () => {
 
 // Quiz screen controls
 document.getElementById('flag-btn').addEventListener('click', toggleFlag);
+document.getElementById('copy-q-btn').addEventListener('click', copyCurrentQuestion);
 document.querySelector('.btn-submit-exam').addEventListener('click', showReviewModal);
 document.getElementById('prev-btn').addEventListener('click', prevQuestion);
 document.getElementById('next-btn').addEventListener('click', nextQuestion);
@@ -490,7 +491,7 @@ document.querySelector('.modal-actions .btn-danger').addEventListener('click', s
 
 // Results screen
 document.querySelector('.results-footer .btn-primary').addEventListener('click', restartQuiz);
-document.querySelector('.copy-review-btn').addEventListener('click', copyForReview);
+document.getElementById('copy-review-btn').addEventListener('click', copyForReview);
 
 // Results review filters — status chips and domain select (delegated: rebuilt on every result)
 document.getElementById('review-filters').addEventListener('click', e => {

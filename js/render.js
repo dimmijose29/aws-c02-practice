@@ -60,6 +60,9 @@ function renderQuestion() {
       isFlagged ? 'Flagged' : 'Flag for Review';
   }
 
+  // Copy button (practice mode, once the answer is revealed — in exam mode it would give the answer away)
+  document.getElementById('copy-q-btn').style.display = isRevealed ? '' : 'none';
+
   // Options
   const selected = state.answers[q.id] || [];
   const list     = document.getElementById('options-list');
