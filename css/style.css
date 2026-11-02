@@ -1192,6 +1192,7 @@ html, body { height: 100%; font-family: 'Amazon Ember', 'Segoe UI', Arial, sans-
 .rf-showing { width: 100%; font-size: 12px; color: var(--text-sec); }
 .rf-showing:empty { display: none; }
 .rc-tags { display: flex; align-items: center; gap: 6px; }
+.copy-review-btn.rc-copy { padding: 3px 10px; margin-right: 4px; }
 .rc-flag { font-size: 12px; font-weight: 700; color: var(--flagged); }
 
 .rc-status.correct   { background: var(--tint-green); color: var(--correct); }

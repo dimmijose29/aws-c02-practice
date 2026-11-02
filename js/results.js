@@ -151,6 +151,7 @@ function renderAnswersReview() {
         <div class="rc-header">
           <span class="rc-num">Question ${idx + 1} · ${esc(q.domain)}</span>
           <span class="rc-tags">
+            <button class="copy-review-btn rc-copy" data-idx="${idx}" title="Copy this question as text, to paste into a chat">📋 Copy</button>
             ${isFlagged ? '<span class="rc-flag">⚑ Flagged</span>' : ''}
             <span class="rc-status ${statusClass}">${statusText}</span>
           </span>
@@ -256,11 +257,14 @@ function copyForReview() {
   copyText(document.getElementById('copy-review-btn'), reviewText());
 }
 
-// Practice mode, after the reveal: the current question only
+// A single question: practice mode after the reveal, or one card of the results review
+function copyQuestion(btn, idx) {
+  copyText(btn, `${cert.code} ${state.practiceMode ? 'practice' : 'exam'} — question to review:\n\n` +
+    questionText(state.questions[idx], idx));
+}
+
 function copyCurrentQuestion() {
-  const q = state.questions[state.current];
-  copyText(document.getElementById('copy-q-btn'),
-    `${cert.code} practice — question to review:\n\n${questionText(q, state.current)}`);
+  copyQuestion(document.getElementById('copy-q-btn'), state.current);
 }
 
 function copyText(btn, text) {
